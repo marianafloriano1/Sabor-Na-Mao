@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SABORNAMAOO",
+    "name": "Sabor Na Mao",
     "slug": "SABORNAMAOO",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,10 +13,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "versionCode": 1,
+      "package": "com.teste662.SABORNAMAOO"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ce1351ed-f8eb-49d3-a3ca-81ae4b236043"
+      }
     }
   }
 }
