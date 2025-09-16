@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
   textoBotao: {
     color: "#fff",
     fontSize: 16,
+
   },
   decorativeImage: {
     position: "absolute",
@@ -343,23 +344,26 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
-    color: 'green'
+    color: 'green',
+    
   },
   modalTexto: {
     fontSize: 16,
     marginBottom: 20,
+   
   },
   textoFechar: {
     textAlign: "center",
     color: "red",
     fontSize: 16,
-    fontWeight: "bold",
+
   },
   toggleText: {
     marginTop: 10,
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
+  
   },
 });
 

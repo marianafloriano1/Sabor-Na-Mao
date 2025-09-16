@@ -21,7 +21,7 @@ export default function RegisterScreen() {
     if (!email || !senha) {
       Alert.alert('Erro', 'Preencha todos os campos');
       return;
-    }else {
+    } else {
       Alert.alert('Erro', 'Email ou senha inválidos');
     }
 
@@ -79,7 +79,7 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
- container: {
+  container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
   },
   textoTopo: {
     color: '#F8D12D',
-    fontWeight: 'bold',
-    fontSize: 36,
+    fontSize: 46,
     marginTop: 40,
+    fontFamily: "Chewy",
   },
   imagem: {
     width: 340,
@@ -111,21 +111,24 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#565656',
     marginBottom: 10,
+     fontFamily: "Imprima",
   },
-  texto3:{
+  texto3: {
     color: 'red',
-    right: 100,
-    top: -10
+    right: 110,
+    top: -10,
+     fontFamily: "Imprima",
   },
   subtitulo: {
     fontSize: 18,
     color: '#565656',
     marginBottom: 20,
     marginTop: 10,
+     fontFamily: "Imprima",
   },
   linkCadastro: {
     color: '#839deb',
-    fontWeight: 'bold',
+    fontFamily: "Imprima",
   },
   input: {
     height: 50,
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
     color: '#565656',
     marginBottom: 16,
     marginTop: 20,
+    fontFamily: "Imprima",
   },
   botao: {
     backgroundColor: 'rgba(248, 209, 45, 0.7)',
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
   },
   botaoTexto: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 17,
+    fontFamily: "Imprima",
   },
 });

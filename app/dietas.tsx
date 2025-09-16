@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: "#242424",
         textTransform: "uppercase",
+        
     },
     branco: {
         backgroundColor: "white",

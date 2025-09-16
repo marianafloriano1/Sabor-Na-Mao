@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFonts } from 'expo-font';
 import { validateUser } from '../bancodedados';
 
 export default function LoginScreen() {
@@ -20,6 +21,12 @@ export default function LoginScreen() {
   const [showSplash, setShowSplash] = useState(true);
   const router = useRouter();
   const video = useRef(null);
+
+   const [fontsLoaded] = useFonts({
+      Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
+      Julius: require("../assets/fonts/JuliusSansOne-Regular.ttf"),
+      Chewy: require("../assets/fonts/Chewy-Regular.ttf"),
+    });
 
   useEffect(() => {
     const checkLoggedUser = async () => {
@@ -100,9 +107,9 @@ const styles = StyleSheet.create({
   },
   textoTopo: {
     color: '#F8D12D',
-    fontWeight: 'bold',
-    fontSize: 36,
+    fontSize: 46,
     marginTop: 40,
+    fontFamily: "Chewy",
   },
   imagem: {
     width: 340,
@@ -124,16 +131,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#565656',
     marginBottom: 10,
+    fontFamily: "Imprima",
+    
   },
   subtitulo: {
     fontSize: 18,
     color: '#565656',
     marginBottom: 20,
     marginTop: 10,
+    fontFamily: "Imprima",
   },
   linkCadastro: {
     color: '#839deb',
-    fontWeight: 'bold',
+    fontFamily: "Imprima",
+    
   },
   input: {
     height: 50,
@@ -146,6 +157,7 @@ const styles = StyleSheet.create({
     color: '#565656',
     marginBottom: 16,
     marginTop: 20,
+    fontFamily: "Imprima",
   },
   botao: {
     backgroundColor: 'rgba(108, 198, 150, 0.7)',
@@ -163,7 +175,7 @@ const styles = StyleSheet.create({
   },
   botaoTexto: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 17,
+    fontFamily: "Imprima",
   },
 });
