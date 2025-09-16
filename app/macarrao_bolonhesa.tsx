@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -47,18 +47,18 @@ export default function MacarraoBolonhesa() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "150g de carne moída \n(pode ser bovina, suína, \nou uma mistura).",
-    item2: "1/2 cebola pequena, picada.",
-    item3: "1 dente de alho, picado.",
-    item4: "1/2 talo de salsão, picado (opcional).",
-    item5: "1/2 xícara de molho de tomate.",
-    item6: "1/2 colher de chá de extrato de tomate (opcional).",
-    item7: "1/4 colher de chá de orégano seco.",
-    item8: "1/4 colher de chá de manjericão seco.",
-    item9: "Sal e pimenta a gosto.",
-    item10: "1 colher de sopa de azeite de oliva.",
-    item11: "100g de macarrão (espaguete, penne, ou o que preferir).",
-    item12: "Água e sal para cozinhar o macarrão.",
+    item1: "1 dente de alho, picado.",
+    item2: "Sal e pimenta a gosto.",
+    item3: "1/4 colher de chá de orégano seco.",
+    item4: "1/4 colher de chá de manjericão seco.",
+    item5: "1/2 cebola pequena, picada.",
+    item6: "1/2 xícara de molho de tomate.",
+    item7: "1 colher de sopa de azeite de oliva.",
+    item8: "1/2 talo de salsão, picado (opcional).",
+    item9: "1/2 colher de chá de extrato de tomate (opcional).",
+    item10: "150g de carne moída (pode ser bovina, suína, ou uma mistura).",
+    item11: "Água e sal para cozinhar o macarrão.",
+    item12: "100g de macarrão (espaguete, penne, ou o que preferir).",
   };
 
   const stepsMap: { [key: string]: string } = {
@@ -116,7 +116,7 @@ export default function MacarraoBolonhesa() {
       console.error(err);
     }
   };
-    const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -128,10 +128,13 @@ export default function MacarraoBolonhesa() {
             resizeMode="contain"
           />
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.goBack()}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.goBack()}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>Macarrão à Bolonhesa</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>Macarrão à Bolonhesa</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -142,7 +145,7 @@ export default function MacarraoBolonhesa() {
                   {checkedItems[key] ? (
                     <Text style={styles.check}>✓ </Text>
                   ) : (
-                    <Text style={styles.bolinha}>○   </Text>
+                    <Text style={styles.bolinha}>○ </Text>
                   )}
                   {label}
                 </Text>
@@ -157,7 +160,7 @@ export default function MacarraoBolonhesa() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○   </Text>
+                  <Text style={styles.bolinha}>○ </Text>
                 )}
                 {step}
               </Text>
@@ -166,56 +169,70 @@ export default function MacarraoBolonhesa() {
         </View>
       </ScrollView>
       <View style={styles.botoesContainer}>
-                 <TouchableOpacity style={styles.botaoVerde}
-                   onPress={() => setModalVisible(true)}>
-                   <Feather
-                     name="refresh-cw"
-                     size={20}
-                     color="#fff"
-                     style={styles.iconeBotao}
-                   />
-                   <Text style={styles.textoBotao}>Forma correta descarte</Text>
-         
-                   <Modal transparent visible={modalVisible} animationType="slide">
-                     <View style={styles.modalContainer}>
-                       <View style={styles.modalContent}>
-                         <Text style={styles.modalTitulo}>
-                           O Que Fazer com Comida Estragada?
-                         </Text>
-                         <Text style={styles.modalTexto}>
-                           <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
-         
-                           <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
-         
-                           <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
-         
-                           <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-         
-                           <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
-         
-                           <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
-         
-                           <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
-                           <Text
-                             style={{ color: "blue", textDecorationLine: "underline" }}
-                             onPress={() =>
-                               Linking.openURL(
-                                 "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                               )
-                             }
-                           >
-                             Manual de Compostagem
-                           </Text>
-                         </Text>
-                         <TouchableOpacity onPress={() => setModalVisible(false)}>
-                           <Text style={styles.textoFechar}>Fechar</Text>
-                         </TouchableOpacity>
-                       </View>
-                     </View>
-                   </Modal>
-         
-                 </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
 
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                  {"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Plásticos e embalagens:
+                  </Text>{" "}
+                  potes, sacos, tampas e garrafas devem ser limpos e colocados
+                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                  conservas, garrafas e frascos podem ser reciclados. Se
+                  estiverem quebrados, embale bem em jornal ou outro material
+                  para evitar acidentes.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                  alimentos, papel toalha (se seco e limpo), embalagens de papel
+                  e papelão vão para a reciclagem. Se estiver engordurado ou
+                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Óleo de cozinha usado:
+                  </Text>{" "}
+                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                  plástica e leve até um ponto de coleta.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                  reciclável.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                  um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
@@ -317,8 +334,8 @@ const styles = StyleSheet.create({
     height: 500,
     zIndex: 0,
   },
-  
- modalButton: {
+
+  modalButton: {
     backgroundColor: "#009E60",
     alignItems: "center",
     marginHorizontal: 20,
@@ -344,7 +361,7 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
-    color: 'green'
+    color: "green",
   },
   modalTexto: {
     fontSize: 16,
@@ -361,5 +378,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

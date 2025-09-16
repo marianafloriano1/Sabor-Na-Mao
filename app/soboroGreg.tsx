@@ -4,13 +4,13 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -103,10 +103,14 @@ export default function soArForno() {
           />
 
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("soboroArroz")}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.navigate("soboroArroz")}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
+
+              <Text style={styles.paragraph}>Arroz à Grega</Text>
             </TouchableOpacity>
-            <Text style={styles.paragraph}>Arroz à Grega</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -118,7 +122,7 @@ export default function soArForno() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○   </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -134,7 +138,7 @@ export default function soArForno() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○   </Text>
+                  <Text style={styles.bolinha}>○ </Text>
                 )}
                 {step}
               </Text>
@@ -254,5 +258,12 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

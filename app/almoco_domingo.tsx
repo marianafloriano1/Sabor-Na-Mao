@@ -19,17 +19,21 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
             <Feather name="chevron-left" size={24} color="#242424" />
+            <Text style={styles.paragraph}>
+              Receitas para comer em família
+            </Text>{" "}
           </TouchableOpacity>
-
-          <Text style={styles.paragraph}>Receitas para comer em família</Text>
         </View>
         <View style={styles.branco}>
           <View>
             <TouchableOpacity
               style={styles.card}
-               onPress={() => nav.navigate("paella")}
+              onPress={() => nav.navigate("paella")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_almoco.png")} // Imagem de fundo
@@ -48,7 +52,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-               onPress={() => nav.navigate("feijoada")}
+              onPress={() => nav.navigate("feijoada")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_almoco.png")} // Imagem de fundo
@@ -67,7 +71,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-               onPress={() => nav.navigate("frango")}
+              onPress={() => nav.navigate("frango")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_almoco.png")} // Imagem de fundo
@@ -86,7 +90,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-               onPress={() => nav.navigate("churrasco")}
+              onPress={() => nav.navigate("churrasco")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_almoco.png")} // Imagem de fundo
@@ -120,14 +124,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 10,
     gap: 12, // espaço entre a seta e o texto
-    
   },
 
   paragraph: {
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 15
+    top: 15,
   },
 
   branco: {
@@ -200,5 +203,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });

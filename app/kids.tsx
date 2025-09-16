@@ -1,5 +1,9 @@
 import { Feather } from "@expo/vector-icons";
-import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Image,
@@ -33,26 +37,28 @@ export default function ComidasInfantis() {
   const route = useRoute<any>();
 
   React.useEffect(() => {
-  // Se veio parâmetro 'bebes', ativa a aba Bebês
-  if (route.params?.categoria === "bebes") {
-    setShowBebes(true);
-    setShowMiniChef(false);
-  } else {
-    // Caso contrário, ativa Mini Chefs por padrão
-    setShowBebes(false);
-    setShowMiniChef(true);
-  }
-}, [route.params]);
-
+    // Se veio parâmetro 'bebes', ativa a aba Bebês
+    if (route.params?.categoria === "bebes") {
+      setShowBebes(true);
+      setShowMiniChef(false);
+    } else {
+      // Caso contrário, ativa Mini Chefs por padrão
+      setShowBebes(false);
+      setShowMiniChef(true);
+    }
+  }, [route.params]);
 
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
             <Feather name="chevron-left" size={24} color="#000" />
+            <Text style={styles.paragraph}>Comidas Infantis</Text>{" "}
           </TouchableOpacity>
-          <Text style={styles.paragraph}>Comidas Infantis</Text>
         </View>
 
         <View style={styles.toggleRow}>
@@ -98,7 +104,7 @@ export default function ComidasInfantis() {
                   style={styles.backgroundImage}
                   resizeMode="cover"
                 />
-                <Text style={styles.texto}>Picolé de Iogurte</Text>
+                <Text style={styles.texto}>Picolé de Iogurte com Frutas</Text>
                 <Image
                   source={{
                     uri: "https://images.pexels.com/photos/461189/pexels-photo-461189.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -411,5 +417,12 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

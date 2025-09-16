@@ -1,5 +1,9 @@
 import { Feather } from "@expo/vector-icons";
-import { NavigationProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Image,
@@ -46,35 +50,44 @@ export default function ComidasInfantis() {
     setShowSuco(category === "suco");
   };
   React.useEffect(() => {
-  if (route.params?.categoria === "vitaminas") {
-    setShowVegano(false);
-    setShowVegetariano(true);
-    setShowSuco(false);
-  }
+    if (route.params?.categoria === "vitaminas") {
+      setShowVegano(false);
+      setShowVegetariano(true);
+      setShowSuco(false);
+    }
 
-  if (route.params?.categoria === "suco") {
-    setShowVegano(false);
-    setShowVegetariano(false);
-    setShowSuco(true);
-  }
-}, [route.params]);
-
+    if (route.params?.categoria === "suco") {
+      setShowVegano(false);
+      setShowVegetariano(false);
+      setShowSuco(true);
+    }
+  }, [route.params]);
 
   return (
-
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
-            <Feather name="chevron-left" size={24} color="#000" style={styles.seta} />
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
+            <Feather
+              name="chevron-left"
+              size={24}
+              color="#000"
+              style={styles.seta}
+            />
+
+            <Text style={styles.paragraph}>Bebidas</Text>
           </TouchableOpacity>
-          <Text style={styles.paragraph}>Bebidas</Text>
         </View>
 
         {/* Toggle Buttons */}
         <View style={styles.toggleRow}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Pressable
               style={[
                 styles.pressable,
@@ -264,7 +277,8 @@ export default function ComidasInfantis() {
           {showSuco && (
             <>
               {/* Sucos */}
-              <TouchableOpacity style={styles.card}
+              <TouchableOpacity
+                style={styles.card}
                 onPress={() => nav.navigate("bebiLaran")}
               >
                 <ImageBackground
@@ -280,7 +294,8 @@ export default function ComidasInfantis() {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.cardD}
+              <TouchableOpacity
+                style={styles.cardD}
                 onPress={() => nav.navigate("bebiLimao")}
               >
                 <ImageBackground
@@ -295,7 +310,8 @@ export default function ComidasInfantis() {
                   style={styles.cardImage}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.card}
+              <TouchableOpacity
+                style={styles.card}
                 onPress={() => nav.navigate("bebiMoran")}
               >
                 <ImageBackground
@@ -310,7 +326,8 @@ export default function ComidasInfantis() {
                   style={styles.cardImage}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.cardD}
+              <TouchableOpacity
+                style={styles.cardD}
                 onPress={() => nav.navigate("bebiAbac")}
               >
                 <ImageBackground
@@ -346,10 +363,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 10
+    top: 10,
   },
   seta: {
-    top: 10
+    top: 10,
   },
   branco: {
     backgroundColor: "white",
@@ -362,7 +379,7 @@ const styles = StyleSheet.create({
   toggleRow: {
     flexDirection: "column",
     marginTop: 40,
-    margin: 10
+    margin: 10,
   },
 
   pressable: {
@@ -420,7 +437,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "uppercase",
     zIndex: 2,
-    width: 100
+    width: 100,
   },
   cardImage: {
     width: 80,
@@ -463,5 +480,12 @@ const styles = StyleSheet.create({
     color: "#7D4DFF",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

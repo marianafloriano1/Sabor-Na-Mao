@@ -3,13 +3,13 @@ import type { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
-    Image,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function AnoNovo() {
@@ -19,11 +19,15 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("economica")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("economica")}
+          >
             <Feather name="chevron-left" size={24} color="#242424" />
+            <Text style={styles.paragraph}>
+              Receitas práticas e economicas
+            </Text>{" "}
           </TouchableOpacity>
-
-          <Text style={styles.paragraph}>Receitas práticas e economicas</Text>
         </View>
         <View style={styles.branco}>
           <View>
@@ -50,7 +54,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("frango_rapido")}
+              onPress={() => nav.navigate("frango_rapido")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_receitarapida.png")} // Imagem de fundo
@@ -88,16 +92,14 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("macarrao_rapido2")}
+              onPress={() => nav.navigate("macarrao_rapido2")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_receitarapida.png")} // Imagem de fundo
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>
-                Macarrão alho e oléo
-              </Text>
+              <Text style={styles.texto}>Macarrão alho e oléo</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/11654236/pexels-photo-11654236.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -202,5 +204,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

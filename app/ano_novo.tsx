@@ -19,12 +19,15 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
             <Feather name="chevron-left" size={24} color="#242424" />
+            <Text style={styles.paragraph}>Ano Novo</Text>
           </TouchableOpacity>
-
-          <Text style={styles.paragraph}>Ano Novo</Text>
         </View>
+
         <View style={styles.branco}>
           <View>
             <TouchableOpacity
@@ -50,7 +53,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("AnoLentilha")}
+              onPress={() => nav.navigate("AnoLentilha")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoAno.jpg")} // Imagem de fundo
@@ -88,7 +91,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("AnoBolinho")}
+              onPress={() => nav.navigate("AnoBolinho")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoAno.jpg")} // Imagem de fundo
@@ -100,7 +103,7 @@ export default function AnoNovo() {
               </Text>
               <Image
                 source={{
-                  uri: "https://images.pexels.com/photos/14734398/pexels-photo-14734398.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                  uri: "https://images.pexels.com/photos/17321493/pexels-photo-17321493.jpeg",
                 }}
                 style={styles.cardImage}
               />
@@ -202,5 +205,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row", // seta e texto na mesma linha
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura
+    paddingVertical: 10, // aumenta a área de clique
+    paddingHorizontal: 10,
   },
 });

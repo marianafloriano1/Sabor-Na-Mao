@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -57,9 +57,9 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Azeite de oliva",
+    item1: "Sal a gosto",
     item2: "Alho (opcional)",
-    item3: "Sal a gosto",
+    item3: "Azeite de oliva",
     item4: "1 baguete ou pão italiano",
     item5: "1 lata de atum (em água ou óleo, escorrido)",
     item6: "3 colheres (sopa) de maionese",
@@ -105,8 +105,7 @@ export default function App() {
       console.error(err);
     }
   };
-      const [modalVisible, setModalVisible] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -118,12 +117,16 @@ export default function App() {
             resizeMode="contain"
           />
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("aperitivos")}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.navigate("aperitivos")}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
+
+              <Text style={styles.paragraph}>
+                Canapés de Patê com Torradinhas
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.paragraph}>
-              Canapés de Patê com Torradinhas
-            </Text>
           </View>
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
@@ -134,7 +137,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○   </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -148,7 +151,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○   </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Corte o pão em rodelas finas. Pincele com azeite e, se quiser,
               esfregue levemente um dente de alho nas fatias. Leve ao forno
@@ -161,7 +164,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○   </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Em uma tigela, misture o atum com a maionese, suco de limão,
               cebola e cheiro-verde. Tempere com sal e pimenta a gosto. Misture
@@ -174,7 +177,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○   </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Sobre cada torradinha, coloque uma porção do patê com uma colher
               pequena ou saco de confeitar. Decore com uma folhinha de salsinha,
@@ -184,55 +187,70 @@ export default function App() {
         </View>
       </ScrollView>
       <View style={styles.botoesContainer}>
-                <TouchableOpacity style={styles.botaoVerde}
-                  onPress={() => setModalVisible(true)}>
-                  <Feather
-                    name="refresh-cw"
-                    size={20}
-                    color="#fff"
-                    style={styles.iconeBotao}
-                  />
-                  <Text style={styles.textoBotao}>Forma correta descarte</Text>
-        
-                  <Modal transparent visible={modalVisible} animationType="slide">
-                    <View style={styles.modalContainer}>
-                      <View style={styles.modalContent}>
-                        <Text style={styles.modalTitulo}>
-                          O Que Fazer com Comida Estragada?
-                        </Text>
-                        <Text style={styles.modalTexto}>
-                          <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
-        
-                          <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
-        
-                          <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
-        
-                          <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-        
-                          <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
-        
-                          <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
-        
-                          <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
-                          <Text
-                            style={{ color: "blue", textDecorationLine: "underline" }}
-                            onPress={() =>
-                              Linking.openURL(
-                                "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                              )
-                            }
-                          >
-                            Manual de Compostagem
-                          </Text>
-                        </Text>
-                        <TouchableOpacity onPress={() => setModalVisible(false)}>
-                          <Text style={styles.textoFechar}>Fechar</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </Modal>
-        
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                  {"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Plásticos e embalagens:
+                  </Text>{" "}
+                  potes, sacos, tampas e garrafas devem ser limpos e colocados
+                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                  conservas, garrafas e frascos podem ser reciclados. Se
+                  estiverem quebrados, embale bem em jornal ou outro material
+                  para evitar acidentes.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                  alimentos, papel toalha (se seco e limpo), embalagens de papel
+                  e papelão vão para a reciclagem. Se estiver engordurado ou
+                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Óleo de cozinha usado:
+                  </Text>{" "}
+                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                  plástica e leve até um ponto de coleta.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                  reciclável.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                  um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
                 </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
@@ -346,8 +364,8 @@ const styles = StyleSheet.create({
     height: 500,
     zIndex: 0,
   },
-  
- modalButton: {
+
+  modalButton: {
     backgroundColor: "#009E60",
     alignItems: "center",
     marginHorizontal: 20,
@@ -373,7 +391,7 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
-    color: 'green'
+    color: "green",
   },
   modalTexto: {
     fontSize: 16,
@@ -390,5 +408,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

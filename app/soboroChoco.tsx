@@ -19,16 +19,22 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("soboro")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("soboro")}
+          >
             <Feather
               name="chevron-left"
               size={24}
               color="#242424"
               style={styles.seta}
             />
-          </TouchableOpacity>
 
-          <Text style={styles.paragraph}> Receitas com sobra de Chocolate</Text>
+            <Text style={styles.paragraph}>
+              {" "}
+              Receitas com sobra de Chocolate
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.branco}>
           <View>
@@ -41,7 +47,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Ganache de Chocolate</Text>
+              <Text style={styles.texto}>Ganache de{"\n"}Chocolate</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/6036018/pexels-photo-6036018.jpeg",
@@ -60,7 +66,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Pão de Chocolate </Text>
+              <Text style={styles.texto}>Pão de Chocolate</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/30419546/pexels-photo-30419546/free-photo-of-pao-de-chocolate-caseiro-fatiado-close-up.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -79,10 +85,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>
-                {" "}
-                Brigadeiro com Sobras de Chocolate
-              </Text>
+              <Text style={styles.texto}>Brigadeiro</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/5149343/pexels-photo-5149343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -210,5 +213,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

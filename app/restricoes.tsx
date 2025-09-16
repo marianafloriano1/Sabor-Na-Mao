@@ -1,5 +1,10 @@
 import { Feather } from "@expo/vector-icons";
-import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   Image,
@@ -58,20 +63,26 @@ export default function ComidasInfantis() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
             <Feather
               name="chevron-left"
               size={24}
               color="#000"
               style={styles.seta}
             />
+
+            <Text style={styles.paragraph}>Restrições e Intolerâncias</Text>
           </TouchableOpacity>
-          <Text style={styles.paragraph}>Restrições e Intolerâncias</Text>
         </View>
 
         {/* Toggle Buttons */}
         <View style={styles.toggleRow}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Pressable
               style={[
                 styles.pressable,
@@ -112,7 +123,9 @@ export default function ComidasInfantis() {
             <>
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => nav.navigate("paoq_lactose", { categoria: "intolerancia" })}
+                onPress={() =>
+                  nav.navigate("paoq_lactose", { categoria: "intolerancia" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -129,7 +142,11 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.cardD}
-                onPress={() => nav.navigate("brigadeiro_lactose", { categoria: "intolerancia" })}
+                onPress={() =>
+                  nav.navigate("brigadeiro_lactose", {
+                    categoria: "intolerancia",
+                  })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -146,7 +163,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => nav.navigate("cookie_lactose", { categoria: "intolerancia" })}
+                onPress={() =>
+                  nav.navigate("cookie_lactose", { categoria: "intolerancia" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -163,7 +182,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.cardD}
-                onPress={() => nav.navigate("churros_lactose", { categoria: "intolerancia" })}
+                onPress={() =>
+                  nav.navigate("churros_lactose", { categoria: "intolerancia" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -184,7 +205,9 @@ export default function ComidasInfantis() {
             <>
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => nav.navigate("brownie_gluten", { categoria: "gluten" })}
+                onPress={() =>
+                  nav.navigate("brownie_gluten", { categoria: "gluten" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -201,7 +224,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.cardD}
-                onPress={() => nav.navigate("pastel_gluten", { categoria: "gluten" })}
+                onPress={() =>
+                  nav.navigate("pastel_gluten", { categoria: "gluten" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -218,7 +243,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => nav.navigate("pizza_gluten", { categoria: "gluten" })}
+                onPress={() =>
+                  nav.navigate("pizza_gluten", { categoria: "gluten" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -235,7 +262,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.cardD}
-                onPress={() => nav.navigate("sanduiche_gluten", { categoria: "gluten" })}
+                onPress={() =>
+                  nav.navigate("sanduiche_gluten", { categoria: "gluten" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -256,7 +285,9 @@ export default function ComidasInfantis() {
             <>
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => nav.navigate("cheesecake_diabetes", { categoria: "diabete" })}
+                onPress={() =>
+                  nav.navigate("cheesecake_diabetes", { categoria: "diabete" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -273,7 +304,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.cardD}
-                onPress={() => nav.navigate("palitos_diabetes", { categoria: "diabete" })}
+                onPress={() =>
+                  nav.navigate("palitos_diabetes", { categoria: "diabete" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -290,7 +323,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.card}
-                onPress={() => nav.navigate("quibe_diabetes", { categoria: "diabete" })}
+                onPress={() =>
+                  nav.navigate("quibe_diabetes", { categoria: "diabete" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -307,7 +342,9 @@ export default function ComidasInfantis() {
 
               <TouchableOpacity
                 style={styles.cardD}
-                onPress={() => nav.navigate("salmao_diabetes", { categoria: "diabete" })}
+                onPress={() =>
+                  nav.navigate("salmao_diabetes", { categoria: "diabete" })
+                }
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_restricao.png")}
@@ -459,5 +496,12 @@ const styles = StyleSheet.create({
     color: "#7D4DFF",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });
