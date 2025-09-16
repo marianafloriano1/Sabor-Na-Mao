@@ -47,15 +47,15 @@ export default function AlmondegasDeCarneDeJaca() {
   const itemsMap: { [key: string]: string } = {
     item1: "1 cebola.",
     item2: "1 tomate.",
-    item3: "4 dentes de alho.",
-    item4: "Sal a gosto.",
-    item5: "Pimenta-do-reino a gosto.",
-    item6: "Ervas a gosto.",
-    item7: "300 g de carne de jaca desfiada/cozida.",
-    item8: "1 colher de sobremesa de chia.",
-    item9: "2/3 de xícara de chá de farinha de baru.",
-    item10: "Farinha para empanar.",
-    item11: "500 ml de molho de tomate.",
+    item3: "Sal a gosto.",
+    item4: "Ervas a gosto.",
+    item5: "4 dentes de alho.",
+    item6: "Farinha para empanar.",
+    item7: "1 colher de sobremesa de chia.",
+    item8: "Pimenta-do-reino a gosto.",
+    item9: "500 ml de molho de tomate.",
+    item10: "2/3 de xícara de chá de farinha de baru.",
+    item11: "300 g de carne de jaca desfiada/cozida.",
   };
 
   const stepsMap: { [key: string]: string } = {
@@ -107,8 +107,7 @@ export default function AlmondegasDeCarneDeJaca() {
       console.error(err);
     }
   };
-    const [modalVisible, setModalVisible] = useState(false);
-  
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -122,12 +121,16 @@ export default function AlmondegasDeCarneDeJaca() {
           />
 
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("dietas", { categoria: "vegano" })}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.navigate("dietas", { categoria: "vegano" })}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
+
+              <Text style={styles.paragraph}>
+                ALMÔNDEGAS DE{"\n"}CARNE DE JACA
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.paragraph}>
-              ALMÔNDEGAS DE{"\n"}CARNE DE JACA
-            </Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -139,7 +142,7 @@ export default function AlmondegasDeCarneDeJaca() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -155,7 +158,7 @@ export default function AlmondegasDeCarneDeJaca() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○  </Text>
+                  <Text style={styles.bolinha}>○ </Text>
                 )}
                 {step}
               </Text>
@@ -164,55 +167,70 @@ export default function AlmondegasDeCarneDeJaca() {
         </View>
       </ScrollView>
       <View style={styles.botoesContainer}>
-       <TouchableOpacity style={styles.botaoVerde}
-                 onPress={() => setModalVisible(true)}>
-                 <Feather
-                   name="refresh-cw"
-                   size={20}
-                   color="#fff"
-                   style={styles.iconeBotao}
-                 />
-                 <Text style={styles.textoBotao}>Forma correta descarte</Text>
-       
-                 <Modal transparent visible={modalVisible} animationType="slide">
-                   <View style={styles.modalContainer}>
-                     <View style={styles.modalContent}>
-                       <Text style={styles.modalTitulo}>
-                         O Que Fazer com Comida Estragada?
-                       </Text>
-                       <Text style={styles.modalTexto}>
-                         <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
-       
-                         <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
-       
-                         <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
-       
-                         <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-       
-                         <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
-       
-                         <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
-       
-                         <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
-                         <Text
-                           style={{ color: "blue", textDecorationLine: "underline" }}
-                           onPress={() =>
-                             Linking.openURL(
-                               "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                             )
-                           }
-                         >
-                           Manual de Compostagem
-                         </Text>
-                       </Text>
-                       <TouchableOpacity onPress={() => setModalVisible(false)}>
-                         <Text style={styles.textoFechar}>Fechar</Text>
-                       </TouchableOpacity>
-                     </View>
-                   </View>
-                 </Modal>
-       
-               </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                  {"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Plásticos e embalagens:
+                  </Text>{" "}
+                  potes, sacos, tampas e garrafas devem ser limpos e colocados
+                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                  conservas, garrafas e frascos podem ser reciclados. Se
+                  estiverem quebrados, embale bem em jornal ou outro material
+                  para evitar acidentes.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                  alimentos, papel toalha (se seco e limpo), embalagens de papel
+                  e papelão vão para a reciclagem. Se estiver engordurado ou
+                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Óleo de cozinha usado:
+                  </Text>{" "}
+                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                  plástica e leve até um ponto de coleta.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                  reciclável.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                  um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.botaoCinza}
           onPress={salvarListaDeCompras}
@@ -318,7 +336,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
 
- modalButton: {
+  modalButton: {
     backgroundColor: "#009E60",
     alignItems: "center",
     marginHorizontal: 20,
@@ -344,8 +362,12 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
+<<<<<<< HEAD
     color: 'green',
     
+=======
+    color: "green",
+>>>>>>> c7a9fb1d61c94e89675cc61cd1a3f12e08d21847
   },
   modalTexto: {
     fontSize: 16,
@@ -365,5 +387,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   
   },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
+  },
 });
-

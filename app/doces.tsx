@@ -3,13 +3,13 @@ import type { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
-    Image,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function AnoNovo() {
@@ -19,11 +19,13 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("economica")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("economica")}
+          >
             <Feather name="chevron-left" size={24} color="#242424" />
+            <Text style={styles.paragraph}>Doces economicos</Text>{" "}
           </TouchableOpacity>
-
-          <Text style={styles.paragraph}>Doces economicos</Text>
         </View>
         <View style={styles.branco}>
           <View>
@@ -36,9 +38,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>
-                Gelatina
-              </Text>
+              <Text style={styles.texto}>Gelatina</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/6550713/pexels-photo-6550713.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load",
@@ -50,7 +50,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("empada_doce")}
+              onPress={() => nav.navigate("empada_doce")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_doces.png")} // Imagem de fundo
@@ -88,16 +88,14 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("bolo_doce")}
+              onPress={() => nav.navigate("bolo_doce")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_doces.png")} // Imagem de fundo
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>
-                Bolo de caneca
-              </Text>
+              <Text style={styles.texto}>Bolo de caneca</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/9981717/pexels-photo-9981717.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -202,5 +200,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

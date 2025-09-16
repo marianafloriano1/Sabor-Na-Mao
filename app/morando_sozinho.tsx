@@ -19,11 +19,18 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
-            <Feather name="chevron-left" size={24} color="#242424" style={styles.seta} />
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
+            <Feather
+              name="chevron-left"
+              size={24}
+              color="#242424"
+              style={styles.seta}
+            />
+            <Text style={styles.paragraph}>Receitas individuais</Text>{" "}
           </TouchableOpacity>
-
-          <Text style={styles.paragraph}>Receitas individuais</Text>
         </View>
         <View style={styles.branco}>
           <View>
@@ -127,10 +134,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 20
+    top: 20,
   },
   seta: {
-    top: 20
+    top: 20,
   },
 
   branco: {
@@ -171,9 +178,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "uppercase",
     zIndex: 2,
-    flexWrap: "wrap", 
-    width: 100
-
+    flexWrap: "wrap",
+    width: 100,
   },
 
   cardD: {
@@ -206,5 +212,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

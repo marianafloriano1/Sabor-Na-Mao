@@ -19,20 +19,24 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("home")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("home")}
+          >
             <Feather name="chevron-left" size={24} color="#242424" />
-          </TouchableOpacity>
 
-          <Text style={styles.paragraph}>
-            {" "}
-            Receitas de Aperitivos para festas
-          </Text>
+            <Text style={styles.paragraph}>
+              {" "}
+              Receitas de Aperitivos para festas
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.branco}>
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => nav.navigate("ApCaprese")}            >
+              onPress={() => nav.navigate("ApCaprese")}
+            >
               <ImageBackground
                 source={require("../assets/images/fundoAp.jpg")} // Imagem de fundo
                 style={styles.backgroundImage}
@@ -88,7 +92,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-             onPress={() => nav.navigate("ApBolinho")}
+              onPress={() => nav.navigate("ApBolinho")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoAp.jpg")} // Imagem de fundo
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 20
+    top: 20,
   },
 
   branco: {
@@ -201,5 +205,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

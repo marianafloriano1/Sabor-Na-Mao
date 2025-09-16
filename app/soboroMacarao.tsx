@@ -19,16 +19,22 @@ export default function AnoNovo() {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => nav.navigate("soboro")}>
+          <TouchableOpacity
+            style={styles.touchTitulo}
+            onPress={() => nav.navigate("soboro")}
+          >
             <Feather
               name="chevron-left"
               size={24}
               color="#242424"
               style={styles.seta}
             />
-          </TouchableOpacity>
 
-          <Text style={styles.paragraph}> Receitas com sobra de macarrão</Text>
+            <Text style={styles.paragraph}>
+              {" "}
+              Receitas com sobra de macarrão
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.branco}>
           <View>
@@ -207,5 +213,12 @@ const styles = StyleSheet.create({
     right: 8,
     zIndex: 2,
     borderRadius: 40,
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

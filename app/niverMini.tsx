@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -57,19 +57,19 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Sal e pimenta-do-reino \na gosto",
-    item2: "1 dente de alho amassado \n(opcional)",
-    item3: "1/2 cebola bem picadinha \n(opcional)",
-    item4: "500g de carne moída (patinho, acém ou fraldinha)",
-    item5: "1 colher (sopa) de farinha de rosca (opcional, para dar liga)",
-    item6:
-      "Mini pães de hambúrguer (ou pães de leite cortados com aro redondo)",
-    item7:
+    item1: "Mini folhas de alface",
+    item2: "Tomate em rodelas finas",
+    item3: "Sal e pimenta-do-reino a gosto",
+    item4: "1 dente de alho amassado (opcional)",
+    item5: "1/2 cebola bem picadinha (opcional)",
+    item6: "Molhos: maionese, ketchup, mostarda (a gosto)",
+    item7: "1 colher (sopa) de farinha de rosca (opcional, para dar liga)",
+    item8: "500g de carne moída (patinho, acém ou fraldinha)",
+    item9: "Palitinhos para segurar (tipo de dente ou decorativos)",
+    item10:
       "Queijo em fatias (prato, muçarela ou cheddar – cortado em quadradinhos)",
-    item8: "Mini folhas de alface",
-    item9: "Tomate em rodelas finas",
-    item10: "Molhos: maionese, ketchup, mostarda (a gosto)",
-    item11: "Palitinhos para segurar (tipo de dente ou decorativos)",
+    item11:
+      "Mini pães de hambúrguer (ou pães de leite cortados com aro redondo)",
   };
 
   const toggleCheck = (item: string) => {
@@ -108,7 +108,7 @@ export default function App() {
       console.error(err);
     }
   };
-    const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -120,10 +120,13 @@ export default function App() {
             resizeMode="contain"
           />
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("niver")}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.navigate("niver")}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>mini hamburguer</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>mini hamburguer</Text>
           </View>
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
@@ -134,7 +137,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○   </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -148,7 +151,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○   </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Misture todos os ingredientes da carne e modele pequenas bolinhas,
               achatando-as para formar mini discos. Frite ou grelhe em
@@ -161,7 +164,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○   </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Corte os mini pães ao meio, passe o molho de sua preferência,
               adicione o hambúrguer com queijo, uma folha de alface e uma rodela
@@ -172,56 +175,70 @@ export default function App() {
         </View>
       </ScrollView>
       <View style={styles.botoesContainer}>
-        <TouchableOpacity style={styles.botaoVerde}
-                                    onPress={() => setModalVisible(true)}>
-                                    <Feather
-                                      name="refresh-cw"
-                                      size={20}
-                                      color="#fff"
-                                      style={styles.iconeBotao}
-                                    />
-                                    <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                          
-                                    <Modal transparent visible={modalVisible} animationType="slide">
-                                      <View style={styles.modalContainer}>
-                                        <View style={styles.modalContent}>
-                                          <Text style={styles.modalTitulo}>
-                                            O Que Fazer com Comida Estragada?
-                                          </Text>
-                                          <Text style={styles.modalTexto}>
-                                            <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
-                          
-                                            <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
-                          
-                                            <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
-                          
-                                            <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-                          
-                                            <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
-                          
-                                            <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
-                          
-                                            <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
-                                            <Text
-                                              style={{ color: "blue", textDecorationLine: "underline" }}
-                                              onPress={() =>
-                                                Linking.openURL(
-                                                  "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                                                )
-                                              }
-                                            >
-                                              Manual de Compostagem
-                                            </Text>
-                                          </Text>
-                                          <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                            <Text style={styles.textoFechar}>Fechar</Text>
-                                          </TouchableOpacity>
-                                        </View>
-                                      </View>
-                                    </Modal>
-                          
-                                  </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
 
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                  {"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Plásticos e embalagens:
+                  </Text>{" "}
+                  potes, sacos, tampas e garrafas devem ser limpos e colocados
+                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                  conservas, garrafas e frascos podem ser reciclados. Se
+                  estiverem quebrados, embale bem em jornal ou outro material
+                  para evitar acidentes.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                  alimentos, papel toalha (se seco e limpo), embalagens de papel
+                  e papelão vão para a reciclagem. Se estiver engordurado ou
+                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Óleo de cozinha usado:
+                  </Text>{" "}
+                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                  plástica e leve até um ponto de coleta.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                  reciclável.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                  um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
@@ -362,7 +379,7 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
-    color: 'green'
+    color: "green",
   },
   modalTexto: {
     fontSize: 16,
@@ -379,5 +396,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });
