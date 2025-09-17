@@ -26,7 +26,6 @@ export default function AnoNovo() {
             <Feather name="chevron-left" size={24} color="#242424" />
 
             <Text style={styles.paragraph}>
-              {" "}
               Receitas de Aperitivos para festas
             </Text>
           </TouchableOpacity>
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 20,
+    top: 10,
   },
 
   branco: {

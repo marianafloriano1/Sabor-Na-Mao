@@ -31,7 +31,6 @@ export default function AnoNovo() {
             />
 
             <Text style={styles.paragraph}>
-              {" "}
               Receitas com sobra de Chocolate
             </Text>
           </TouchableOpacity>
@@ -138,6 +137,7 @@ const styles = StyleSheet.create({
     color: "#242424",
     textTransform: "uppercase",
     top: 20,
+    width: 250,
   },
   seta: {
     top: 7,

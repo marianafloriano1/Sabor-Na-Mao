@@ -297,8 +297,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    paddingHorizontal: 40,
-    justifyContent: "space-between",
   },
   botaoVerde: {
     flex: 1,
@@ -307,7 +305,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
   },
   botaoCinza: {
     flex: 1,
@@ -316,7 +313,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 10,
   },
   iconeBotao: {
     marginRight: 10,
@@ -324,8 +320,8 @@ const styles = StyleSheet.create({
   textoBotao: {
     color: "#fff",
     fontSize: 16,
-
   },
+
   decorativeImage: {
     position: "absolute",
     left: 135,
@@ -362,26 +358,27 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
+<<<<<<< HEAD
     color: 'green',
 
+=======
+    color: "green",
+>>>>>>> 5af47c853bf00c01710ba0886f7dc09e8ed3684a
   },
   modalTexto: {
     fontSize: 16,
     marginBottom: 20,
-   
   },
   textoFechar: {
     textAlign: "center",
     color: "red",
     fontSize: 16,
-
   },
   toggleText: {
     marginTop: 10,
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
-  
   },
   touchTitulo: {
     flexDirection: "row",

@@ -124,12 +124,15 @@ export default function Brigadeiro() {
           />
 
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("almoco")}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.navigate("almoco")}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>
+                BERINJELA RECHEADA COM CARNE MÓIDA
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.paragraph}>
-              BERINJELA RECHEADA COM CARNE MÓIDA
-            </Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -374,5 +377,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
+  },
+  touchTitulo: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%", // ocupa toda a largura do container
+    paddingVertical: 10, // aumenta a área de toque vertical
+    paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
 });

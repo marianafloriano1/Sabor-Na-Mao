@@ -74,7 +74,7 @@ export default function ComidasInfantis() {
               style={styles.seta}
             />
 
-            <Text style={styles.paragraph}>Restrições e Intolerâncias</Text>
+            <Text style={styles.paragraph}>Restrições Alimentares</Text>
           </TouchableOpacity>
         </View>
 

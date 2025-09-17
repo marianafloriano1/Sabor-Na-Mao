@@ -118,7 +118,10 @@ export default function Brigadeiro() {
           />
 
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("receitas_rapidas")}>
+            <TouchableOpacity
+              style={styles.touchTitulo}
+              onPress={() => nav.navigate("receitas_rapidas")}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
 
               <Text style={styles.paragraph}>FRANGO TERIYAKI</Text>

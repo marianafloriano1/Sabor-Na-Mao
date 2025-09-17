@@ -115,8 +115,8 @@ export default function soArForno() {
               onPress={() => nav.navigate("soboroArroz")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>Arroz de forno</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>Arroz de forno</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>

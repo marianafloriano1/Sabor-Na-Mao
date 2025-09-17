@@ -32,8 +32,8 @@ export default function Churrasco() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Escolha e compra da carne (fraldinha, picanha...)",
-    item2: "Tempero (sal grosso)",
+    item1: "Tempero (sal grosso)",
+    item2: "Escolha e compra da carne\n (fraldinha, picanha...)",
   };
 
   const stepsMap: { [key: string]: string } = {
@@ -291,6 +291,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+
   decorativeImage: {
     position: "absolute",
     left: 135,

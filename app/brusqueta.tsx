@@ -114,8 +114,8 @@ export default function Brigadeiro() {
               onPress={() => nav.navigate("lanche_rapido")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>BRUSQUETA</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>BRUSQUETA</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
