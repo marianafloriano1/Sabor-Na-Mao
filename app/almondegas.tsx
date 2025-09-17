@@ -362,12 +362,8 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
-<<<<<<< HEAD
     color: 'green',
-    
-=======
-    color: "green",
->>>>>>> c7a9fb1d61c94e89675cc61cd1a3f12e08d21847
+
   },
   modalTexto: {
     fontSize: 16,
