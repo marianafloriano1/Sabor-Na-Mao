@@ -17,7 +17,7 @@ export default function AnoNovo() {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ height: 1000 }}>
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.touchTitulo}

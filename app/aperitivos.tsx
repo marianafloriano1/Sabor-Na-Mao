@@ -98,7 +98,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Bolinha de Queijo com Bacon</Text>
+              <Text style={styles.texto}>Bolinha de Queijo {'\n'}com Bacon</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/166031/pexels-photo-166031.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 10,
+    top: 15,
   },
 
   branco: {

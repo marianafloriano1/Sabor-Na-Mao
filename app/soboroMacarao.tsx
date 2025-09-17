@@ -44,7 +44,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Gratinado de Macarrão</Text>
+              <Text style={styles.texto}>Gratinado de {'\n'}Macarrão</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/22890010/pexels-photo-22890010/free-photo-of-mao-jantar-janta-almoco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -101,7 +101,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Sopa de Macarrão com Legumes</Text>
+              <Text style={styles.texto}>Sopa de Macarrão {'\n'} com Legumes</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/1395319/pexels-photo-1395319.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

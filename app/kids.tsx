@@ -104,7 +104,7 @@ export default function ComidasInfantis() {
                   style={styles.backgroundImage}
                   resizeMode="cover"
                 />
-                <Text style={styles.texto}>Picolé de Iogurte com Frutas</Text>
+                <Text style={styles.texto}>Picolé de Iogurte {'\n'}com Frutas</Text>
                 <Image
                   source={{
                     uri: "https://images.pexels.com/photos/461189/pexels-photo-461189.jpeg?auto=compress&cs=tinysrgb&w=600",

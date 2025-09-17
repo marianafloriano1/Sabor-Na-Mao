@@ -25,7 +25,7 @@ export default function AnoNovo() {
           >
             <Feather name="chevron-left" size={24} color="#242424" />
             <Text style={styles.paragraph}>
-              Receitas práticas e economicas
+              Receitas práticas
             </Text>{" "}
           </TouchableOpacity>
         </View>

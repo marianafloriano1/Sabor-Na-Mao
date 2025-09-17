@@ -19,7 +19,7 @@ export default function Pascoa() {
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ height: 1000 }}
       >
         <View style={styles.row}>
           <TouchableOpacity
@@ -110,7 +110,7 @@ export default function Pascoa() {
               >
                 {" "}
               </ImageBackground>
-              <Text style={styles.texto}>Coelho de Chocolate</Text>
+              <Text style={styles.texto}>Coelho de {'\n'}Chocolate</Text>
               <Image
                 source={{
                   uri: "https://images.unsplash.com/photo-1744368643381-2169a2f349cf?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
