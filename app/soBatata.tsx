@@ -115,8 +115,8 @@ export default function soArForno() {
               onPress={() => nav.navigate("soboroAir")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>Batata Rústica Crocante</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>Batata Rústica Crocante</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>

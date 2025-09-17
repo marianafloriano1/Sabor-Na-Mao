@@ -84,7 +84,10 @@ export default function Brigadeiro() {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={styles.container}>
           <Image
             source={require("../assets/images/fundo_briga.png")} // Certifique-se de que o caminho está correto

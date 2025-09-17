@@ -30,7 +30,7 @@ export default function AnoNovo() {
               style={styles.seta}
             />
 
-            <Text style={styles.paragraph}>Lanches rápidos e práticos</Text>
+            <Text style={styles.paragraph}>Lanches rápidos</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.branco}>

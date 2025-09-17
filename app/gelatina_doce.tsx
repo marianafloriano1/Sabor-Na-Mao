@@ -111,8 +111,8 @@ export default function Brigadeiro() {
               onPress={() => nav.navigate("doces")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>GELATINA DE MORANGO</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>GELATINA DE MORANGO</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>

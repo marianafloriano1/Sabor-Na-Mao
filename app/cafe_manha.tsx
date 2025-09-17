@@ -24,9 +24,9 @@ export default function Natal() {
             onPress={() => nav.navigate("economica")}
           >
             <Feather name="chevron-left" size={24} color="#000" />
-          </TouchableOpacity>
 
-          <Text style={styles.paragraph}>Receitas para o Desjejum</Text>
+            <Text style={styles.paragraph}>Receitas para o Desjejum</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.branco}>
           <View>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 30,
     paddingHorizontal: 10,
     gap: 12, // espaço entre a seta e o texto
   },

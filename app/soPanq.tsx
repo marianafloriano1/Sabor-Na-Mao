@@ -112,8 +112,8 @@ export default function PanquecaSobras() {
               onPress={() => nav.goBack()}
             >
               <Feather name="chevron-left" size={28} color="#000" />
+              <Text style={styles.paragraph}>Panqueca de Sobras</Text>{" "}
             </TouchableOpacity>
-            <Text style={styles.paragraph}>Panqueca de Sobras</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>

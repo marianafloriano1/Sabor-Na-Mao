@@ -29,7 +29,7 @@ export default function AnoNovo() {
               color="#242424"
               style={styles.seta}
             />
-            <Text style={styles.paragraph}> Receitas com sobra de bebidas</Text>{" "}
+            <Text style={styles.paragraph}>Receitas com sobra de bebidas</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.branco}>
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     color: "#242424",
     textTransform: "uppercase",
     top: 20,
+    width: 250,
   },
   seta: {
     top: 7,

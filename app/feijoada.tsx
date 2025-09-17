@@ -111,7 +111,10 @@ export default function Feijoada() {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={styles.container}>
           <Image
             source={require("../assets/images/fundo_feijoada.png")}
@@ -303,7 +306,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
