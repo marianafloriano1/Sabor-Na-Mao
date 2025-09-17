@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type CheckedItems = {
@@ -134,7 +134,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯  </Text>
                     )}
                     {label}
                   </Text>
@@ -148,7 +148,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Derreta a manteiga em uma panela em fogo médio. Adicione a farinha
               e mexa por 1 minuto para cozinhar (formando um "roux").
@@ -159,7 +159,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Aos poucos, adicione o leite, mexendo sempre até virar um creme
               liso. Acrescente o queijo ralado ou processado e mexa até derreter
@@ -172,7 +172,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Coloque os nachos em um prato ou travessa. Sirva com o molho de
               queijo em uma tigelinha ao lado ou despeje por cima dos nachos.
@@ -183,7 +183,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Finalize com jalapeños fatiados, tomate picado, guacamole, sour
               cream ou carne moída refogada, se quiser algo mais completo.

@@ -12,13 +12,17 @@ import {
   GestureResponderEvent,
   Image,
   ImageBackground,
+  Keyboard,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
@@ -47,7 +51,6 @@ export default function App(): JSX.Element {
   });
 
   if (!fontsLoaded) return null;
-
 
   const getRandomPic = () => {
     return profilePics[Math.floor(Math.random() * profilePics.length)];
@@ -152,8 +155,6 @@ export default function App(): JSX.Element {
     throw new Error('Function not implemented.');
   }
 
-
-
   return (
     <ImageBackground source={require('../assets/images/fundo_heranca.png')} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
@@ -205,34 +206,43 @@ export default function App(): JSX.Element {
         transparent={true}
         onRequestClose={() => setAddRecipeModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.x} onPress={() => setAddRecipeModalVisible(false)}>
-              <Feather name="x" size={22} color="red" />
-            </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }} keyboardShouldPersistTaps="handled">
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <TouchableOpacity style={styles.x} onPress={() => setAddRecipeModalVisible(false)}>
+                    <Feather name="x" size={22} color="red" />
+                  </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleTakePhoto}>
-              {photo ? (
-                <Image source={{ uri: photo }} style={styles.photo} />
-              ) : (
-                <Image style={styles.img_heranca} source={require('../assets/images/image 9.png')} />
-              )}
-            </TouchableOpacity>
+                  <TouchableOpacity onPress={handleTakePhoto}>
+                    {photo ? (
+                      <Image source={{ uri: photo }} style={styles.photo} />
+                    ) : (
+                      <Image style={styles.img_heranca} source={require('../assets/images/image 9.png')} />
+                    )}
+                  </TouchableOpacity>
 
-            <Text style={styles.label}>Nome da receita:</Text>
-            <TextInput value={recipeName} onChangeText={setRecipeName} style={styles.input4} />
-            <Text style={styles.label}>Autor da receita:</Text>
-            <TextInput value={authorName} onChangeText={setAuthorName} style={styles.input} />
-            <Text style={styles.label}>Digite os ingredientes:</Text>
-            <TextInput value={ingredients} onChangeText={setIngredients} style={styles.input2} multiline />
-            <Text style={styles.label}>Digite o modo de preparo:</Text>
-            <TextInput value={instructions} onChangeText={setInstructions} style={styles.input3} multiline />
+                  <Text style={styles.label}>Nome da receita:</Text>
+                  <TextInput value={recipeName} onChangeText={setRecipeName} style={styles.input4} />
+                  <Text style={styles.label}>Autor da receita:</Text>
+                  <TextInput value={authorName} onChangeText={setAuthorName} style={styles.input} />
+                  <Text style={styles.label}>Digite os ingredientes:</Text>
+                  <TextInput value={ingredients} onChangeText={setIngredients} style={styles.input2} multiline />
+                  <Text style={styles.label}>Digite o modo de preparo:</Text>
+                  <TextInput value={instructions} onChangeText={setInstructions} style={styles.input3} multiline />
 
-            <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
-              <Text style={styles.texto_botao}>Salvar</Text>
-            </Pressable>
-          </View>
-        </View>
+                  <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
+                    <Text style={styles.texto_botao}>Salvar</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </ScrollView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </Modal>
 
       {/* Modal Detalhes da Receita */}
@@ -257,7 +267,7 @@ export default function App(): JSX.Element {
                   .split("\n")
                   .map((item, idx) => (
                     <Text key={idx} style={styles.recipeDescription}>
-                      • {item.trim()}
+                      ⬤  {item.trim()}
                     </Text>
                   ))}
 
@@ -269,17 +279,14 @@ export default function App(): JSX.Element {
                       {idx + 1}. {step.trim()}
                     </Text>
                   ))}
-
               </>
             )}
-
           </View>
         </View>
       </Modal>
     </ImageBackground>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -344,7 +351,7 @@ const styles = StyleSheet.create({
   mais: {
     position: 'absolute',
     zIndex: 1,
-    left: 229,
+    left: 210,
     top: 70,
     backgroundColor: '#385A64',
     width: 180,

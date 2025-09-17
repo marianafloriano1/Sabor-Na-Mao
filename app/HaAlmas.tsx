@@ -135,7 +135,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯  </Text>
                     )}
                     {label}
                   </Text>
@@ -149,7 +149,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Para deixar mais crocante, deixe as batatas de molho em água
               gelada por 30 minutos antes de assar (e seque bem depois).
@@ -164,7 +164,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Coloque as rodelas em uma tigela, regue com azeite e tempere com
               sal, páprica e ervas a gosto. Misture delicadamente para não
@@ -176,7 +176,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Disponha as carinhas em uma assadeira forrada com papel manteiga.
               Leve ao forno preaquecido a 200 °C por cerca de 25–35 minutos ou

@@ -251,7 +251,7 @@ export default function App() {
                       {
                         shadowColor: shadowColors[index % shadowColors.length],
                         shadowOffset: { width: 0, height: 12 }, // mais deslocada pra baixo
-                        shadowOpacity: 0.9,                     // mais forte
+                        shadowOpacity: 4,                     // mais forte
                         shadowRadius: 16,                       // mais espalhada
                         elevation: 20,                          // Android mais intenso
                       },

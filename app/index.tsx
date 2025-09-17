@@ -48,6 +48,8 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     const user = await validateUser(email, senha);
     if (user) {
+      // 🔹 Salva o usuário logado para manter sessão
+      await AsyncStorage.setItem('LOGGED_USER', JSON.stringify(user));
       router.replace('/home');
     } else {
       Alert.alert('Erro', 'Email ou senha inválidos');

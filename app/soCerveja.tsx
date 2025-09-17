@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type CheckedItems = {
@@ -132,7 +132,7 @@ export default function soArForno() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯  </Text>
                     )}
                     {label}
                   </Text>
@@ -148,7 +148,7 @@ export default function soArForno() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯  </Text>
                 )}
                 {step}
               </Text>

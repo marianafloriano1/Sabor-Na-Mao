@@ -206,10 +206,10 @@ export default function App() {
                                         styles.carouselItem,
                                         {
                                             shadowColor: shadowColors[index % shadowColors.length],
-                                            shadowOffset: { width: 10, height: 10 },
-                                            shadowOpacity: 0.8,
-                                            shadowRadius: 1,
-                                            elevation: 6,
+                                            shadowOffset: { width: 0, height: 12 }, // mais deslocada pra baixo
+                                            shadowOpacity: 4,                     // mais forte
+                                            shadowRadius: 16,                       // mais espalhada
+                                            elevation: 20,
                                         },
                                     ]}
                                 >
@@ -305,7 +305,7 @@ export default function App() {
                                 shadowOpacity: 0.8,
                                 shadowRadius: 0.3,
                                 elevation: 26,
-                              
+
                             }}
                             onPress={() => nav.navigate('receitas_rapidas')}
                         >
@@ -329,7 +329,7 @@ export default function App() {
                                 shadowOpacity: 0.8,
                                 shadowRadius: 0.3,
                                 elevation: 26,
-                                
+
                             }}
                             onPress={() => nav.navigate('doces')}>
                             <Text style={styles.texto_almoco}>Doces</Text>

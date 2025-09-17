@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type CheckedItems = {
@@ -128,7 +128,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯  </Text>
                     )}
                     {label}
                   </Text>
@@ -142,7 +142,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}
               Descasque e corte o gengibre em fatias finas ou rale.
             </Text>
@@ -152,7 +152,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Coloque a água e o gengibre em uma panela e leve ao fogo.
             </Text>
@@ -162,7 +162,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Quando começar a ferver, abaixe o fogo e deixe cozinhar por 10 a
               15 minutos.
@@ -173,7 +173,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Coe o chá e despeje na xícara. Adicione mel e limão, se desejar,
               para realçar o sabor e potencializar os benefícios.Para um sabor

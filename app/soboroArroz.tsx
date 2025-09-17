@@ -135,11 +135,8 @@ const styles = StyleSheet.create({
     color: "#242424",
     textTransform: "uppercase",
     top: 20,
-<<<<<<< HEAD
     width: 400
-=======
-    width: 250,
->>>>>>> 5af47c853bf00c01710ba0886f7dc09e8ed3684a
+
   },
   seta: {
     top: 7,

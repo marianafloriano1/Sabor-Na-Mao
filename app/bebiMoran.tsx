@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type CheckedItems = {
@@ -129,7 +129,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯  </Text>
                     )}
                     {label}
                   </Text>
@@ -143,7 +143,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}
               Lave bem os morangos e retire as folhas. Coloque os morangos no
               liquidificador com a água, o açúcar (ou mel) e o suco de limão, se
@@ -155,7 +155,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Bata bem por 1 a 2 minutos até ficar homogêneo. Coe se quiser um
               suco mais leve, sem sementes (opcional).
@@ -166,7 +166,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Sirva com gelo e, se quiser, decore com pedaços de morango ou
               folhas de hortelã. Se os morangos estiverem muito doces, talvez

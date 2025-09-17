@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type CheckedItems = {
@@ -137,7 +137,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯  </Text>
                     )}
                     {label}
                   </Text>
@@ -151,7 +151,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Mini abóboras de pasta americana ou fondant (ou use confeitos em
               formato de abóbora, facilmente encontrados em lojas de confeitaria
@@ -163,7 +163,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Preaqueça o forno a 180 °C. Em uma tigela, misture o purê de
               abóbora, ovos, óleo e os açúcares. Em outra tigela, misture os
@@ -178,7 +178,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Bata a manteiga até ficar cremosa. Adicione o açúcar de
               confeiteiro aos poucos, depois a baunilha e o leite. Acrescente o
@@ -192,7 +192,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯  </Text>
               )}{" "}
               Finalize cada cupcake com uma mini abóbora de fondant no topo.
               Você também pode modelar pequenas bolinhas laranja com gominhos
