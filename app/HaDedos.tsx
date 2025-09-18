@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -136,7 +136,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -150,7 +150,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Em uma tigela, misture a manteiga e o açúcar até formar um creme.
               Adicione o ovo, a essência de baunilha, o sal e misture bem.
@@ -164,7 +164,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Pegue pequenas porções de massa, enrole como se fossem palitinhos
               e modele em formato de dedo. Use uma faca para marcar as “dobras”
@@ -177,7 +177,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Coloque os dedos em uma assadeira forrada com papel manteiga. Leve
               ao forno preaquecido a 180 °C por cerca de 15 a 20 minutos ou até
@@ -189,7 +189,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Depois de assados, retire as amêndoas com cuidado, coloque um
               pouco de geleia no local e recoloque a amêndoa por cima, deixando

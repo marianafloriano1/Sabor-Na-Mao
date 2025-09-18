@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -133,7 +133,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -147,7 +147,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}
               Corte a beterraba e a cenoura em pedaços pequenos para facilitar
               na hora de bater.
@@ -158,7 +158,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Coloque todos os ingredientes no liquidificador: beterraba,
               cenoura, suco de limão, água (ou água de coco) e o mel, se usar.
@@ -169,7 +169,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Bata bem até ficar uma mistura homogênea. Se quiser, coe para uma
               textura mais leve, mas o ideal é consumir com o bagaço para

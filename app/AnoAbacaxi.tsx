@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -133,7 +133,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -147,7 +147,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Em uma coqueteleira ou copo grande, amasse levemente as folhas de
               hortelã com o gengibre e o suco de limão.
@@ -158,7 +158,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Coloque o suco de abacaxi e misture bem. Coe se quiser uma bebida
               mais lisa.
@@ -169,7 +169,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Encha um copo com gelo, despeje a mistura e complete com água com
               gás ou club soda.
@@ -180,7 +180,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Finalize com uma rodela de abacaxi na borda e um ramo de hortelã.
             </Text>

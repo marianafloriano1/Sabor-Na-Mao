@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -135,7 +135,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -149,7 +149,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Pré-aqueça o forno a 180 °C e forre uma assadeira com papel
               manteiga.
@@ -160,7 +160,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Em uma tigela, bata a manteiga com os açúcares até formar um
               creme. Acrescente o ovo e a baunilha e misture bem.
@@ -171,7 +171,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Adicione as gotas de chocolate e mexa bem.
             </Text>
@@ -181,7 +181,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Faça bolinhas (de 1 colher de sopa) e coloque na assadeira,
               deixando espaço entre elas (eles espalham).
@@ -192,7 +192,7 @@ export default function App() {
               {checkedItems.step5 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Leve ao forno por 10 a 12 minutos, ou até as bordas começarem a
               dourar. O centro deve ficar macio. Deixe esfriar na forma por 5

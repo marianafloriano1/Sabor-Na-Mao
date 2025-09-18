@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -135,7 +135,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -149,7 +149,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Frite o bacon até ficar dourado e crocante. Escorra o excesso de
               gordura e deixe esfriar.
@@ -160,7 +160,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Em uma tigela, misture o queijo, o bacon frito, o requeijão,
               pimenta, orégano e salsinha. Vá adicionando a farinha de trigo aos
@@ -172,7 +172,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Com as mãos, modele pequenas bolinhas com a massa.
             </Text>
@@ -182,7 +182,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Passe cada bolinha no ovo batido e depois na farinha de rosca. Se
               quiser mais crocância, repita o processo (ovo + farinha de rosca).
@@ -193,7 +193,7 @@ export default function App() {
               {checkedItems.step5 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>◯  </Text>
+                <Text style={styles.bolinha}>○ </Text>
               )}{" "}
               Aqueça o óleo e frite as bolinhas em fogo médio até dourarem.
               Retire e escorra em papel-toalha.

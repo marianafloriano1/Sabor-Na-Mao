@@ -17,7 +17,7 @@ export default function AnoNovo() {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ height: 1000 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.touchTitulo}
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 15
   },
 
   branco: {

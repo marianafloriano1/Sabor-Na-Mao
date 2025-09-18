@@ -1,30 +1,26 @@
-import { Feather } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Camera } from 'expo-camera';
-import { useFonts } from 'expo-font';
-import type { ImagePickerResult } from 'expo-image-picker';
-import * as ImagePicker from 'expo-image-picker';
-import React, { JSX, useEffect, useState } from 'react';
+import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Camera } from "expo-camera";
+import { useFonts } from "expo-font";
+import type { ImagePickerResult } from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
+import React, { JSX, useEffect, useState } from "react";
 import {
   Alert,
   GestureResponderEvent,
   Image,
   ImageBackground,
-  Keyboard,
-  KeyboardAvoidingView,
   Modal,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
-} from 'react-native';
+} from "react-native";
 
 type Recipe = {
   recipeName: string;
@@ -36,12 +32,12 @@ type Recipe = {
 
 export default function App(): JSX.Element {
   const profilePics = [
-    require('../assets/images/perfil1.png'),
-    require('../assets/images/perfil2.png'),
-    require('../assets/images/perfil3.png'),
-    require('../assets/images/perfil4.png'),
-    require('../assets/images/perfil5.png'),
-    require('../assets/images/perfil6.png'),
+    require("../assets/images/perfil1.png"),
+    require("../assets/images/perfil2.png"),
+    require("../assets/images/perfil3.png"),
+    require("../assets/images/perfil4.png"),
+    require("../assets/images/perfil5.png"),
+    require("../assets/images/perfil6.png"),
   ];
 
   const [fontsLoaded] = useFonts({
@@ -60,51 +56,55 @@ export default function App(): JSX.Element {
 
   const nav = useNavigation<NativeStackNavigationProp<any>>();
 
-  const [addRecipeModalVisible, setAddRecipeModalVisible] = useState<boolean>(false);
-  const [recipeDetailsModalVisible, setRecipeDetailsModalVisible] = useState<boolean>(false);
-  const [cameraPermission, setCameraPermission] = useState<boolean | null>(null);
+  const [addRecipeModalVisible, setAddRecipeModalVisible] =
+    useState<boolean>(false);
+  const [recipeDetailsModalVisible, setRecipeDetailsModalVisible] =
+    useState<boolean>(false);
+  const [cameraPermission, setCameraPermission] = useState<boolean | null>(
+    null
+  );
   const [photo, setPhoto] = useState<string | null>(null);
-  const [recipeName, setRecipeName] = useState<string>('');
-  const [authorName, setAuthorName] = useState<string>('');
-  const [ingredients, setIngredients] = useState<string>('');
-  const [instructions, setInstructions] = useState<string>('');
+  const [recipeName, setRecipeName] = useState<string>("");
+  const [authorName, setAuthorName] = useState<string>("");
+  const [ingredients, setIngredients] = useState<string>("");
+  const [instructions, setInstructions] = useState<string>("");
   const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setCameraPermission(status === 'granted');
+      setCameraPermission(status === "granted");
       loadRecipes();
     })();
   }, []);
 
   const loadRecipes = async () => {
     try {
-      const recipes = await AsyncStorage.getItem('savedRecipes');
+      const recipes = await AsyncStorage.getItem("savedRecipes");
       if (recipes !== null) {
         setSavedRecipes(JSON.parse(recipes));
       }
     } catch (error) {
-      console.error('Erro ao carregar receitas:', error);
+      console.error("Erro ao carregar receitas:", error);
     }
   };
 
   const saveRecipes = async (recipes: Recipe[]) => {
     try {
-      await AsyncStorage.setItem('savedRecipes', JSON.stringify(recipes));
+      await AsyncStorage.setItem("savedRecipes", JSON.stringify(recipes));
     } catch (error) {
-      console.error('Erro ao salvar receitas:', error);
+      console.error("Erro ao salvar receitas:", error);
     }
   };
 
   const handleTakePhoto = async () => {
     if (cameraPermission === null) {
-      alert('Você precisa dar permissão para usar a câmera!');
+      alert("Você precisa dar permissão para usar a câmera!");
       return;
     }
     if (cameraPermission === false) {
-      alert('Permissão para usar a câmera foi negada!');
+      alert("Permissão para usar a câmera foi negada!");
       return;
     }
 
@@ -120,7 +120,10 @@ export default function App(): JSX.Element {
 
   const handleSaveData = () => {
     if (!recipeName || !authorName || !ingredients || !instructions || !photo) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos e tire uma foto.');
+      Alert.alert(
+        "Erro",
+        "Por favor, preencha todos os campos e tire uma foto."
+      );
       return;
     }
 
@@ -137,13 +140,13 @@ export default function App(): JSX.Element {
     saveRecipes(updatedRecipes);
     setAddRecipeModalVisible(false);
 
-    setRecipeName('');
-    setAuthorName('');
-    setIngredients('');
-    setInstructions('');
+    setRecipeName("");
+    setAuthorName("");
+    setIngredients("");
+    setInstructions("");
     setPhoto(null);
 
-    Alert.alert('Sucesso', 'Receita salva com sucesso!');
+    Alert.alert("Sucesso", "Receita salva com sucesso!");
   };
 
   const openRecipeDetailsModal = (recipe: Recipe) => {
@@ -152,14 +155,20 @@ export default function App(): JSX.Element {
   };
 
   function heranca(event: GestureResponderEvent): void {
-    throw new Error('Function not implemented.');
+    throw new Error("Function not implemented.");
   }
 
   return (
-    <ImageBackground source={require('../assets/images/fundo_heranca.png')} style={styles.container}>
+    <ImageBackground
+      source={require("../assets/images/fundo_heranca.png")}
+      style={styles.container}
+    >
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('home')}>
+          <TouchableOpacity
+            style={styles.seta}
+            onPress={() => nav.navigate("home")}
+          >
             <Feather name="chevron-left" size={28} color="#000" />
             <Text style={styles.texto_seta}>Voltar</Text>
           </TouchableOpacity>
@@ -168,7 +177,8 @@ export default function App(): JSX.Element {
 
           <Text style={styles.texto_dois}>Minhas Receitas</Text>
           <Text style={styles.texto_tres}>
-            "As receitas são heranças cheias de memórias e carinho, conectando gerações pelo sabor."
+            "As receitas são heranças cheias de memórias e carinho, conectando
+            gerações pelo sabor."
           </Text>
         </View>
 
@@ -181,7 +191,10 @@ export default function App(): JSX.Element {
               <Text style={styles.authorName}>por {recipe.authorName}</Text>
             </View>
 
-            <TouchableOpacity style={styles.botao} onPress={() => openRecipeDetailsModal(recipe)}>
+            <TouchableOpacity
+              style={styles.botao}
+              onPress={() => openRecipeDetailsModal(recipe)}
+            >
               <Text style={styles.botaoTexto}>Ver receita</Text>
             </TouchableOpacity>
           </TouchableOpacity>
@@ -206,43 +219,58 @@ export default function App(): JSX.Element {
         transparent={true}
         onRequestClose={() => setAddRecipeModalVisible(false)}
       >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }} keyboardShouldPersistTaps="handled">
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <TouchableOpacity style={styles.x} onPress={() => setAddRecipeModalVisible(false)}>
-                    <Feather name="x" size={22} color="red" />
-                  </TouchableOpacity>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.x}
+              onPress={() => setAddRecipeModalVisible(false)}
+            >
+              <Feather name="x" size={22} color="red" />
+            </TouchableOpacity>
 
-                  <TouchableOpacity onPress={handleTakePhoto}>
-                    {photo ? (
-                      <Image source={{ uri: photo }} style={styles.photo} />
-                    ) : (
-                      <Image style={styles.img_heranca} source={require('../assets/images/image 9.png')} />
-                    )}
-                  </TouchableOpacity>
+            <TouchableOpacity onPress={handleTakePhoto}>
+              {photo ? (
+                <Image source={{ uri: photo }} style={styles.photo} />
+              ) : (
+                <Image
+                  style={styles.img_heranca}
+                  source={require("../assets/images/image 9.png")}
+                />
+              )}
+            </TouchableOpacity>
 
-                  <Text style={styles.label}>Nome da receita:</Text>
-                  <TextInput value={recipeName} onChangeText={setRecipeName} style={styles.input4} />
-                  <Text style={styles.label}>Autor da receita:</Text>
-                  <TextInput value={authorName} onChangeText={setAuthorName} style={styles.input} />
-                  <Text style={styles.label}>Digite os ingredientes:</Text>
-                  <TextInput value={ingredients} onChangeText={setIngredients} style={styles.input2} multiline />
-                  <Text style={styles.label}>Digite o modo de preparo:</Text>
-                  <TextInput value={instructions} onChangeText={setInstructions} style={styles.input3} multiline />
+            <Text style={styles.label}>Nome da receita:</Text>
+            <TextInput
+              value={recipeName}
+              onChangeText={setRecipeName}
+              style={styles.input4}
+            />
+            <Text style={styles.label}>Autor da receita:</Text>
+            <TextInput
+              value={authorName}
+              onChangeText={setAuthorName}
+              style={styles.input}
+            />
+            <Text style={styles.label}>Digite os ingredientes:</Text>
+            <TextInput
+              value={ingredients}
+              onChangeText={setIngredients}
+              style={styles.input2}
+              multiline
+            />
+            <Text style={styles.label}>Digite o modo de preparo:</Text>
+            <TextInput
+              value={instructions}
+              onChangeText={setInstructions}
+              style={styles.input3}
+              multiline
+            />
 
-                  <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
-                    <Text style={styles.texto_botao}>Salvar</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </ScrollView>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+            <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
+              <Text style={styles.texto_botao}>Salvar</Text>
+            </Pressable>
+          </View>
+        </View>
       </Modal>
 
       {/* Modal Detalhes da Receita */}
@@ -256,29 +284,35 @@ export default function App(): JSX.Element {
           <View style={styles.modalContent2}>
             {selectedRecipe && (
               <>
-                <TouchableOpacity style={styles.x} onPress={() => setRecipeDetailsModalVisible(false)}>
-                  <Feather name="x" size={24} color="red" />
+                <TouchableOpacity
+                  style={styles.x}
+                  onPress={() => setRecipeDetailsModalVisible(false)}
+                >
+                  <Feather name="x" size={34} color="red" />
                 </TouchableOpacity>
-                <Image source={{ uri: selectedRecipe.photo }} style={styles.modalImage} />
-                <Text style={styles.modalTitle}>{selectedRecipe.recipeName}</Text>
-                <Text style={styles.modal_authorName}>por {selectedRecipe.authorName}</Text>
+                <Image
+                  source={{ uri: selectedRecipe.photo }}
+                  style={styles.modalImage}
+                />
+                <Text style={styles.modalTitle}>
+                  {selectedRecipe.recipeName}
+                </Text>
+                <Text style={styles.modal_authorName}>
+                  por {selectedRecipe.authorName}
+                </Text>
                 <Text style={styles.modalText}>Ingredientes:</Text>
-                {selectedRecipe.ingredients
-                  .split("\n")
-                  .map((item, idx) => (
-                    <Text key={idx} style={styles.recipeDescription}>
-                      ⬤  {item.trim()}
-                    </Text>
-                  ))}
+                {selectedRecipe.ingredients.split("\n").map((item, idx) => (
+                  <Text key={idx} style={styles.recipeDescription}>
+                    • {item.trim()}
+                  </Text>
+                ))}
 
                 <Text style={styles.modal_preparo}>Modo de Preparo:</Text>
-                {selectedRecipe.instructions
-                  .split("\n")
-                  .map((step, idx) => (
-                    <Text key={idx} style={styles.recipeDescription}>
-                      {idx + 1}. {step.trim()}
-                    </Text>
-                  ))}
+                {selectedRecipe.instructions.split("\n").map((step, idx) => (
+                  <Text key={idx} style={styles.recipeDescription}>
+                    {idx + 1}. {step.trim()}
+                  </Text>
+                ))}
               </>
             )}
           </View>
@@ -287,11 +321,12 @@ export default function App(): JSX.Element {
     </ImageBackground>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "auto"
+    height: "auto",
   },
   scroll: {
     flexGrow: 1,
@@ -301,18 +336,18 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     marginBottom: 40,
-    alignItems: 'center',
+    alignItems: "center",
   },
   seta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    marginTop: 40
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    marginTop: 40,
   },
   texto_seta: {
     marginLeft: 5,
     fontSize: 17,
-    fontFamily: 'Julius',
+    fontFamily: "Julius",
   },
   perfil: {
     width: 100,
@@ -322,45 +357,45 @@ const styles = StyleSheet.create({
   },
   texto_dois: {
     fontSize: 16,
-    fontFamily: 'Julius',
+    fontFamily: "Julius",
     marginBottom: 15,
   },
   texto_tres: {
     fontSize: 16,
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     width: 350,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: 18,
-    color: "#474747ff"
+    color: "#474747ff",
   },
   retangulo: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     width: 350,
     height: 160,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 9,
     marginVertical: 10,
-    shadowColor: '#565656',
+    shadowColor: "#565656",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.5,
     shadowRadius: 6,
     elevation: 26,
   },
   mais: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
-    left: 210,
+    left: 229,
     top: 70,
-    backgroundColor: '#385A64',
+    backgroundColor: "#385A64",
     width: 180,
     height: 40,
     borderRadius: 20,
     padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#565656',
+    flexDirection: "row",
+    alignItems: "center",
+    shadowColor: "#565656",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.5,
     shadowRadius: 6,
@@ -368,9 +403,9 @@ const styles = StyleSheet.create({
   },
   texto_mais: {
     fontSize: 16,
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     marginLeft: 8,
-    color: 'white',
+    color: "white",
   },
   modalContainer: {
     flex: 1,
@@ -388,75 +423,73 @@ const styles = StyleSheet.create({
   },
   img_heranca: {
     width: 300,
-    height: 300 * 150 / 265,
+    height: (300 * 150) / 265,
     marginTop: -40,
   },
   label: {
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     fontSize: 16,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 17,
-    color: '#333',
+    color: "#333",
   },
   input: {
     height: 40,
-    width: 270,
+    width: 290,
     fontSize: 16,
     padding: 10,
     borderRadius: 8,
-    color: '#565656',
+    color: "#565656",
     margin: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+    backgroundColor: "rgba(0, 0, 0, 0.09)",
     fontFamily: "Imprima",
-    left: -10
-
+    left: -10,
   },
   input2: {
     height: 130,
-    width: 270,
+    width: 290,
     fontSize: 16,
     padding: 10,
     borderRadius: 8,
-    color: '#565656',
+    color: "#565656",
     margin: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+    backgroundColor: "rgba(0, 0, 0, 0.09)",
     paddingTop: 10,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
     fontFamily: "Imprima",
-    left: -10
+    left: -10,
   },
   input3: {
     height: 130,
-    width: 270,
+    width: 290,
     fontSize: 16,
     padding: 10,
     borderRadius: 8,
-    color: '#565656',
+    color: "#565656",
     margin: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+    backgroundColor: "rgba(0, 0, 0, 0.09)",
     paddingTop: 10,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
     fontFamily: "Imprima",
-    left: -10
+    left: -10,
   },
   input4: {
     height: 40,
-    width: 270,
+    width: 290,
     fontSize: 16,
     padding: 10,
     borderRadius: 8,
-    color: '#565656',
+    color: "#565656",
     margin: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+    backgroundColor: "rgba(0, 0, 0, 0.09)",
     fontFamily: "Imprima",
-    left: -10
-
+    left: -10,
   },
   x: {
-    resizeMode: 'contain',
-    marginLeft: 'auto',
+    resizeMode: "contain",
+    marginLeft: "auto",
     top: -50,
-    left: 25
+    left: 30,
   },
   img: {
     width: 130,
@@ -466,18 +499,18 @@ const styles = StyleSheet.create({
   },
   botao_salvar: {
     borderRadius: 5,
-    backgroundColor: '#6CC696',
+    backgroundColor: "#6CC696",
     height: 31,
     width: 70,
-    left: 260,
-    top: 5
+    left: 230,
+    top: 5,
   },
   texto_botao: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    textAlign: 'center',
-    fontFamily: 'Imprima',
-    top: 5
+    textAlign: "center",
+    fontFamily: "Imprima",
+    top: 5,
   },
   photo: {
     width: 290,
@@ -486,20 +519,20 @@ const styles = StyleSheet.create({
   },
   recipeName: {
     fontSize: 20,
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     marginLeft: 50,
     marginTop: -130,
-    height: 90
+    height: 90,
   },
   authorName: {
     fontSize: 16,
-    color: 'gray',
-    fontFamily: 'Imprima',
+    color: "gray",
+    fontFamily: "Imprima",
     marginTop: -60,
     marginLeft: 50,
   },
   botao: {
-    backgroundColor: '#009E60',
+    backgroundColor: "#009E60",
     height: 25,
     width: 140,
     borderRadius: 6,
@@ -509,17 +542,17 @@ const styles = StyleSheet.create({
   },
   botaoTexto: {
     fontSize: 16,
-    color: 'white',
-    fontFamily: 'Imprima',
+    color: "white",
+    fontFamily: "Imprima",
     marginLeft: 31,
   },
   recipeDescription: {
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     fontSize: 16,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 17,
-    color: '#333',
-    left: 30
+    color: "#333",
+    left: 30,
   },
   modalContainer2: {
     flex: 1,
@@ -542,44 +575,41 @@ const styles = StyleSheet.create({
     marginTop: -20,
   },
   modalText: {
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     fontSize: 18,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 40,
-    color: '#000',
-
+    color: "#000",
   },
   modal_preparo: {
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     fontSize: 16,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 40,
-    color: '#000',
+    color: "#000",
   },
   modalTitle: {
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     fontSize: 18,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 17,
-    color: '#000',
-
+    color: "#000",
   },
   modal_authorName: {
-    fontFamily: 'Imprima',
+    fontFamily: "Imprima",
     fontSize: 16,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 10,
-    color: '#333',
-
+    color: "#333",
   },
 
   recipeCard: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    backgroundColor: "white",
     borderRadius: 10,
     marginVertical: 10,
     padding: 10,
-    shadowColor: '#565656',
+    shadowColor: "#565656",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -590,4 +620,3 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
 });
-

@@ -19,7 +19,7 @@ export default function Arraia() {
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ height: 1000 }}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <View style={styles.row}>
           <TouchableOpacity

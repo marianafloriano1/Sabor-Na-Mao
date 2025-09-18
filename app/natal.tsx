@@ -17,7 +17,7 @@ export default function Natal() {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ height: 1000 }} >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.touchTitulo}
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     position: "relative",
     zIndex: -1,
     flex: 1,
-    minHeight: 400, 
+    minHeight: 300, // 👈 adicione isso ou outro valor
     width: "100%",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 100,

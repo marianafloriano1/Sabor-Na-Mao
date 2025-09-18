@@ -1,7 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
-import LottieView from 'lottie-react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
@@ -13,6 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFonts } from 'expo-font';
 import { validateUser } from '../bancodedados';
 
 export default function LoginScreen() {
@@ -22,24 +22,17 @@ export default function LoginScreen() {
   const router = useRouter();
   const video = useRef(null);
 
-  const [fontsLoaded] = useFonts({
-    Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
-    Julius: require("../assets/fonts/JuliusSansOne-Regular.ttf"),
-    Chewy: require("../assets/fonts/Chewy-Regular.ttf"),
-  });
+   const [fontsLoaded] = useFonts({
+      Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
+      Julius: require("../assets/fonts/JuliusSansOne-Regular.ttf"),
+      Chewy: require("../assets/fonts/Chewy-Regular.ttf"),
+    });
 
-  // Exibe Splash por 3s
-  useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Se já estiver logado, pula pro home
   useEffect(() => {
     const checkLoggedUser = async () => {
       const savedUser = await AsyncStorage.getItem('LOGGED_USER');
       if (savedUser) {
-        router.replace('/home');
+        router.replace('/home'); // já logado, vai direto para Home
       }
     };
     checkLoggedUser();
@@ -48,34 +41,14 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     const user = await validateUser(email, senha);
     if (user) {
-      // 🔹 Salva o usuário logado para manter sessão
-      await AsyncStorage.setItem('LOGGED_USER', JSON.stringify(user));
       router.replace('/home');
     } else {
       Alert.alert('Erro', 'Email ou senha inválidos');
     }
   };
 
-  // Enquanto fontes não carregam, não renderiza nada
-  if (!fontsLoaded) return null;
 
-  // SplashScreen
-  if (showSplash) {
-    return (
-      <View style={styles.splashContainer}>
-        <LottieView
-          ref={video}
-          source={require('../assets/splash/teste.json')}
-          autoPlay
-          loop={false}
-          style={styles.splashVideo}
-        />
-        <Text style={styles.splashTexto}>Sabor Na Mão</Text>
-      </View>
-    );
-  }
 
-  // LoginScreen
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
@@ -121,19 +94,10 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'black',
   },
   splashVideo: {
-    width: 300,
-    height: 300,
-  },
-  splashTexto: {
-    fontFamily: "Chewy",
-    fontSize: 36,
-    color: "#84b6aa",
-    marginTop: 20,
+    flex: 1,
   },
   container: {
     flex: 1,
@@ -168,6 +132,7 @@ const styles = StyleSheet.create({
     color: '#565656',
     marginBottom: 10,
     fontFamily: "Imprima",
+    
   },
   subtitulo: {
     fontSize: 18,
@@ -179,6 +144,7 @@ const styles = StyleSheet.create({
   linkCadastro: {
     color: '#839deb',
     fontFamily: "Imprima",
+    
   },
   input: {
     height: 50,

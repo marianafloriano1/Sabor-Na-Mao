@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   texto: {
     position: "absolute",
     top: 20,
-    left: 20,
+    left: 13,
     color: "#000",
     fontSize: 14,
     textTransform: "uppercase",

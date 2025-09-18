@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = { [key: string]: boolean };
@@ -42,8 +42,6 @@ export default function FrangoAssado() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "Sal à gosto",
-    item2: "Sal à gosto",
-    item3: "Orégano à gosto",
     item4: "Orégano a gosto",
     item5: "1/2 xícara (chá) de vinagre",
     item6: "Pimenta-do-reino a gosto",
@@ -134,7 +132,7 @@ export default function FrangoAssado() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -150,7 +148,7 @@ export default function FrangoAssado() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>◯  </Text>
+                  <Text style={styles.bolinha}>○ </Text>
                 )}
                 {index + 1}. {label}
               </Text>

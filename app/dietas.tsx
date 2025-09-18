@@ -255,11 +255,11 @@ export default function ComidasInfantis() {
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => {
-              setModalType("vegetariano");
+              setModalType("vegano");
               setModalVisible(true);
             }}
           >
-            <Text style={styles.toggleText}>O que é ser vegano?</Text>
+            <Text style={styles.toggleText}>O que é ser vegetariano?</Text>
           </TouchableOpacity>
         )}
 
@@ -267,11 +267,11 @@ export default function ComidasInfantis() {
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => {
-              setModalType("vegano");
+              setModalType("vegetariano");
               setModalVisible(true);
             }}
           >
-            <Text style={styles.toggleText}>O que é ser vegetariano?</Text>
+            <Text style={styles.toggleText}>O que é ser vegano?</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -303,15 +303,14 @@ export default function ComidasInfantis() {
 }
 
 const styles = StyleSheet.create({
-
-      container: {
+  container: {
     flex: 1,
     backgroundColor: "#ececec",
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 38,
     paddingHorizontal: 10,
     gap: 12,
   },
@@ -447,5 +446,4 @@ const styles = StyleSheet.create({
     paddingVertical: 10, // aumenta a área de toque vertical
     paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
-
 });

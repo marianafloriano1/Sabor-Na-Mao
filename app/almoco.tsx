@@ -17,7 +17,7 @@ export default function Natal() {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ height: 1000 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.touchTitulo}
@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
     width: 150,
   },
+
   cardD: {
     width: "47%",
     aspectRatio: 1,

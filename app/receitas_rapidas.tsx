@@ -25,7 +25,7 @@ export default function AnoNovo() {
           >
             <Feather name="chevron-left" size={24} color="#242424" />
             <Text style={styles.paragraph}>
-              Receitas práticas
+              Receitas práticas e economicas
             </Text>{" "}
           </TouchableOpacity>
         </View>
@@ -99,7 +99,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Macarrão alho e oléo</Text>
+              <Text style={styles.texto}>Macarrão{"\n"}alho e oléo</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/11654236/pexels-photo-11654236.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "uppercase",
     zIndex: 2,
+    width: 150,
   },
 
   cardD: {

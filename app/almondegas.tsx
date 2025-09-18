@@ -142,7 +142,7 @@ export default function AlmondegasDeCarneDeJaca() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -158,7 +158,7 @@ export default function AlmondegasDeCarneDeJaca() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>◯  </Text>
+                  <Text style={styles.bolinha}>○ </Text>
                 )}
                 {step}
               </Text>
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   modalTitulo: {
     fontSize: 18,
     marginBottom: 30,
-    color: 'green',
+    color: "green",
   },
   modalTexto: {
     fontSize: 16,

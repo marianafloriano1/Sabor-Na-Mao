@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = { [key: string]: boolean };
@@ -37,13 +37,13 @@ export default function Churrasco() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: "Fatie a carne e sirva.",
+    step1: "Coloque o carvão na churrasqueira.",
     step2: "Despeje álcool sobre o carvão.",
-    step3: "Coloque o carvão na churrasqueira.",
-    step4: "Acenda o carvão com um palito de fósforo.",
-    step5: "Coloque a carne na grelha sobre o carvão.",
-    step6: "Vire a carne para cozinhar de forma uniforme.",
-    step7: "Verifique o ponto da carne conforme o gosto.",
+    step3: "Acenda o carvão com um palito de fósforo.",
+    step4: "Coloque a carne na grelha sobre o carvão.",
+    step5: "Vire a carne para cozinhar de forma uniforme.",
+    step6: "Verifique o ponto da carne conforme o gosto.",
+    step7: "Fatie a carne e sirva.",
   };
 
   const toggleCheck = (item: string) => {
@@ -111,7 +111,7 @@ export default function Churrasco() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>◯  </Text>
+                      <Text style={styles.bolinha}>○ </Text>
                     )}
                     {label}
                   </Text>
@@ -127,7 +127,7 @@ export default function Churrasco() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>◯  </Text>
+                  <Text style={styles.bolinha}>○ </Text>
                 )}
                 {step}
               </Text>
