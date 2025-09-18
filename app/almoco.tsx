@@ -146,34 +146,6 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 
-<<<<<<< HEAD
-    card: {
-        width: "47%",
-        aspectRatio: 1,
-        backgroundColor: "#fff",
-        borderRadius: 12,
-        overflow: "hidden",
-        elevation: 3,
-        shadowColor: "#000",
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 2 },
-        alignSelf: "flex-start",
-        marginBottom: 16,
-        marginTop: 16,
-    },
-    texto: {
-        position: "absolute",
-        top: 20,
-        left: 20,
-        color: "#000",
-        fontSize: 14,
-        textTransform: "uppercase",
-        zIndex: 2,
-        width: 150,
-       
-    },
-=======
   card: {
     width: "47%",
     aspectRatio: 1,
@@ -199,7 +171,6 @@ const styles = StyleSheet.create({
     zIndex: 2,
     width: 150,
   },
->>>>>>> c7a9fb1d61c94e89675cc61cd1a3f12e08d21847
 
   cardD: {
     width: "47%",

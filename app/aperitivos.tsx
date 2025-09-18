@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   texto: {
     position: "absolute",
     top: 20,
-    left: 12,
+    left: 10,
     color: "#000",
     fontSize: 14,
     textTransform: "uppercase",

@@ -82,7 +82,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}> Salada Fria de Macarrão</Text>
+              <Text style={styles.texto}>Salada Fria de Macarrão</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

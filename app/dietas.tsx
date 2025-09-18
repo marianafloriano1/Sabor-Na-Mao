@@ -255,11 +255,11 @@ export default function ComidasInfantis() {
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => {
-              setModalType("vegetariano");
+              setModalType("vegano");
               setModalVisible(true);
             }}
           >
-            <Text style={styles.toggleText}>O que é ser vegano?</Text>
+            <Text style={styles.toggleText}>O que é ser vegetariano?</Text>
           </TouchableOpacity>
         )}
 
@@ -267,11 +267,11 @@ export default function ComidasInfantis() {
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => {
-              setModalType("vegano");
+              setModalType("vegetariano");
               setModalVisible(true);
             }}
           >
-            <Text style={styles.toggleText}>O que é ser vegetariano?</Text>
+            <Text style={styles.toggleText}>O que é ser vegano?</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -303,146 +303,6 @@ export default function ComidasInfantis() {
 }
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
-    container: {
-        flex: 1,
-        backgroundColor: "#ececec",
-    },
-    row: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 40,
-        paddingHorizontal: 10,
-        gap: 12,
-    },
-    paragraph: {
-        fontSize: 24,
-        color: "#242424",
-        textTransform: "uppercase",
-        
-    },
-    branco: {
-        backgroundColor: "white",
-        flex: 1,
-        width: "100%",
-        borderTopRightRadius: 100,
-        padding: 15,
-        top: 50,
-    },
-    toggleRow: {
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        marginTop: 40,
-        marginBottom: 10,
-    },
-    pressable: {
-        width: 180,
-        height: 40,
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    toggleText: {
-        fontSize: 14,
-        color: "#fff",
-        textTransform: "uppercase",
-
-    },
-    card: {
-        width: "47%",
-        aspectRatio: 1,
-        backgroundColor: "#fff",
-        borderRadius: 12,
-        overflow: "hidden",
-        elevation: 3,
-        shadowColor: "#000",
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 2 },
-        alignSelf: "flex-start",
-        marginBottom: 16,
-        marginTop: 16,
-    },
-    cardD: {
-        width: "47%",
-        aspectRatio: 1,
-        backgroundColor: "#fff",
-        borderRadius: 12,
-        overflow: "hidden",
-        elevation: 3,
-        shadowColor: "#000",
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 2 },
-        alignSelf: "flex-end",
-        marginBottom: 16,
-    },
-    backgroundImage: {
-        width: "100%",
-        height: "100%",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        position: "relative",
-    },
-    texto: {
-        position: "absolute",
-        top: 20,
-        left: 20,
-        color: "#000",
-        fontSize: 14,
-        textTransform: "uppercase",
-        zIndex: 2,
-    },
-    cardImage: {
-        width: 80,
-        height: 80,
-        position: "absolute",
-        bottom: 8,
-        right: 8,
-        zIndex: 2,
-        borderRadius: 40,
-    },
-    modalButton: {
-        backgroundColor: '#2F4B54',
-        padding: 20,
-        alignItems: 'center',
-        marginHorizontal: 20,
-        width: "100%",
-        resizeMode: 'contain',
-        marginLeft: 'auto',
-        height: 60,
-        marginTop: 50
-    },
-    modalContainer: {
-        flex: 1,
-        backgroundColor: "rgba(0,0,0,0.5)",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 20,
-    },
-    modalContent: {
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 20,
-        width: "100%",
-        maxWidth: 350,
-    },
-    modalTitulo: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 10,
-    },
-    modalTexto: {
-        fontSize: 16,
-        marginBottom: 20,
-    },
-    textoFechar: {
-        textAlign: "center",
-        color: "red",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-=======
   container: {
     flex: 1,
     backgroundColor: "#ececec",
@@ -450,7 +310,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 38,
     paddingHorizontal: 10,
     gap: 12,
   },
@@ -586,5 +446,4 @@ const styles = StyleSheet.create({
     paddingVertical: 10, // aumenta a área de toque vertical
     paddingHorizontal: 10, // aumenta a área de toque horizontal
   },
->>>>>>> c7a9fb1d61c94e89675cc61cd1a3f12e08d21847
 });

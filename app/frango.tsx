@@ -42,8 +42,6 @@ export default function FrangoAssado() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "Sal à gosto",
-    item2: "Sal à gosto",
-    item3: "Orégano à gosto",
     item4: "Orégano a gosto",
     item5: "1/2 xícara (chá) de vinagre",
     item6: "Pimenta-do-reino a gosto",

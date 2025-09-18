@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "uppercase",
     zIndex: 2,
+    width: 150,
   },
 
   cardD: {

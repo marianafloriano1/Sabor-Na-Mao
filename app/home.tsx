@@ -52,8 +52,6 @@ export default function App() {
     Chewy: require("../assets/fonts/Chewy-Regular.ttf"),
   });
 
-
-
   const names = [
     "Mister Panela",
     "Mestre Cuca",
@@ -126,7 +124,6 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!fontsLoaded) return null;
-
 
   return (
     <View style={styles.container}>
@@ -237,7 +234,11 @@ export default function App() {
           ></Image>
 
           <View style={styles.buttonRow}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ height: 140 }} >
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ height: 140 }}
+            >
               {items
                 .slice(currentIndex, currentIndex + 6)
                 .map((item, index) => (
@@ -251,9 +252,9 @@ export default function App() {
                       {
                         shadowColor: shadowColors[index % shadowColors.length],
                         shadowOffset: { width: 0, height: 12 }, // mais deslocada pra baixo
-                        shadowOpacity: 0.9,                     // mais forte
-                        shadowRadius: 16,                       // mais espalhada
-                        elevation: 20,                          // Android mais intenso
+                        shadowOpacity: 0.9, // mais forte
+                        shadowRadius: 16, // mais espalhada
+                        elevation: 20, // Android mais intenso
                       },
                     ]}
                   >
@@ -312,7 +313,7 @@ export default function App() {
             justifyContent: "space-evenly",
             marginTop: 10,
             marginLeft: -5,
-            padding: 20
+            padding: 20,
           }}
         >
           <View style={{ alignItems: "center" }}>
@@ -331,7 +332,7 @@ export default function App() {
               }}
               onPress={() => nav.navigate("snack")}
             >
-              <Text style={styles.texto_snack}>Noite de  Snacks</Text>
+              <Text style={styles.texto_snack}>Noite de Snacks</Text>
               <Image
                 style={styles.img_snacks}
                 source={require("../assets/images/snacks.jpg")}
@@ -370,7 +371,7 @@ export default function App() {
             flexDirection: "row",
             justifyContent: "space-evenly",
             marginLeft: -5,
-            padding: 20
+            padding: 20,
           }}
         >
           <View style={{ alignItems: "center" }}>
@@ -385,7 +386,7 @@ export default function App() {
                 shadowOpacity: 0.8,
                 shadowRadius: 0.3,
                 elevation: 26,
-                bottom: 16
+                bottom: 16,
               }}
               onPress={() => nav.navigate("aperitivos")}
             >
@@ -421,7 +422,6 @@ export default function App() {
                 source={require("../assets/images/almoco_domingo.png")}
               />
             </Pressable>
-
           </View>
         </View>
       </ScrollView>
@@ -434,7 +434,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     backgroundColor: "#ececec",
-
   },
   fundo: {
     padding: 25,
@@ -449,7 +448,7 @@ const styles = StyleSheet.create({
     width: 370,
     height: 175,
     right: 15,
-    bottom: -3
+    bottom: -3,
   },
 
   quadrado_fundo: {
@@ -474,7 +473,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     right: 5,
     top: 30,
-    zIndex: 999
+    zIndex: 999,
   },
   buttonRow: {
     flexDirection: "row",
@@ -534,7 +533,7 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     color: "#000",
     top: 10,
-    fontFamily: "Imprima"
+    fontFamily: "Imprima",
   },
   texto_filtro: {
     fontSize: 18,
@@ -542,7 +541,7 @@ const styles = StyleSheet.create({
     color: "#000",
     bottom: -10,
     fontFamily: "Imprima",
-    left: 12
+    left: 12,
   },
   texto1: {
     fontSize: 16,
@@ -566,7 +565,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 26,
     height: 180,
-    top: 30
+    top: 30,
   },
 
   tooltipContainer: {
@@ -591,7 +590,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     color: "#000",
-    fontFamily: "Imprima"
+    fontFamily: "Imprima",
   },
   recipesButton: {
     marginTop: 10,
@@ -607,7 +606,6 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 16,
     fontFamily: "Imprima",
-
   },
   logoutButton: {
     marginTop: 18,
@@ -623,7 +621,6 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 16,
     fontFamily: "Imprima",
-
   },
   touchable: {
     alignItems: "center",
@@ -663,7 +660,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", // Organiza os itens em linha
     top: -10,
     left: 5,
-    width: 90
+    width: 90,
   },
 
   texto22: {
@@ -724,20 +721,20 @@ const styles = StyleSheet.create({
     height: 70,
     left: 2,
     top: 18,
-    borderRadius: 10
+    borderRadius: 10,
   },
   img_almoco: {
     width: 147,
     height: 80,
     left: 2,
     top: 7,
-    borderRadius: 10
+    borderRadius: 10,
   },
   img_aperitivos: {
     width: 147,
     height: 70,
     left: 2,
     top: 18,
-    borderRadius: 10
+    borderRadius: 10,
   },
 });

@@ -29,7 +29,7 @@ export default function AnoNovo() {
               color="#242424"
               style={styles.seta}
             />
-            <Text style={styles.paragraph}>Marmitas simples</Text>{" "}
+            <Text style={styles.paragraph}>Marmitas simples</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.branco}>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   texto: {
     position: "absolute",
     top: 20,
-    left: 20,
+    left: 13,
     color: "#000",
     fontSize: 14,
     textTransform: "uppercase",
