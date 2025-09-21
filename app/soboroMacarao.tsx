@@ -33,7 +33,7 @@ export default function AnoNovo() {
             <Text style={styles.paragraph}>Receitas com sobra de macarrão</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.branco}>
+         <View style={[styles.branco, { paddingBottom: 100 }]}>
           <View>
             <TouchableOpacity
               style={styles.card}
@@ -44,7 +44,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Gratinado de Macarrão</Text>
+              <Text style={styles.texto}>Gratinado de {"\n"}Macarrão</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/22890010/pexels-photo-22890010/free-photo-of-mao-jantar-janta-almoco.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -101,7 +101,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Sopa de Macarrão com Legumes</Text>
+              <Text style={styles.texto}>Sopa de Macarrão {"\n"}com Legumes</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/1395319/pexels-photo-1395319.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -122,12 +122,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "#ececec",
   },
-  row: {
+    row: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 10,
     gap: 12, // espaço entre a seta e o texto
+    top: 20
   },
 
   paragraph: {

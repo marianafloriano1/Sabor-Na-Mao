@@ -49,13 +49,12 @@ export default function Brigadeiro() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1:
-      "Misture os ingredientes, menos a farinha de rosca para formar um creme.",
-    step2: "Mergulhe os files de frango um por um nesse creme.",
-    step3: "Depois passe os filés na farinha de rosca.",
-    step4: "No óleo aquecido frite os filés de frango. ",
-    step5: "Ficam super sequinhos. ",
-  };
+  step1: "Misture os ingredientes (exceto a farinha de rosca) até formar um creme homogêneo.",
+  step2: "Mergulhe os filés de frango, um a um, no creme e, em seguida, passe-os na farinha de rosca para empanar.",
+  step3: "Preaqueça a airfryer a 200°C por 3–5 minutos. Disponha os filés na cesta em única camada (não amontoar).",
+  step4: "Borrife ou pincele uma leve camada de óleo sobre os filés (ajuda a dourar). Cozinhe a 200°C por 10–12 minutos, virando na metade do tempo. Se os filés forem finos, 8–10 min podem bastar; para mais grossos, 12–15 min.",
+  step5: "Retire quando estiverem dourados e crocantes por fora e cozidos por dentro (temperatura interna 75°C). Deixe descansar 1–2 minutos antes de servir — ficam super sequinhos!",
+};
 
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
@@ -122,7 +121,7 @@ export default function Brigadeiro() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -138,7 +137,7 @@ export default function Brigadeiro() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>

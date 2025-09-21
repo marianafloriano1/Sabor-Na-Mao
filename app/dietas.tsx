@@ -1,20 +1,20 @@
 import { Feather } from "@expo/vector-icons";
 import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
+    NavigationProp,
+    useNavigation,
+    useRoute,
 } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-  Image,
-  ImageBackground,
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    ImageBackground,
+    Modal,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type RootStackParamList = {
@@ -98,7 +98,7 @@ export default function ComidasInfantis() {
             <Text style={styles.toggleText}>Veganas</Text>
           </Pressable>
         </View>
-        <View style={styles.branco}>
+         <View style={[styles.branco, { paddingBottom: 100 }]}>
           {showVege && (
             <>
               <TouchableOpacity

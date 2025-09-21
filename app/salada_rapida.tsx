@@ -121,7 +121,7 @@ export default function Brigadeiro() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -137,7 +137,7 @@ export default function Brigadeiro() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "50%",
     backgroundColor: "#ECECEC",
+     paddingBottom: 70,
   },
   tituloContainer: {
     flexDirection: "row",

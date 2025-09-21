@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import {
   Alert,
   Image,
+  Linking,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -91,6 +93,7 @@ export default function soArForno() {
       console.error(err);
     }
   };
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -122,7 +125,7 @@ export default function soArForno() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -138,7 +141,7 @@ export default function soArForno() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>
@@ -149,7 +152,7 @@ export default function soArForno() {
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
-          onPress={() => Alert.alert("Forma correta descarte")}
+          onPress={() => setModalVisible(true)}
         >
           <Feather
             name="refresh-cw"
@@ -158,6 +161,58 @@ export default function soArForno() {
             style={styles.iconeBotao}
           />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
+
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                  {"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Plásticos e embalagens:
+                  </Text>{" "}
+                  potes, sacos, tampas e garrafas devem ser limpos e colocados
+                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                  conservas, garrafas e frascos podem ser reciclados. Se
+                  estiverem quebrados, embale bem em jornal ou outro material
+                  para evitar acidentes.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                  alimentos, papel toalha (se seco e limpo), embalagens de papel
+                  e papelão vão para a reciclagem. Se estiver engordurado ou
+                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Óleo de cozinha usado:
+                  </Text>{" "}
+                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                  plástica e leve até um ponto de coleta.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                  reciclável.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                  um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -184,6 +239,15 @@ const styles = StyleSheet.create({
     height: "50%",
     backgroundColor: "#ECECEC",
   },
+  decorativeImage: {
+    position: "absolute",
+    left: 135,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 500,
+    zIndex: 0,
+  },
   tituloContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -196,6 +260,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginLeft: 5,
     width: 240,
+    lineHeight: 26,
   },
   ingredientes: {
     marginTop: 100,
@@ -203,6 +268,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
+    color: "#000",
   },
   ingredientesContainer: {
     flexDirection: "row",
@@ -250,14 +316,49 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  decorativeImage: {
-    position: "absolute",
-    left: 135,
-    top: 0,
-    right: 0,
-    width: 350,
-    height: 500,
-    zIndex: 0,
+  modalButton: {
+    backgroundColor: "#009E60",
+    alignItems: "center",
+    marginHorizontal: 20,
+    width: "100%",
+    resizeMode: "contain",
+    marginLeft: "auto",
+    height: 40,
+    marginTop: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    width: "100%",
+    maxWidth: 350,
+  },
+  modalTitulo: {
+    fontSize: 18,
+    marginBottom: 30,
+    color: "green",
+  },
+  modalTexto: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  textoFechar: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  toggleText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: "#fff",
+    textTransform: "uppercase",
   },
   touchTitulo: {
     flexDirection: "row",

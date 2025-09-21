@@ -49,7 +49,7 @@ export default function soArForno() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: "Preaqueça o forno a 180°C.",
+    step1: "Preaqueça o forno ou airfrier a 180°C.",
     step2:
       "Misture a manteiga, o alho, o sal e a salsinha até formar uma pasta.",
     step3: "Corte o pão em fatias sem separar totalmente.",
@@ -126,7 +126,7 @@ export default function soArForno() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -142,7 +142,7 @@ export default function soArForno() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>

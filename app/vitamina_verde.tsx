@@ -100,7 +100,7 @@ export default function Brigadeiro() {
               <Feather name="chevron-left" size={28} color="#000" />
               <Text style={styles.paragraph}>
                 VITAMINA DE ABACATE COM HORTELÃ
-              </Text>{" "}
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -113,7 +113,7 @@ export default function Brigadeiro() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -129,7 +129,7 @@ export default function Brigadeiro() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>
@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
     width: "300%",
     height: "50%",
     backgroundColor: "#ECECEC",
+    paddingBottom: 50
   },
   tituloContainer: {
     flexDirection: "row",

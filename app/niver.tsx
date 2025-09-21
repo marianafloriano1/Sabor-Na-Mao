@@ -26,12 +26,12 @@ export default function AnoNovo() {
             <Feather name="chevron-left" size={24} color="#242424" />
 
             <Text style={styles.paragraph}>
-              {" "}
+            
               Receitas para Festas e Aniversários
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.branco}>
+         <View style={[styles.branco, { paddingBottom: 100 }]}>
           <View>
             <TouchableOpacity
               style={styles.card}
@@ -120,12 +120,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "#ececec",
   },
-  row: {
+    row: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 10,
     gap: 12, // espaço entre a seta e o texto
+    top: 20
   },
 
   paragraph: {

@@ -119,7 +119,7 @@ export default function FarofaDeOvo() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -135,7 +135,7 @@ export default function FarofaDeOvo() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>
@@ -230,8 +230,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "50%",
     backgroundColor: "#ECECEC",
+    paddingBottom: 50,
   },
   decorativeImage: {
     position: "absolute",
@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 90,
     marginLeft: 10,
+    zIndex: 1,
   },
   paragraph: {
     fontSize: 22,
@@ -254,6 +255,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginLeft: 5,
     width: 240,
+    lineHeight: 26,
   },
   ingredientes: {
     marginTop: 100,
@@ -261,6 +263,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
+    color: "#000",
   },
   ingredientesContainer: {
     flexDirection: "row",
@@ -308,7 +311,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-
   modalButton: {
     backgroundColor: "#009E60",
     alignItems: "center",

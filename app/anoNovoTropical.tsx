@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 type CheckedItems = {
@@ -134,7 +134,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -148,7 +148,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Intercale os pedaços de frutas nos palitos (ex: abacaxi → banana →
               morango → manga) e deixe uma ponta livre para segurar.
@@ -159,7 +159,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Em uma frigideira grande ou chapa, derreta a manteiga. Acrescente
               o açúcar e a canela, mexa até formar um caramelo leve. Coloque os
@@ -172,7 +172,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Pincele os espetinhos com a calda de açúcar. Leve à churrasqueira
               por 2–3 minutos de cada lado ou ao forno a 200 °C por 10 minutos.
@@ -183,7 +183,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Pode acompanhar uma bola de sorvete, iogurte gelado ou ser servido
               puro como sobremesa.

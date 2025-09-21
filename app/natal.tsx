@@ -27,7 +27,7 @@ export default function Natal() {
             <Text style={styles.paragraph}>Receitas Natalinas</Text>{" "}
           </TouchableOpacity>
         </View>
-        <View style={styles.branco}>
+        <View style={[styles.branco, { paddingBottom: 100 }]}>
           <View>
             <TouchableOpacity
               style={styles.card}

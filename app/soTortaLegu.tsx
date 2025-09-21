@@ -117,7 +117,7 @@ export default function soArForno() {
               <Feather name="chevron-left" size={28} color="#000" />
 
               <Text style={styles.paragraph}>
-                Tota de Legumes de liquidificador
+                Torta de Legumes de liquidificador
               </Text>
             </TouchableOpacity>
           </View>
@@ -131,7 +131,7 @@ export default function soArForno() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -147,7 +147,7 @@ export default function soArForno() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>

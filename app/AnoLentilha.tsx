@@ -118,8 +118,9 @@ export default function App() {
           <View style={styles.tituloContainer}>
             <TouchableOpacity onPress={() => nav.navigate("ano_novo")}>
               <Feather name="chevron-left" size={28} color="#000" />
-            </TouchableOpacity>
+            
             <Text style={styles.paragraph}>Salada de Lentilha</Text>
+            </TouchableOpacity>
           </View>
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
@@ -130,7 +131,7 @@ export default function App() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓</Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -144,7 +145,7 @@ export default function App() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Lave bem e cozinhe em água com uma pitada de sal por cerca de 20
               minutos, até que fique macia, mas firme (não deixe desmanchar).
@@ -156,7 +157,7 @@ export default function App() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Corte todos os ingredientes em cubinhos ou tiras pequenas.
             </Text>
@@ -166,7 +167,7 @@ export default function App() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Em uma tigela grande, junte a lentilha fria com os vegetais e
               ervas.
@@ -177,7 +178,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Adicione o limão (ou vinagre), azeite, sal e pimenta. Misture bem.
             </Text>
@@ -187,7 +188,7 @@ export default function App() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓</Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}{" "}
               Leve à geladeira por 30 minutos para que os sabores se integrem
               melhor.
@@ -299,7 +300,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#242424",
     textTransform: "uppercase",
-    marginLeft: 5,
+    marginLeft: 35,
+    bottom: 30
   },
 
   ingredientes: {

@@ -3,13 +3,13 @@ import type { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
-  Image,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    ImageBackground,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 export default function AnoNovo() {
@@ -32,7 +32,7 @@ export default function AnoNovo() {
             <Text style={styles.paragraph}>Receitas com sobra de bebidas</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.branco}>
+         <View style={[styles.branco, { paddingBottom: 100 }]}>
           <View>
             <TouchableOpacity
               style={styles.card}
@@ -121,12 +121,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "#ececec",
   },
-  row: {
+    row: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 10,
     gap: 12, // espaço entre a seta e o texto
+    top: 20
   },
 
   paragraph: {

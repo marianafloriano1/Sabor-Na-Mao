@@ -114,7 +114,7 @@ export default function PaozinhoDeBatataDoce() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -130,9 +130,9 @@ export default function PaozinhoDeBatataDoce() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
-                {index + 1}. {label}
+               {label}
               </Text>
             </TouchableOpacity>
           ))}

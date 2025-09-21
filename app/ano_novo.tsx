@@ -28,7 +28,7 @@ export default function AnoNovo() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.branco}>
+         <View style={[styles.branco, { paddingBottom: 100 }]}>
           <View>
             <TouchableOpacity
               style={styles.card}
@@ -127,12 +127,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 10,
     gap: 12, // espaço entre a seta e o texto
+    top: 20
   },
 
   paragraph: {
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
+
   },
 
   branco: {

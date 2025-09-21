@@ -45,13 +45,13 @@ export default function soArForno() {
     item3: "1 colher (sopa) de mel",
   };
 
-  const stepsMap: { [key: string]: string } = {
-    step1: "Descasque e corte as bananas em rodelas.",
-    step2: "Coloque as bananas em uma tigela ou prato.",
-    step3: "Polvilhe canela em pó sobre as bananas.",
-    step4: "Se desejar, regue com mel para adoçar.",
-    step5: "Sirva imediatamente ou leve à geladeira para servir gelado.",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1: "Descasque e corte as bananas em rodelas ou no sentido do comprimento.",
+  step2: "Disponha as bananas em um refratário pequeno ou direto no cesto da airfryer, forrado com papel manteiga perfurado.",
+  step3: "Polvilhe canela em pó por cima e, se desejar, um fio de mel ou açúcar mascavo para caramelizar.",
+  step4: "Preaqueça a airfryer a 180°C por 3 minutos e asse as bananas por 8–10 minutos, até ficarem levemente douradas.",
+  step5: "Sirva ainda quentinhas ou aguarde esfriar para servir geladas.",
+};
 
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
@@ -121,7 +121,7 @@ export default function soArForno() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -137,7 +137,7 @@ export default function soArForno() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
                 {step}
               </Text>

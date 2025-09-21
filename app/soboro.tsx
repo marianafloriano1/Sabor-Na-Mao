@@ -2,8 +2,9 @@ import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { router } from "expo-router";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
+  Animated,
   Image,
   Linking,
   Modal,
@@ -147,289 +148,339 @@ export default function App() {
   ];
 
   if (!fontsLoaded) return null;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+
+  const fadeNavigate = (navigateFunc: () => void) => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      navigateFunc();
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+  const [creditsVisible, setCreditsVisible] = useState(false);
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.fundo}>
-          <Tooltip
-            isVisible={toolTipVisible}
-            content={
-              <View style={styles.tooltipContainer}>
-                <View style={styles.userInfo}>
-                  <View style={styles.userIcon}>
-                    <Image
-                      source={userProfile.pic}
-                      style={styles.userIconImage}
-                    />
+      <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+        <ScrollView>
+          <View style={styles.fundo}>
+            <Tooltip
+              isVisible={toolTipVisible}
+              content={
+                <View style={styles.tooltipContainer}>
+                   <TouchableOpacity
+                                      style={styles.infoButton}
+                                      onPress={() => setCreditsVisible(true)}
+                                    >
+                                      <Feather name="info" size={22} color="#333" />
+                                    </TouchableOpacity>
+                  
+                                    <Modal
+                                      animationType="slide"
+                                      transparent={true}
+                                      visible={creditsVisible}
+                                      onRequestClose={() => setCreditsVisible(false)}
+                                    >
+                                      <View style={styles.modalOverlay}>
+                                        <View style={styles.modalContent2}>
+                                          <Text style={styles.modalTitle}>Créditos</Text>
+                                          <Text style={styles.modalText}>
+                                            Ícones e recursos visuais utilizados neste aplicativo foram obtidos em{" "}
+                                            <Text style={{ fontWeight: "bold" }}>Freepik</Text>.
+                                            {"\n"}Mais em: www.freepik.com
+                                          </Text>
+                                          <TouchableOpacity
+                                            style={styles.closeButton}
+                                            onPress={() => setCreditsVisible(false)}
+                                          >
+                                            <Text style={styles.closeText}>Fechar</Text>
+                                          </TouchableOpacity>
+                                        </View>
+                                      </View>
+                                    </Modal>
+                  <View style={styles.userInfo}>
+                    <View style={styles.userIcon}>
+                      <Image
+                        source={userProfile.pic}
+                        style={styles.userIconImage}
+                      />
+                    </View>
+                    <Text style={styles.userName}>{userProfile.name}</Text>
                   </View>
-                  <Text style={styles.userName}>{userProfile.name}</Text>
+
+                  <TouchableOpacity
+                    style={styles.recipesButton}
+                    onPress={() => {
+                      nav.navigate("heranca");
+                    }}
+                  >
+                    <Text style={styles.recipesText}>Minhas receitas</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.logoutButton}
+                    onPress={() => router.replace("/")}
+                  >
+                    <Text style={styles.logoutText}>Sair</Text>
+                  </TouchableOpacity>
                 </View>
+              }
+              placement="bottom"
+              onClose={() => setToolTipVisible(false)}
+              contentStyle={styles.tooltip}
+              backgroundColor="transparent"
+              showChildInTooltip={false}
+              allowChildInteraction={true}
+              arrowSize={{ width: 0, height: 0 }} // seta invisível
+              displayInsets={{ top: 0, bottom: 0, left: 0, right: 0 }}
 
-                <TouchableOpacity
-                  style={styles.recipesButton}
-                  onPress={() => {
-                    nav.navigate("heranca");
-                  }}
-                >
-                  <Text style={styles.recipesText}>Minhas receitas</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.logoutButton}
-                  onPress={() => router.replace("/")}
-                >
-                  <Text style={styles.logoutText}>Sair</Text>
-                </TouchableOpacity>
-              </View>
-            }
-            placement="bottom"
-            onClose={() => setToolTipVisible(false)}
-            contentStyle={styles.tooltip}
-            backgroundColor="transparent"
-            showChildInTooltip={false}
-            allowChildInteraction={true}
-            arrowSize={{ width: 0, height: 0 }} // seta invisível
-            displayInsets={{ top: 0, bottom: 0, left: 0, right: 0 }}
-
-          >
-            <TouchableOpacity
-              style={styles.touchable}
-              onPress={() => setToolTipVisible(true)}
             >
-              <Image
-                source={require("../assets/images/perfil.png")}
-                style={styles.perfil}
-              />
-            </TouchableOpacity>
-          </Tooltip>
-
-          <View style={styles.categorias2}>
-            <TouchableOpacity
-              style={[
-                styles.categoria21,
-                selectedCategory === "tudo" && { backgroundColor: "#385A64" }, // cor do "tudo"
-                selectedCategory !== "tudo" && { backgroundColor: "#D3D3D3" }, // cinza claro
-              ]}
-              onPress={() => {
-                setSelectedCategory("tudo"); // Adiciona isso
-                nav.navigate("home");
-              }}
-            >
-              <Text style={styles.texto22}>Tudo</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.categoria2,
-                selectedCategory === "soboro" && { backgroundColor: "#385A64" },
-                selectedCategory !== "soboro" && { backgroundColor: "#D3D3D3" },
-              ]}
-              onPress={() => {
-                setSelectedCategory("soboro");
-                nav.navigate("soboro");
-              }}
-            >
-              <Text style={styles.texto2}>Soboro</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.categoria22,
-                selectedCategory === "economica" && {
-                  backgroundColor: "#385A64",
-                },
-                selectedCategory !== "economica" && {
-                  backgroundColor: "#D3D3D3",
-                },
-              ]}
-              onPress={() => {
-                setSelectedCategory("economica");
-                nav.navigate("economica");
-              }}
-            >
-              <Text style={styles.texto2}>Econômica</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Image
-            source={require("../assets/images/imgCarrosel.png")}
-            style={styles.img_home}
-          ></Image>
-
-          <Text style={styles.texto_filtro}>O que mais sobrou?</Text>
-          <View style={styles.categorias}>
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("soboroArroz");
-              }}
-            >
-              <Text style={styles.texto1}>ARROZ</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("soboroMacarao");
-              }}
-            >
-              <Text style={styles.texto1}>Macarrão</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("soboroCarne");
-              }}
-            >
-              <Text style={styles.texto1}>Carne</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("soboroLegu");
-              }}
-            >
-              <Text style={styles.texto1}>Legumes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("soboroChoco");
-              }}
-            >
-              <Text style={styles.texto1}>Chocolate</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("soboroBebi");
-              }}
-            >
-              <Text style={styles.texto1}>Bebida</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <Text style={styles.textoo}>Clique e conheça outras opções:</Text>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            marginTop: 10,
-            marginLeft: -5,
-            padding: 20
-          }}
-        >
-          <View style={{ alignItems: "center" }}>
-            <Pressable
-              style={{
-                width: 160,
-                height: 160,
-                backgroundColor: "#fff",
-                borderRadius: 10,
-                marginBottom: 10,
-                shadowColor: "#1D192B",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.8,
-                shadowRadius: 0.3,
-                elevation: 26,
-
-              }}
-              onPress={() => nav.navigate("soboroFruta")}
-            >
-              <Text style={styles.texto_fruta}>Receitas com Frutas</Text>
-              <Image
-                style={styles.img_fruta}
-                source={require("../assets/images/melancia.jpg")}
-              />
-            </Pressable>
-          </View>
-
-          <View style={{ alignItems: "center" }}>
-            <Pressable
-              style={{
-                width: 160,
-                height: 160,
-                backgroundColor: "white",
-                borderRadius: 10,
-                marginBottom: 10,
-                shadowColor: "#7F7F7F",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.8,
-                shadowRadius: 0.3,
-                elevation: 26,
-
-              }}
-              onPress={() => nav.navigate("soboroAir")}
-            >
-              <Text style={styles.texto_sozinho}>Receitas para Airfryer</Text>
-              <Image
-                style={styles.img_sozinho}
-                source={require("../assets/images/airfryer.jpg")}
-              />
-            </Pressable>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={styles.modalButton}
-          onPress={() => setModalVisible(true)
-
-          }
-        >
-          <Text style={styles.toggleText}>Estragou, e agora? </Text>
-        </TouchableOpacity>
-
-        {/* Modal */}
-        <Modal transparent visible={modalVisible} animationType="fade">
-          <View style={styles.modalContainer}>
-
-            <View style={styles.modalContent}>
-              <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.fecharModal}>
-                <Feather name="x" size={28} color="red" />
+              <TouchableOpacity
+                style={styles.touchable}
+                onPress={() => setToolTipVisible(true)}
+              >
+                <Image
+                  source={require("../assets/images/perfil.png")}
+                  style={styles.perfil}
+                />
               </TouchableOpacity>
-              <Text style={styles.modalTitulo}>
-                O Que Fazer com Comida Estragada?
-              </Text>
-              <Text style={styles.modalTexto}>
-                Todo mundo já jogou fora alguma comida estragada, né? Mas você
-                sabia que isso pode prejudicar o meio ambiente? Quando vai pro
-                lixo comum, esses restos ajudam a formar mais lixo nos aterros e
-                ainda liberam gases que poluem o ar. {"\n\n"}A boa notícia é que
-                dá pra reaproveitar! Restos de frutas, legumes e até alimentos
-                passados podem virar adubo por meio da compostagem. Isso vira
-                uma terra rica, perfeita pra plantar! Dá até pra usar sementes
-                de frutas como limão ou abacate e começar sua própria horta em
-                casa. Além de ajudar a natureza, você ainda economiza e aprende
-                a cuidar melhor do que come. Que tal começar hoje?{"\n\n"}
-                Acesse um manual completo sobre compostagem aqui:{" "}
-                <Text
-                  style={{
-                    color: "blue",
-                    borderBottomColor: "blue",
-                    borderBottomWidth: 1, // ajuste aqui para deixar mais fino
-                  }}
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                    )
-                  }
-                >
-                  Manual de Compostagem
-                </Text>
+            </Tooltip>
 
+            <View style={styles.categorias2}>
+              <TouchableOpacity
+                style={[
+                  styles.categoria21,
+                  selectedCategory === "tudo" && { backgroundColor: "#385A64" }, // cor do "tudo"
+                  selectedCategory !== "tudo" && { backgroundColor: "#D3D3D3" }, // cinza claro
+                ]}
+                onPress={() => {
+                  setSelectedCategory("tudo");
+                  fadeNavigate(() => nav.navigate("home"));
+                }}
+              >
+                <Text style={styles.texto22}>Tudo</Text>
+              </TouchableOpacity>
 
+              <TouchableOpacity
+                style={[
+                  styles.categoria2,
+                  selectedCategory === "soboro" && { backgroundColor: "#385A64" },
+                  selectedCategory !== "soboro" && { backgroundColor: "#D3D3D3" },
+                ]}
+                onPress={() => {
+                  setSelectedCategory("soboro");
+                  fadeNavigate(() => nav.navigate("soboro"));
+                }}
+              >
+                <Text style={styles.texto2}>Soboro</Text>
+              </TouchableOpacity>
 
-              </Text>
+              <TouchableOpacity
+                style={[
+                  styles.categoria22,
+                  selectedCategory === "economica" && {
+                    backgroundColor: "#385A64",
+                  },
+                  selectedCategory !== "economica" && {
+                    backgroundColor: "#D3D3D3",
+                  },
+                ]}
+                onPress={() => {
+                  setSelectedCategory("economica");
+                  fadeNavigate(() => nav.navigate("economica"));
+                }}
+              >
+                <Text style={styles.texto2}>Econômica</Text>
+              </TouchableOpacity>
+            </View>
 
+            <Image
+              source={require("../assets/images/imgCarrosel.png")}
+              style={styles.img_home}
+            ></Image>
+
+            <Text style={styles.texto_filtro}>O que mais sobrou?</Text>
+            <View style={styles.categorias}>
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("soboroArroz");
+                }}
+              >
+                <Text style={styles.texto1}>ARROZ</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("soboroMacarao");
+                }}
+              >
+                <Text style={styles.texto1}>Macarrão</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("soboroCarne");
+                }}
+              >
+                <Text style={styles.texto1}>Carne</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("soboroLegu");
+                }}
+              >
+                <Text style={styles.texto1}>Legumes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("soboroChoco");
+                }}
+              >
+                <Text style={styles.texto1}>Chocolate</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("soboroBebi");
+                }}
+              >
+                <Text style={styles.texto1}>Bebida</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </Modal>
-      </ScrollView>
+
+          <Text style={styles.textoo}>Clique e conheça outras opções:</Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              marginTop: 10,
+              marginLeft: -5,
+              padding: 20
+            }}
+          >
+            <View style={{ alignItems: "center" }}>
+              <Pressable
+                style={{
+                  width: 160,
+                  height: 160,
+                  backgroundColor: "#fff",
+                  borderRadius: 10,
+                  marginBottom: 10,
+                  shadowColor: "#1D192B",
+                  shadowOffset: { width: 0, height: 10 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 0.3,
+                  elevation: 26,
+
+                }}
+                onPress={() => nav.navigate("soboroFruta")}
+              >
+                <Text style={styles.texto_fruta}>Receitas com Frutas</Text>
+                <Image
+                  style={styles.img_fruta}
+                  source={require("../assets/images/melancia.jpg")}
+                />
+              </Pressable>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <Pressable
+                style={{
+                  width: 160,
+                  height: 160,
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  marginBottom: 10,
+                  shadowColor: "#7F7F7F",
+                  shadowOffset: { width: 0, height: 10 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 0.3,
+                  elevation: 26,
+
+                }}
+                onPress={() => nav.navigate("soboroAir")}
+              >
+                <Text style={styles.texto_sozinho}>Receitas para Airfryer</Text>
+                <Image
+                  style={styles.img_sozinho}
+                  source={require("../assets/images/airfryer.jpg")}
+                />
+              </Pressable>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={styles.modalButton}
+            onPress={() => setModalVisible(true)
+
+            }
+          >
+            <Text style={styles.toggleText}>Estragou, e agora? </Text>
+          </TouchableOpacity>
+
+          {/* Modal */}
+          <Modal transparent visible={modalVisible} animationType="fade">
+            <View style={styles.modalContainer}>
+
+              <View style={styles.modalContent}>
+                <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.fecharModal}>
+                  <Feather name="x" size={28} color="red" />
+                </TouchableOpacity>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  Todo mundo já jogou fora alguma comida estragada, né? Mas você
+                  sabia que isso pode prejudicar o meio ambiente? Quando vai pro
+                  lixo comum, esses restos ajudam a formar mais lixo nos aterros e
+                  ainda liberam gases que poluem o ar. {"\n\n"}A boa notícia é que
+                  dá pra reaproveitar! Restos de frutas, legumes e até alimentos
+                  passados podem virar adubo por meio da compostagem. Isso vira
+                  uma terra rica, perfeita pra plantar! Dá até pra usar sementes
+                  de frutas como limão ou abacate e começar sua própria horta em
+                  casa. Além de ajudar a natureza, você ainda economiza e aprende
+                  a cuidar melhor do que come. Que tal começar hoje?{"\n\n"}
+                  Acesse um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{
+                      color: "blue",
+                      borderBottomColor: "blue",
+                      borderBottomWidth: 1, // ajuste aqui para deixar mais fino
+                    }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+
+
+
+                </Text>
+
+              </View>
+            </View>
+          </Modal>
+        </ScrollView>
+
+      </Animated.View>
     </View >
   );
 }
@@ -452,7 +503,7 @@ const styles = StyleSheet.create({
   img_home: {
     width: 390,
     height: 190,
-    right: 20,
+    right: 10,
     bottom: -3
   },
 
@@ -767,4 +818,53 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: "Imprima"
   },
+   infoButton: {
+    position: "absolute",
+    right: -10, 
+    top: -10,
+    padding: 6,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent2: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 12,
+    width: "90%",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
+
+  },
+  modalTitle: {
+    fontSize: 20,
+    marginBottom: 20,
+    textAlign: "center",
+    fontFamily: "Imprima"
+  },
+  modalText: {
+    fontSize: 17,
+    marginBottom: 20,
+    fontFamily: "Imprima"
+  },
+  closeButton: {
+    backgroundColor: "rgba(179, 38, 30, 0.5)",
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignSelf: "flex-end",
+    width: 70,
+  },
+  closeText: {
+    color: "#fff",
+    textAlign: "center",
+    fontFamily: "Imprima",
+    fontSize: 16
+  },
+
 });

@@ -1,10 +1,14 @@
+import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { logout } from '../bancodedados';
 
 import {
+  Animated,
   Image,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -125,306 +129,368 @@ export default function App() {
 
   if (!fontsLoaded) return null;
 
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+
+  const fadeNavigate = (navigateFunc: () => void) => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      navigateFunc();
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+
+  const [creditsVisible, setCreditsVisible] = useState(false);
+
+
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-        <View style={styles.fundo}>
-          <Tooltip
-            isVisible={toolTipVisible}
-            content={
-              <View style={styles.tooltipContainer}>
-                <View style={styles.userInfo}>
-                  <View style={styles.userIcon}>
-                    <Image
-                      source={userProfile.pic}
-                      style={styles.userIconImage}
-                    />
+      <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+          <View style={styles.fundo}>
+            <Tooltip
+              isVisible={toolTipVisible}
+              content={
+                <View style={styles.tooltipContainer}>
+                   <TouchableOpacity
+                    style={styles.infoButton}
+                    onPress={() => setCreditsVisible(true)}
+                  >
+                    <Feather name="info" size={22} color="#333" />
+                  </TouchableOpacity>
+
+                  <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={creditsVisible}
+                    onRequestClose={() => setCreditsVisible(false)}
+                  >
+                    <View style={styles.modalOverlay}>
+                      <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Créditos</Text>
+                        <Text style={styles.modalText}>
+                          Ícones e recursos visuais utilizados neste aplicativo foram obtidos em{" "}
+                          <Text style={{ fontWeight: "bold" }}>Freepik</Text>.
+                          {"\n"}Mais em: www.freepik.com
+                        </Text>
+                        <TouchableOpacity
+                          style={styles.closeButton}
+                          onPress={() => setCreditsVisible(false)}
+                        >
+                          <Text style={styles.closeText}>Fechar</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Modal>
+                  <View style={styles.userInfo}>
+                    <View style={styles.userIcon}>
+                      <Image
+                        source={userProfile.pic}
+                        style={styles.userIconImage}
+                      />
+                    </View>
+                    <Text style={styles.userName}>{userProfile.name}</Text>
                   </View>
-                  <Text style={styles.userName}>{userProfile.name}</Text>
+
+                  <TouchableOpacity
+                    style={styles.recipesButton}
+                    onPress={() => {
+                      nav.navigate("heranca");
+                    }}
+                  >
+                    <Text style={styles.recipesText}>Minhas receitas</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.logoutButton}
+                    onPress={async () => {
+                      try {
+                        await logout(); // limpa o usuário logado
+                        router.replace("/"); // navega para a tela de login
+                      } catch (error) {
+                        console.log("Erro ao sair:", error);
+                      }
+                    }}
+                  >
+                    <Text style={styles.logoutText}>Sair</Text>
+                  </TouchableOpacity>
+                 
+
                 </View>
+              }
+              placement="bottom"
+              onClose={() => setToolTipVisible(false)}
+              contentStyle={styles.tooltip}
+              backgroundColor="transparent"
+              showChildInTooltip={false}
+              arrowStyle={{
+                borderTopWidth: 0,
+              }}
+            >
+              <TouchableOpacity
+                style={styles.touchable}
+                onPress={() => setToolTipVisible(true)}
+              >
+                <Image
+                  source={require("../assets/images/perfil.png")}
+                  style={styles.perfil}
+                />
+              </TouchableOpacity>
+            </Tooltip>
 
-                <TouchableOpacity
-                  style={styles.recipesButton}
-                  onPress={() => {
-                    nav.navigate("heranca");
-                  }}
-                >
-                  <Text style={styles.recipesText}>Minhas receitas</Text>
-                </TouchableOpacity>
+            <View style={styles.categorias2}>
+              <TouchableOpacity
+                style={[
+                  styles.categoria21,
+                  selectedCategory === "tudo" && { backgroundColor: "#385A64" }, // cor do "tudo"
+                  selectedCategory !== "tudo" && { backgroundColor: "#D3D3D3" }, // cinza claro
+                ]}
+                onPress={() => {
+                  setSelectedCategory("tudo");
+                  fadeNavigate(() => nav.navigate("home"));
+                }}
+              >
+                <Text style={styles.texto22}>Tudo</Text>
+              </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={styles.logoutButton}
-                  onPress={() => router.replace("/")}
-                >
-                  <Text style={styles.logoutText}>Sair</Text>
-                </TouchableOpacity>
-              </View>
-            }
-            placement="bottom"
-            onClose={() => setToolTipVisible(false)}
-            contentStyle={styles.tooltip}
-            backgroundColor="transparent"
-            showChildInTooltip={false}
-            arrowStyle={{
-              borderTopWidth: 0,
+              <TouchableOpacity
+                style={[
+                  styles.categoria2,
+                  selectedCategory === "soboro" && { backgroundColor: "#385A64" },
+                  selectedCategory !== "soboro" && { backgroundColor: "#D3D3D3" },
+                ]}
+                onPress={() => {
+                  setSelectedCategory("soboro");
+                  fadeNavigate(() => nav.navigate("soboro"));
+                }}
+              >
+                <Text style={styles.texto2}>Soboro</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[
+                  styles.categoria22,
+                  selectedCategory === "economica" && {
+                    backgroundColor: "#385A64",
+                  },
+                  selectedCategory !== "economica" && {
+                    backgroundColor: "#D3D3D3",
+                  },
+                ]}
+                onPress={() => {
+                  setSelectedCategory("economica");
+                  fadeNavigate(() => nav.navigate("economica"));
+                }}
+              >
+                <Text style={styles.texto2}>Econômica</Text>
+              </TouchableOpacity>
+            </View>
+
+            <Image
+              source={require("../assets/images/home2.png")}
+              style={styles.img_home}
+            ></Image>
+
+            <View style={styles.buttonRow}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ height: 140 }}
+              >
+                {items
+                  .slice(currentIndex, currentIndex + 6)
+                  .map((item, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        nav.navigate(item.route as keyof RootStackParamList);
+                      }}
+                      style={[
+                        styles.carouselItem,
+                        {
+                          shadowColor: shadowColors[index % shadowColors.length],
+                          shadowOffset: { width: 0, height: 12 }, // mais deslocada pra baixo
+                          shadowOpacity: 4,                     // mais forte
+                          shadowRadius: 16,                       // mais espalhada
+                          elevation: 20,                          // Android mais intenso
+
+                        },
+                      ]}
+                    >
+                      <Image style={styles.buttonImage} source={item.image} />
+                      <Text style={styles.texto}>{item.title}</Text>
+                    </TouchableOpacity>
+                  ))}
+              </ScrollView>
+            </View>
+
+            <Text style={styles.texto_filtro}>Filtros:</Text>
+            <View style={styles.categorias}>
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("bebidas");
+                }}
+              >
+                <Text style={styles.texto1}>Bebidas</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("kids");
+                }}
+              >
+                <Text style={styles.texto1}>Kids</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("dietas");
+                }}
+              >
+                <Text style={styles.texto1}>Dietas</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.categoria}
+                onPress={() => {
+                  nav.navigate("restricoes");
+                }}
+              >
+                <Text style={styles.texto1}>Restrições</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <Text style={styles.textoo}>Clique e conheça nossas receitas:</Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              marginTop: 10,
+              marginLeft: -5,
+              padding: 20,
             }}
           >
-            <TouchableOpacity
-              style={styles.touchable}
-              onPress={() => setToolTipVisible(true)}
-            >
-              <Image
-                source={require("../assets/images/perfil.png")}
-                style={styles.perfil}
-              />
-            </TouchableOpacity>
-          </Tooltip>
+            <View style={{ alignItems: "center" }}>
+              <Pressable
+                style={{
+                  width: 150,
+                  height: 150,
+                  backgroundColor: "#fff",
+                  borderRadius: 10,
+                  marginBottom: 10,
+                  shadowColor: "#1D192B",
+                  shadowOffset: { width: 0, height: 10 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 0.3,
+                  elevation: 26,
+                }}
+                onPress={() => nav.navigate("snack")}
+              >
+                <Text style={styles.texto_snack}>Noite de {"\n"}Snacks</Text>
+                <Image
+                  style={styles.img_snacks}
+                  source={require("../assets/images/snacks.jpg")}
+                />
+              </Pressable>
+            </View>
 
-          <View style={styles.categorias2}>
-            <TouchableOpacity
-              style={[
-                styles.categoria21,
-                selectedCategory === "tudo" && { backgroundColor: "#385A64" }, // cor do "tudo"
-                selectedCategory !== "tudo" && { backgroundColor: "#D3D3D3" }, // cinza claro
-              ]}
-              onPress={() => {
-                setSelectedCategory("tudo");
-                nav.navigate("home");
-              }}
-            >
-              <Text style={styles.texto22}>Tudo</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.categoria2,
-                selectedCategory === "soboro" && { backgroundColor: "#385A64" },
-                selectedCategory !== "soboro" && { backgroundColor: "#D3D3D3" },
-              ]}
-              onPress={() => {
-                setSelectedCategory("soboro");
-                nav.navigate("soboro");
-              }}
-            >
-              <Text style={styles.texto2}>Soboro</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.categoria22,
-                selectedCategory === "economica" && {
-                  backgroundColor: "#385A64",
-                },
-                selectedCategory !== "economica" && {
-                  backgroundColor: "#D3D3D3",
-                },
-              ]}
-              onPress={() => {
-                setSelectedCategory("economica");
-                nav.navigate("economica");
-              }}
-            >
-              <Text style={styles.texto2}>Econômica</Text>
-            </TouchableOpacity>
+            <View style={{ alignItems: "center" }}>
+              <Pressable
+                style={{
+                  width: 150,
+                  height: 150,
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  marginBottom: 10,
+                  shadowColor: "#14AE5C",
+                  shadowOffset: { width: 0, height: 10 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 0.3,
+                  elevation: 26,
+                }}
+                onPress={() => nav.navigate("morando_sozinho")}
+              >
+                <Text style={styles.texto_sozinho}>Para comer sozinho</Text>
+                <Image
+                  style={styles.img_sozinho}
+                  source={require("../assets/images/morando_sozinho.png")}
+                />
+              </Pressable>
+            </View>
           </View>
 
-          <Image
-            source={require("../assets/images/home2.png")}
-            style={styles.img_home}
-          ></Image>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              marginLeft: -5,
+              padding: 20,
+            }}
+          >
+            <View style={{ alignItems: "center" }}>
+              <Pressable
+                style={{
+                  width: 150,
+                  height: 150,
+                  backgroundColor: "#fff",
+                  borderRadius: 10,
+                  shadowColor: "#003856",
+                  shadowOffset: { width: 0, height: 10 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 0.3,
+                  elevation: 26,
+                  bottom: 16,
+                }}
+                onPress={() => nav.navigate("aperitivos")}
+              >
+                <Text style={styles.texto_aperitivos}>
+                  Aperitivos para festas
+                </Text>
+                <Image
+                  style={styles.img_aperitivos}
+                  source={require("../assets/images/aperitivos.jpg")}
+                />
+              </Pressable>
+            </View>
 
-          <View style={styles.buttonRow}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ height: 140 }}
-            >
-              {items
-                .slice(currentIndex, currentIndex + 6)
-                .map((item, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => {
-                      nav.navigate(item.route as keyof RootStackParamList);
-                    }}
-                    style={[
-                      styles.carouselItem,
-                      {
-                        shadowColor: shadowColors[index % shadowColors.length],
-                        shadowOffset: { width: 0, height: 12 }, // mais deslocada pra baixo
-                        shadowOpacity: 0.9, // mais forte
-                        shadowRadius: 16, // mais espalhada
-                        elevation: 20, // Android mais intenso
-                      },
-                    ]}
-                  >
-                    <Image style={styles.buttonImage} source={item.image} />
-                    <Text style={styles.texto}>{item.title}</Text>
-                  </TouchableOpacity>
-                ))}
-            </ScrollView>
+            <View style={{ alignItems: "center" }}>
+              <Pressable
+                style={{
+                  width: 150,
+                  height: 150,
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  shadowColor: "#B3261E",
+                  shadowOffset: { width: 0, height: 10 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 0.3,
+                  elevation: 26,
+                  bottom: 16,
+                }}
+                onPress={() => nav.navigate("almoco_domingo")}
+              >
+                <Text style={styles.texto_almoco}>Almoços em família</Text>
+                <Image
+                  style={styles.img_almoco}
+                  source={require("../assets/images/almoco_domingo.png")}
+                />
+              </Pressable>
+            </View>
           </View>
-
-          <Text style={styles.texto_filtro}>Filtros:</Text>
-          <View style={styles.categorias}>
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("bebidas");
-              }}
-            >
-              <Text style={styles.texto1}>Bebidas</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("kids");
-              }}
-            >
-              <Text style={styles.texto1}>Kids</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("dietas");
-              }}
-            >
-              <Text style={styles.texto1}>Dietas</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoria}
-              onPress={() => {
-                nav.navigate("restricoes");
-              }}
-            >
-              <Text style={styles.texto1}>Restrições</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <Text style={styles.textoo}>Clique e conheça nossas receitas:</Text>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            marginTop: 10,
-            marginLeft: -5,
-            padding: 20,
-          }}
-        >
-          <View style={{ alignItems: "center" }}>
-            <Pressable
-              style={{
-                width: 150,
-                height: 150,
-                backgroundColor: "#fff",
-                borderRadius: 10,
-                marginBottom: 10,
-                shadowColor: "#1D192B",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.8,
-                shadowRadius: 0.3,
-                elevation: 26,
-              }}
-              onPress={() => nav.navigate("snack")}
-            >
-              <Text style={styles.texto_snack}>Noite de Snacks</Text>
-              <Image
-                style={styles.img_snacks}
-                source={require("../assets/images/snacks.jpg")}
-              />
-            </Pressable>
-          </View>
-
-          <View style={{ alignItems: "center" }}>
-            <Pressable
-              style={{
-                width: 150,
-                height: 150,
-                backgroundColor: "white",
-                borderRadius: 10,
-                marginBottom: 10,
-                shadowColor: "#14AE5C",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.8,
-                shadowRadius: 0.3,
-                elevation: 26,
-              }}
-              onPress={() => nav.navigate("morando_sozinho")}
-            >
-              <Text style={styles.texto_sozinho}>Para comer sozinho</Text>
-              <Image
-                style={styles.img_sozinho}
-                source={require("../assets/images/morando_sozinho.png")}
-              />
-            </Pressable>
-          </View>
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            marginLeft: -5,
-            padding: 20,
-          }}
-        >
-          <View style={{ alignItems: "center" }}>
-            <Pressable
-              style={{
-                width: 150,
-                height: 150,
-                backgroundColor: "#fff",
-                borderRadius: 10,
-                shadowColor: "#003856",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.8,
-                shadowRadius: 0.3,
-                elevation: 26,
-                bottom: 16,
-              }}
-              onPress={() => nav.navigate("aperitivos")}
-            >
-              <Text style={styles.texto_aperitivos}>
-                Aperitivos para festas
-              </Text>
-              <Image
-                style={styles.img_aperitivos}
-                source={require("../assets/images/aperitivos.jpg")}
-              />
-            </Pressable>
-          </View>
-
-          <View style={{ alignItems: "center" }}>
-            <Pressable
-              style={{
-                width: 150,
-                height: 150,
-                backgroundColor: "white",
-                borderRadius: 10,
-                shadowColor: "#B3261E",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.8,
-                shadowRadius: 0.3,
-                elevation: 26,
-                bottom: 16,
-              }}
-              onPress={() => nav.navigate("almoco_domingo")}
-            >
-              <Text style={styles.texto_almoco}>Almoços em família</Text>
-              <Image
-                style={styles.img_almoco}
-                source={require("../assets/images/almoco_domingo.png")}
-              />
-            </Pressable>
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </Animated.View>
     </View>
   );
 }
@@ -447,7 +513,7 @@ const styles = StyleSheet.create({
   img_home: {
     width: 370,
     height: 175,
-    right: 15,
+    right: 10,
     bottom: -3,
   },
 
@@ -737,4 +803,53 @@ const styles = StyleSheet.create({
     top: 18,
     borderRadius: 10,
   },
+  infoButton: {
+    position: "absolute",
+    right: -10, 
+    top: -10,
+    padding: 6,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 12,
+    width: "90%",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
+
+  },
+  modalTitle: {
+    fontSize: 20,
+    marginBottom: 20,
+    textAlign: "center",
+    fontFamily: "Imprima"
+  },
+  modalText: {
+    fontSize: 17,
+    marginBottom: 20,
+    fontFamily: "Imprima"
+  },
+  closeButton: {
+    backgroundColor: "rgba(179, 38, 30, 0.5)",
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignSelf: "flex-end",
+    width: 70,
+  },
+  closeText: {
+    color: "#fff",
+    textAlign: "center",
+    fontFamily: "Imprima",
+    fontSize: 16
+  },
+
 });

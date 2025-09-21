@@ -116,7 +116,7 @@ export default function PapinhaDeCarne() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -132,7 +132,7 @@ export default function PapinhaDeCarne() {
               {checkedItems.step1 ? (
                 <Text style={styles.check}>✓ </Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}
               Em uma panela, aqueça o óleo e refogue a cebola, o alho e a carne
               moída.
@@ -144,7 +144,7 @@ export default function PapinhaDeCarne() {
               {checkedItems.step2 ? (
                 <Text style={styles.check}>✓ </Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}
               Em seguida, acrescente a batata, o inhame e a abóbora.
             </Text>
@@ -155,7 +155,7 @@ export default function PapinhaDeCarne() {
               {checkedItems.step3 ? (
                 <Text style={styles.check}>✓ </Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}
               Cubra com água, tampe a panela e cozinhe até que todos os
               ingredientes estejam macios.
@@ -167,7 +167,7 @@ export default function PapinhaDeCarne() {
               {checkedItems.step4 ? (
                 <Text style={styles.check}>✓ </Text>
               ) : (
-                <Text style={styles.bolinha}>○ </Text>
+                <Text style={styles.bolinha}>◯ </Text>
               )}
               Amasse todos os ingredientes com um garfo e sirva.
             </Text>

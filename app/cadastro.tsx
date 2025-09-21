@@ -67,7 +67,7 @@ export default function RegisterScreen() {
             secureTextEntry
             placeholderTextColor="#999"
           />
-          <Text style={styles.texto3}>*mínimo 6 caracteres</Text>
+          
 
           <Pressable style={styles.botao} onPress={handleRegister}>
             <Text style={styles.botaoTexto}>Cadastrar</Text>

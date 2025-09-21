@@ -31,7 +31,7 @@ export default function Arraia() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.branco}>
+         <View style={[styles.branco, { paddingBottom: 100 }]}>
           <View>
             <TouchableOpacity
               style={styles.card}

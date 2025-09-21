@@ -124,7 +124,7 @@ export default function Pacoca() {
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
                     ) : (
-                      <Text style={styles.bolinha}>○ </Text>
+                      <Text style={styles.bolinha}>◯ </Text>
                     )}
                     {label}
                   </Text>
@@ -140,65 +140,79 @@ export default function Pacoca() {
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
-                  <Text style={styles.bolinha}>○ </Text>
+                  <Text style={styles.bolinha}>◯ </Text>
                 )}
-                {index + 1}. {label}
+               {label}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
       <View style={styles.botoesContainer}>
-        <Modal transparent visible={modalVisible} animationType="slide">
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitulo}>
-                O Que Fazer com Comida Estragada?
-              </Text>
-              <Text style={styles.modalTexto}>
-                <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
-                <Text style={{ fontWeight: "bold" }}>
-                  Plásticos e embalagens:
-                </Text>{" "}
-                potes, sacos, tampas e garrafas devem ser limpos e colocados no
-                lixo reciclável. Não precisa lavar tudo com sabão, só tirar o
-                grosso da sujeira já ajuda bastante.{"\n\n"}
-                <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                conservas, garrafas e frascos podem ser reciclados. Se estiverem
-                quebrados, embale bem em jornal ou outro material para evitar
-                acidentes.{"\n\n"}
-                <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                alimentos, papel toalha (se seco e limpo), embalagens de papel e
-                papelão vão para a reciclagem. Se estiver engordurado ou muito
-                sujo, jogue no lixo comum.{"\n\n"}
-                <Text style={{ fontWeight: "bold" }}>
-                  Óleo de cozinha usado:
-                </Text>{" "}
-                nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica
-                e leve até um ponto de coleta.{"\n\n"}
-                <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                reciclável.{"\n\n"}
-                <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                um manual completo sobre compostagem aqui:{" "}
-                <Text
-                  style={{ color: "blue", textDecorationLine: "underline" }}
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                    )
-                  }
-                >
-                  Manual de Compostagem
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
                 </Text>
-              </Text>
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Text style={styles.textoFechar}>Fechar</Text>
-              </TouchableOpacity>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                  {"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Plásticos e embalagens:
+                  </Text>{" "}
+                  potes, sacos, tampas e garrafas devem ser limpos e colocados
+                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                  conservas, garrafas e frascos podem ser reciclados. Se
+                  estiverem quebrados, embale bem em jornal ou outro material
+                  para evitar acidentes.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                  alimentos, papel toalha (se seco e limpo), embalagens de papel
+                  e papelão vão para a reciclagem. Se estiver engordurado ou
+                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>
+                    Óleo de cozinha usado:
+                  </Text>{" "}
+                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                  plástica e leve até um ponto de coleta.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                  reciclável.{"\n\n"}
+                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                  um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
@@ -221,13 +235,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    height: "50%",
     backgroundColor: "#ECECEC",
-    paddingBottom: 40,
   },
   decorativeImage: {
     position: "absolute",
     left: 135,
-    top: -10,
+    top: 0,
     right: 0,
     width: 350,
     height: 500,
@@ -238,7 +252,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 90,
     marginLeft: 10,
-    zIndex: 1,
   },
   paragraph: {
     fontSize: 22,
@@ -302,7 +315,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-
   modalButton: {
     backgroundColor: "#009E60",
     alignItems: "center",
