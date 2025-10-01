@@ -4,16 +4,20 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+
+// Funções de anúncio e recompensa
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -30,15 +34,13 @@ export default function Brigadeiro() {
     item5: false,
     item6: false,
     item7: false,
-    item8: false,
     step1: false,
     step2: false,
     step3: false,
-    step4: false,
-    step5: false,
-    step6: false,
-    step7: false,
   });
+
+  const [adShown, setAdShown] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const itemsMap: { [key: string]: string } = {
     item1: "3 ovos",
@@ -59,10 +61,23 @@ export default function Brigadeiro() {
       "Monte a marmita com uma porção de arroz e a omelete por cima ou ao lado.",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  // Função para alternar checks e exibir anúncio quando todos forem marcados
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio intersticial fechado."));
+      }
+    }, 100);
   };
 
+  // Função para salvar e compartilhar lista de compras
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -93,14 +108,13 @@ export default function Brigadeiro() {
       console.error(err);
     }
   };
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         <View style={styles.container}>
           <Image
-            source={require("../assets/images/fundo_arroz_marmita.png")} // Certifique-se de que o caminho está correto
+            source={require("../assets/images/fundo_arroz_marmita.png")}
             style={styles.decorativeImage}
             resizeMode="contain"
           />
@@ -111,33 +125,29 @@ export default function Brigadeiro() {
               onPress={() => nav.navigate("marmitas")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-              <Text style={styles.paragraph}>
-                ARROZ À GREGA COM OMELETE
-              </Text>{" "}
+              <Text style={styles.paragraph}>ARROZ À GREGA COM OMELETE</Text>
             </TouchableOpacity>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            <View>
-              {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                  <Text style={styles.topicos}>
-                    {checkedItems[key] ? (
-                      <Text style={styles.check}>✓ </Text>
-                    ) : (
-                      <Text style={styles.bolinha}>◯ </Text>
-                    )}
-                    {label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>◯ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -149,89 +159,52 @@ export default function Brigadeiro() {
             </TouchableOpacity>
           ))}
         </View>
-      </ScrollView>{" "}
+      </ScrollView>
+
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
           onPress={() => setModalVisible(true)}
         >
-          <Feather
-            name="refresh-cw"
-            size={20}
-            color="#fff"
-            style={styles.iconeBotao}
-          />
+          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
-
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
-          <Feather
-            name="download"
-            size={20}
-            color="#FFCC00"
-            style={styles.iconeBotao}
-          />
+          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal do descarte */}
+      <Modal transparent visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTexto}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() => Linking.openURL("https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/")}>
+                Manual de Compostagem
+              </Text>
+            </Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.textoFechar}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

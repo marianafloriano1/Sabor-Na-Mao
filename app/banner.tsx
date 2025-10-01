@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const PRODUCTION_AD_UNIT_ID = 'ca-app-pub-3940256099942544/6300978111'; //mudar o id
@@ -21,11 +21,7 @@ export default function CustomBannerAd() {
         }}
       />
 
-      <View style={styles.debugContainer}>
-        <Text style={styles.debugText}>
-          {adStatus}
-        </Text>
-      </View>
+      
     </View>
   );
 }
@@ -34,12 +30,5 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     marginTop: 10,
-  },
-  debugContainer: {
-    alignItems: 'center',
-  },
-  debugText: {
-    color: '#565656', // cor neutra
-    fontSize: 12,
   }
 });
