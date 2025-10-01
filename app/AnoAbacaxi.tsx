@@ -2,17 +2,20 @@ import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
+import { anunciobola } from "./anunciobola"; // mesmo esquema do outro código
+import { recompensa } from "./recompensa";
+
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -30,49 +33,59 @@ export default function App() {
     item5: false,
     item6: false,
     item7: false,
-    item8: false,
-    item9: false,
-    item10: false,
-    item11: false,
-    item12: false,
-    item13: false,
-    item14: false,
-    item15: false,
-    item16: false,
-    item17: false,
-    item18: false,
-    item19: false,
-    item20: false,
     step1: false,
     step2: false,
     step3: false,
     step4: false,
-    step5: false,
-    step6: false,
-    step7: false,
-    step8: false,
-    step9: false,
-    step10: false,
-    step11: false,
   });
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [adShown, setAdShown] = useState(false);
 
   const itemsMap: { [key: string]: string } = {
     item1: "Gelo a gosto",
     item2: "4 folhas de hortelã",
     item3: "1 xícara de suco de abacaxi",
     item4: "1 colher (sopa) de suco de limão",
-    item5: "1/2 xícara de água com \ngás ou soda (gelada)",
+    item5: "1/2 xícara de água com gás ou soda (gelada)",
     item6: "1 colher (chá) de gengibre fresco ralado (opcional)",
     item7: "Rodelas de abacaxi e ramos de hortelã para decorar",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const stepsMap: { [key: string]: string } = {
+    step1:
+      "Em uma coqueteleira ou copo grande, amasse levemente as folhas de hortelã com o gengibre e o suco de limão.",
+    step2:
+      "Coloque o suco de abacaxi e misture bem. Coe se quiser uma bebida mais lisa.",
+    step3:
+      "Encha um copo com gelo, despeje a mistura e complete com água com gás ou club soda.",
+    step4:
+      "Finalize com uma rodela de abacaxi na borda e um ramo de hortelã.",
   };
 
+  // Marca/desmarca bolinha + dispara anúncio se tudo concluído
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = {
+      ...checkedItems,
+      [key]: !checkedItems[key],
+    };
+
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true); // evita repetir
+        anunciobola(() => {
+          console.log("Anúncio fechado.");
+        });
+      }
+    }, 100);
+  };
+
+  // Salvar lista de compras
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -84,7 +97,7 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri = FileSystem.documentDirectory + "lista_de_compras_mocktail.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -103,7 +116,12 @@ export default function App() {
     }
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
+  // Botão de download chama recompensa
+  const handleDownloadPress = () => {
+    recompensa(() => {
+      salvarListaDeCompras();
+    });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -120,7 +138,6 @@ export default function App() {
               onPress={() => nav.navigate("ano_novo")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-
               <Text style={styles.paragraph}>Mocktail de Abacaxi</Text>
             </TouchableOpacity>
           </View>
@@ -128,10 +145,13 @@ export default function App() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
+                      <Text style={styles.check}>✓ </Text>
                     ) : (
                       <Text style={styles.bolinha}>◯ </Text>
                     )}
@@ -142,51 +162,20 @@ export default function App() {
             </View>
           </View>
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Em uma coqueteleira ou copo grande, amasse levemente as folhas de
-              hortelã com o gengibre e o suco de limão.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Coloque o suco de abacaxi e misture bem. Coe se quiser uma bebida
-              mais lisa.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Encha um copo com gelo, despeje a mistura e complete com água com
-              gás ou club soda.
-            </Text>
-          </TouchableOpacity>{" "}
-          <TouchableOpacity onPress={() => toggleCheck("step4")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Finalize com uma rodela de abacaxi na borda e um ramo de hortelã.
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      </ScrollView>{" "}
+      </ScrollView>
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
@@ -214,16 +203,14 @@ export default function App() {
                     Plásticos e embalagens:
                   </Text>{" "}
                   potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
+                  no lixo reciclável.{"\n\n"}
                   <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
                   conservas, garrafas e frascos podem ser reciclados. Se
                   estiverem quebrados, embale bem em jornal ou outro material
                   para evitar acidentes.{"\n\n"}
                   <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
                   alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
+                  e papelão vão para a reciclagem.{"\n\n"}
                   <Text style={{ fontWeight: "bold" }}>
                     Óleo de cozinha usado:
                   </Text>{" "}
@@ -254,7 +241,7 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={handleDownloadPress}
         >
           <Feather
             name="download"
@@ -273,12 +260,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "50%",
     backgroundColor: "#ECECEC",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
+    paddingBottom: 40,
   },
   tituloContainer: {
     flexDirection: "row",
@@ -292,7 +275,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginLeft: 5,
   },
-
   ingredientes: {
     marginTop: 100,
     fontSize: 18,
@@ -318,43 +300,34 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 55,
-  },
-
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: "#009B4D",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: "#2F4B54",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   iconeBotao: {
     marginRight: 10,
   },
-
   textoBotao: {
     color: "#fff",
     fontSize: 16,
   },
-
   decorativeImage: {
     position: "absolute",
     left: 135,
@@ -363,16 +336,6 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
-  },
-  modalButton: {
-    backgroundColor: "#009E60",
-    alignItems: "center",
-    marginHorizontal: 20,
-    width: "100%",
-    resizeMode: "contain",
-    marginLeft: "auto",
-    height: 40,
-    marginTop: 30,
   },
   modalContainer: {
     flex: 1,
@@ -402,17 +365,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  toggleText: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#fff",
-    textTransform: "uppercase",
-  },
   touchTitulo: {
     flexDirection: "row",
     alignItems: "center",
-    width: "100%", // ocupa toda a largura do container
-    paddingVertical: 10, // aumenta a área de toque vertical
-    paddingHorizontal: 10, // aumenta a área de toque horizontal
+    width: "100%",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });

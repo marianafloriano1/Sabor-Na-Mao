@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import { validateUser } from '../bancodedados';
 
+
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -92,13 +93,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  splashContainer: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-  splashVideo: {
-    flex: 1,
-  },
+
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',

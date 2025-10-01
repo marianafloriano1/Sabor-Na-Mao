@@ -15,6 +15,10 @@ import {
   View,
 } from "react-native";
 
+// Funções de anúncio
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
+
 type CheckedItems = {
   [key: string]: boolean;
 };
@@ -56,6 +60,9 @@ export default function App() {
     step11: false,
   });
 
+  const [adShown, setAdShown] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const itemsMap: { [key: string]: string } = {
     item1: "12 tomates-cereja",
     item2: "Azeite de oliva extra virgem",
@@ -67,13 +74,30 @@ export default function App() {
     item8: "12 bolinhas de mussarela de búfala (ou cubos pequenos)",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const passosPreparo: { [key: string]: string } = {
+    step1: "Em cada palito, espete um tomate-cereja, uma folha de manjericão dobrada e uma bolinha de mussarela.",
+    step2: "Disponha os palitos em um prato ou tábua. Regue com azeite, sal e pimenta. Adicione vinagre balsâmico se quiser.",
+    step3: "Sirva imediatamente ou mantenha refrigerado até a hora de servir.",
+    step4: "Pode acompanhar sorvete, iogurte gelado ou ser servido puro como sobremesa.",
   };
 
+  // Alterna check e verifica se todos os itens e passos estão marcados
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(passosPreparo)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio intersticial fechado."));
+      }
+    }, 100);
+  };
+
+  // Salvar lista de compras
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -103,7 +127,13 @@ export default function App() {
       console.error(err);
     }
   };
-  const [modalVisible, setModalVisible] = useState(false);
+
+  // Botão salvar lista com anúncio de recompensa
+  const handleDownloadPress = () => {
+    recompensa(() => {
+      salvarListaDeCompras();
+    });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -120,154 +150,79 @@ export default function App() {
               onPress={() => nav.navigate("aperitivos")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-
-              <Text style={styles.paragraph}>Caprese no Palito </Text>
+              <Text style={styles.paragraph}>Caprese no Palito</Text>
             </TouchableOpacity>
           </View>
+
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            <View>
-              {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                  <Text style={styles.topicos}>
-                    {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
-                    ) : (
-                      <Text style={styles.bolinha}>◯ </Text>
-                    )}
-                    {label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>◯ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
+
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Em cada palito, espete um tomate-cereja, uma folha de manjericão
-              dobrada e uma bolinha de mussarela.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Disponha os palitos em um prato ou tábua. Regue com um fio de
-              azeite de oliva, salpique sal e pimenta a gosto. Se quiser,
-              adicione algumas gotas de vinagre balsâmico ou reduza um pouco do
-              vinagre balsâmico para fazer uma calda e regar por cima.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Sirva imediatamente ou mantenha refrigerado até a hora de servir.
-            </Text>
-          </TouchableOpacity>{" "}
-          <TouchableOpacity onPress={() => toggleCheck("step4")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Pode acompanhar uma bola de sorvete, iogurte gelado ou ser servido
-              puro como sobremesa.
-            </Text>
-          </TouchableOpacity>{" "}
+          {Object.entries(passosPreparo).map(([key, text]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {text}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      </ScrollView>{" "}
+      </ScrollView>
+
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
           onPress={() => setModalVisible(true)}
         >
-          <Feather
-            name="refresh-cw"
-            size={20}
-            color="#fff"
-            style={styles.iconeBotao}
-          />
+          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
-
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
-        >
-          <Feather
-            name="download"
-            size={20}
-            color="#FFCC00"
-            style={styles.iconeBotao}
-          />
+        <TouchableOpacity style={styles.botaoCinza} onPress={handleDownloadPress}>
+          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal transparent visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTexto}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas limpos vão para o lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha seco e limpo, papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Dica final:</Text> veja o{" "}
+              <Text style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() => Linking.openURL("https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/")}>
+                Manual de Compostagem
+              </Text>
+            </Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.textoFechar}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -278,10 +233,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "50%",
     backgroundColor: "#ECECEC",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   tituloContainer: {
     flexDirection: "row",
@@ -295,7 +246,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginLeft: 5,
   },
-
   ingredientes: {
     marginTop: 100,
     fontSize: 18,
@@ -321,44 +271,34 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 55,
-  },
-
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
-
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: "#009B4D",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: "#2F4B54",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   iconeBotao: {
     marginRight: 10,
   },
-
   textoBotao: {
     color: "#fff",
     fontSize: 16,
   },
-
   decorativeImage: {
     position: "absolute",
     left: 135,
@@ -367,17 +307,6 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
-  },
-
-  modalButton: {
-    backgroundColor: "#009E60",
-    alignItems: "center",
-    marginHorizontal: 20,
-    width: "100%",
-    resizeMode: "contain",
-    marginLeft: "auto",
-    height: 40,
-    marginTop: 30,
   },
   modalContainer: {
     flex: 1,
@@ -407,17 +336,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  toggleText: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#fff",
-    textTransform: "uppercase",
-  },
   touchTitulo: {
     flexDirection: "row",
     alignItems: "center",
-    width: "100%", // ocupa toda a largura do container
-    paddingVertical: 10, // aumenta a área de toque vertical
-    paddingHorizontal: 10, // aumenta a área de toque horizontal
+    width: "100%",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });

@@ -1,4 +1,3 @@
-import { Feather } from '@expo/vector-icons';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { router, useFocusEffect } from 'expo-router';
@@ -114,9 +113,9 @@ export default function App() {
             }).start();
         });
     };
-  const [creditsVisible, setCreditsVisible] = useState(false);
+    const [creditsVisible, setCreditsVisible] = useState(false);
 
-  
+
     return (
         <View style={styles.container}>
             <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
@@ -130,7 +129,7 @@ export default function App() {
                                         style={styles.infoButton}
                                         onPress={() => setCreditsVisible(true)}
                                     >
-                                        <Feather name="info" size={22} color="#333" />
+                                        <Text style={{ fontSize: 22 }} >©</Text>
                                     </TouchableOpacity>
 
                                     <Modal

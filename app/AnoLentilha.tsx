@@ -15,50 +15,26 @@ import {
   View,
 } from "react-native";
 
+// importa suas funções de anúncio
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
+
 type CheckedItems = {
   [key: string]: boolean;
 };
 
-export default function App() {
+export default function SaladaDeLentilha() {
   const nav = useNavigation<NavigationProp<any>>();
 
-  const [checkedItems, setCheckedItems] = useState<CheckedItems>({
-    item1: false,
-    item2: false,
-    item3: false,
-    item4: false,
-    item5: false,
-    item6: false,
-    item7: false,
-    item8: false,
-    item9: false,
-    item10: false,
-    item11: false,
-    item12: false,
-    item13: false,
-    item14: false,
-    item15: false,
-    item16: false,
-    item17: false,
-    item18: false,
-    item19: false,
-    item20: false,
-    step1: false,
-    step2: false,
-    step3: false,
-    step4: false,
-    step5: false,
-    step6: false,
-    step7: false,
-    step8: false,
-    step9: false,
-    step10: false,
-    step11: false,
-  });
+  // controle dos checkboxes
+  const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
+  const [modalVisible, setModalVisible] = useState(false);
+  const [adShown, setAdShown] = useState(false); // controla se já exibiu anúncio
 
+  // ingredientes
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de lentilha crua",
-    item2: "1/2 pimentão vermelho\n picado",
+    item2: "1/2 pimentão vermelho picado",
     item3: "1/2 pepino em cubos pequenos",
     item4: "2 colheres (sopa) de azeite de oliva",
     item5: "1/2 cebola roxa picada em cubinhos",
@@ -68,13 +44,39 @@ export default function App() {
     item9: "Suco de 1 limão ou 2 colheres (sopa) de vinagre",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  // modo de preparo
+  const stepsMap: { [key: string]: string } = {
+    step1:
+      "Lave bem e cozinhe em água com sal por cerca de 20 minutos, até que fique macia mas firme. Escorra e deixe esfriar.",
+    step2: "Corte todos os ingredientes em cubinhos ou tiras pequenas.",
+    step3: "Em uma tigela grande, junte a lentilha fria com os vegetais e ervas.",
+    step4: "Adicione o limão (ou vinagre), azeite, sal e pimenta. Misture bem.",
+    step5: "Leve à geladeira por 30 minutos para que os sabores se integrem melhor.",
   };
 
+  // alternar check/uncheck + verificação de anúncio
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = {
+      ...checkedItems,
+      [key]: !checkedItems[key],
+    };
+
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => {
+          console.log("Anúncio intersticial fechado.");
+        });
+      }
+    }, 100);
+  };
+
+  // salvar lista (somente não marcados) com anúncio de recompensa
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -104,191 +106,138 @@ export default function App() {
       console.error(err);
     }
   };
-  const [modalVisible, setModalVisible] = useState(false);
+
+  // botão salvar lista -> anúncio de recompensa antes
+  const handleDownloadPress = () => {
+    recompensa(() => {
+      salvarListaDeCompras();
+    });
+  };
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
+          {/* imagem decorativa */}
           <Image
             source={require("../assets/images/fundo_lentilha.png")}
             style={styles.decorativeImage}
             resizeMode="contain"
           />
+
+          {/* título com botão voltar */}
           <View style={styles.tituloContainer}>
-            <TouchableOpacity onPress={() => nav.navigate("ano_novo")}>
+            <TouchableOpacity
+              style={{ flexDirection: "row", alignItems: "center" }}
+              onPress={() => nav.navigate("ano_novo")}
+            >
               <Feather name="chevron-left" size={28} color="#000" />
-            
-            <Text style={styles.paragraph}>Salada de Lentilha</Text>
+              <Text style={styles.paragraph}>Salada de Lentilha</Text>
             </TouchableOpacity>
           </View>
+
+          {/* ingredientes */}
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            <View>
-              {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                  <Text style={styles.topicos}>
-                    {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
-                    ) : (
-                      <Text style={styles.bolinha}>◯ </Text>
-                    )}
-                    {label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>◯ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
+
+          {/* modo de preparo */}
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Lave bem e cozinhe em água com uma pitada de sal por cerca de 20
-              minutos, até que fique macia, mas firme (não deixe desmanchar).
-              Escorra e espere esfriar.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Corte todos os ingredientes em cubinhos ou tiras pequenas.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Em uma tigela grande, junte a lentilha fria com os vegetais e
-              ervas.
-            </Text>
-          </TouchableOpacity>{" "}
-          <TouchableOpacity onPress={() => toggleCheck("step4")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Adicione o limão (ou vinagre), azeite, sal e pimenta. Misture bem.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step5")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Leve à geladeira por 30 minutos para que os sabores se integrem
-              melhor.
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      </ScrollView>{" "}
+      </ScrollView>
+
+      {/* botões inferiores */}
       <View style={styles.botoesContainer}>
+        {/* botão modal */}
         <TouchableOpacity
           style={styles.botaoVerde}
           onPress={() => setModalVisible(true)}
         >
-          <Feather
-            name="refresh-cw"
-            size={20}
-            color="#fff"
-            style={styles.iconeBotao}
-          />
+          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
-
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
-        >
-          <Feather
-            name="download"
-            size={20}
-            color="#FFCC00"
-            style={styles.iconeBotao}
-          />
+        {/* botão salvar lista com anúncio */}
+        <TouchableOpacity style={styles.botaoCinza} onPress={handleDownloadPress}>
+          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
+
+      {/* modal */}
+      <Modal transparent visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTexto}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras
+              e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes,
+              sacos, tampas e garrafas devem ser limpos e reciclados.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas,
+              garrafas e frascos podem ser reciclados.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos e
+              papelão limpos vão para a reciclagem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> nunca
+              jogue no ralo. Guarde em garrafa plástica e leve até um ponto de coleta.
+              {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Latas:</Text> enxágue e coloque no lixo
+              reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Veja um manual
+              completo sobre compostagem em:{" "}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
+                Manual de Compostagem
+              </Text>
+            </Text>
+
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.textoFechar}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
+// estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "50%",
     backgroundColor: "#ECECEC",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
+    paddingBottom: 20,
   },
   tituloContainer: {
     flexDirection: "row",
@@ -300,91 +249,67 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#242424",
     textTransform: "uppercase",
-    marginLeft: 35,
-    bottom: 30
+    marginLeft: 10,
   },
-
   ingredientes: {
-    marginTop: 100,
+    marginTop: 40,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
   },
   ingredientesContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    marginBottom: 20,
   },
   topicos: {
     marginBottom: 10,
-    lineHeight: 24,
+    lineHeight: 22,
     left: 44,
     width: 290,
   },
   check: {
     color: "#32CD32",
-    fontSize: 20,
-    marginRight: 5,
+    fontSize: 18,
   },
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 55,
-  },
-
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
-    height: 50,
+    height: 55,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: "#009B4D",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: "#2F4B54",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   iconeBotao: {
-    marginRight: 10,
+    marginRight: 8,
   },
-
   textoBotao: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 15,
   },
-
   decorativeImage: {
     position: "absolute",
     left: 135,
     top: 0,
-    right: 0,
     width: 350,
     height: 500,
     zIndex: 0,
-  },
-
-  modalButton: {
-    backgroundColor: "#009E60",
-    alignItems: "center",
-    marginHorizontal: 20,
-    width: "100%",
-    resizeMode: "contain",
-    marginLeft: "auto",
-    height: 40,
-    marginTop: 30,
   },
   modalContainer: {
     flex: 1,
@@ -396,16 +321,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
-    width: "100%",
+    width: "90%",
     maxWidth: 350,
   },
   modalTitulo: {
     fontSize: 18,
-    marginBottom: 30,
+    marginBottom: 20,
     color: "green",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   modalTexto: {
-    fontSize: 16,
+    fontSize: 15,
     marginBottom: 20,
   },
   textoFechar: {
@@ -413,11 +340,5 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 16,
     fontWeight: "bold",
-  },
-  toggleText: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#fff",
-    textTransform: "uppercase",
   },
 });

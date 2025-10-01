@@ -1,9 +1,9 @@
-import { Feather } from "@expo/vector-icons";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import type { NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
-import { logout } from '../bancodedados';
+import Tooltip from "react-native-walkthrough-tooltip";
 
 import {
   Animated,
@@ -14,10 +14,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import Tooltip from "react-native-walkthrough-tooltip";
-
 type RootStackParamList = {
   heranca: undefined;
   login: undefined;
@@ -60,9 +58,15 @@ export default function App() {
     "Mister Panela",
     "Mestre Cuca",
     "Chef de Plantão",
-    "Mastre do Tempero",
+    "Mestre do Tempero",
     "Panela Quente",
     "Sabor Divino",
+    "Mestre Miojo",
+"Doutor Feijão",
+"Chef X-Tudo",
+"Capitão Cuscuz",
+"General Brigadeiro",
+"Lord Pastel",
   ];
   const profilePics = [
     require("../assets/images/perfil1.png"),
@@ -149,6 +153,10 @@ export default function App() {
   const [creditsVisible, setCreditsVisible] = useState(false);
 
 
+  function logout() {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <View style={styles.container}>
       <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
@@ -159,10 +167,10 @@ export default function App() {
               content={
                 <View style={styles.tooltipContainer}>
                    <TouchableOpacity
-                    style={styles.infoButton}
+                   style={styles.infoButton}
                     onPress={() => setCreditsVisible(true)}
                   >
-                    <Feather name="info" size={22} color="#333" />
+                    <Text style={{ fontSize: 22 }} >©</Text>
                   </TouchableOpacity>
 
                   <Modal

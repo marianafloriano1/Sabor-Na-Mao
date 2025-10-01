@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
 
-
 type RootStackParamList = {
   heranca: undefined;
   login: undefined;
@@ -175,36 +174,36 @@ export default function App() {
               isVisible={toolTipVisible}
               content={
                 <View style={styles.tooltipContainer}>
-                   <TouchableOpacity
-                                      style={styles.infoButton}
-                                      onPress={() => setCreditsVisible(true)}
-                                    >
-                                      <Feather name="info" size={22} color="#333" />
-                                    </TouchableOpacity>
-                  
-                                    <Modal
-                                      animationType="slide"
-                                      transparent={true}
-                                      visible={creditsVisible}
-                                      onRequestClose={() => setCreditsVisible(false)}
-                                    >
-                                      <View style={styles.modalOverlay}>
-                                        <View style={styles.modalContent2}>
-                                          <Text style={styles.modalTitle}>Créditos</Text>
-                                          <Text style={styles.modalText}>
-                                            Ícones e recursos visuais utilizados neste aplicativo foram obtidos em{" "}
-                                            <Text style={{ fontWeight: "bold" }}>Freepik</Text>.
-                                            {"\n"}Mais em: www.freepik.com
-                                          </Text>
-                                          <TouchableOpacity
-                                            style={styles.closeButton}
-                                            onPress={() => setCreditsVisible(false)}
-                                          >
-                                            <Text style={styles.closeText}>Fechar</Text>
-                                          </TouchableOpacity>
-                                        </View>
-                                      </View>
-                                    </Modal>
+                  <TouchableOpacity
+                    style={styles.infoButton}
+                    onPress={() => setCreditsVisible(true)}
+                  >
+                    <Text style={{ fontSize: 22 }} >©</Text>
+                  </TouchableOpacity>
+
+                  <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={creditsVisible}
+                    onRequestClose={() => setCreditsVisible(false)}
+                  >
+                    <View style={styles.modalOverlay}>
+                      <View style={styles.modalContent2}>
+                        <Text style={styles.modalTitle}>Créditos</Text>
+                        <Text style={styles.modalText}>
+                          Ícones e recursos visuais utilizados neste aplicativo foram obtidos em{" "}
+                          <Text style={{ fontWeight: "bold" }}>Freepik</Text>.
+                          {"\n"}Mais em: www.freepik.com
+                        </Text>
+                        <TouchableOpacity
+                          style={styles.closeButton}
+                          onPress={() => setCreditsVisible(false)}
+                        >
+                          <Text style={styles.closeText}>Fechar</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Modal>
                   <View style={styles.userInfo}>
                     <View style={styles.userIcon}>
                       <Image
@@ -818,9 +817,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: "Imprima"
   },
-   infoButton: {
+  infoButton: {
     position: "absolute",
-    right: -10, 
+    right: -10,
     top: -10,
     padding: 6,
   },

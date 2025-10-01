@@ -21,7 +21,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
 type Recipe = {
   recipeName: string;
   authorName: string;
@@ -163,7 +162,8 @@ export default function App(): JSX.Element {
       source={require("../assets/images/fundo_heranca.png")}
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.scroll}>
+      
+      <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <View style={styles.headerContainer}>
           <TouchableOpacity
             style={styles.seta}
@@ -274,50 +274,85 @@ export default function App(): JSX.Element {
       </Modal>
 
       {/* Modal Detalhes da Receita */}
-      <Modal
-        visible={recipeDetailsModalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setRecipeDetailsModalVisible(false)}
-      >
-        <View style={styles.modalContainer2}>
-          <View style={styles.modalContent2}>
-            {selectedRecipe && (
-              <>
-                <TouchableOpacity
-                  style={styles.x}
-                  onPress={() => setRecipeDetailsModalVisible(false)}
-                >
-                  <Feather name="x" size={34} color="red" />
-                </TouchableOpacity>
-                <Image
-                  source={{ uri: selectedRecipe.photo }}
-                  style={styles.modalImage}
-                />
-                <Text style={styles.modalTitle}>
-                  {selectedRecipe.recipeName}
-                </Text>
-                <Text style={styles.modal_authorName}>
-                  por {selectedRecipe.authorName}
-                </Text>
-                <Text style={styles.modalText}>Ingredientes:</Text>
-                {selectedRecipe.ingredients.split("\n").map((item, idx) => (
-                  <Text key={idx} style={styles.recipeDescription}>
-                    • {item.trim()}
-                  </Text>
-                ))}
+<Modal
+  visible={recipeDetailsModalVisible}
+  animationType="slide"
+  transparent={true}
+  onRequestClose={() => setRecipeDetailsModalVisible(false)}
+>
+  <View style={styles.modalContainer2}>
+    <View style={styles.modalContent2}>
+      {selectedRecipe && (
+        <>
+          <TouchableOpacity
+            style={styles.x}
+            onPress={() => setRecipeDetailsModalVisible(false)}
+          >
+            <Feather name="x" size={34} color="red" />
+          </TouchableOpacity>
 
-                <Text style={styles.modal_preparo}>Modo de Preparo:</Text>
-                {selectedRecipe.instructions.split("\n").map((step, idx) => (
-                  <Text key={idx} style={styles.recipeDescription}>
-                    {idx + 1}. {step.trim()}
-                  </Text>
-                ))}
-              </>
-            )}
-          </View>
-        </View>
-      </Modal>
+          <Image
+            source={{ uri: selectedRecipe.photo }}
+            style={styles.modalImage}
+          />
+
+          <Text style={styles.modalTitle}>{selectedRecipe.recipeName}</Text>
+          <Text style={styles.modal_authorName}>
+            por {selectedRecipe.authorName}
+          </Text>
+
+          <Text style={styles.modalText}>Ingredientes:</Text>
+          {selectedRecipe.ingredients.split("\n").map((item, idx) => (
+            <Text key={idx} style={styles.recipeDescription}>
+              • {item.trim()}
+            </Text>
+          ))}
+
+          <Text style={styles.modal_preparo}>Modo de Preparo:</Text>
+          {selectedRecipe.instructions.split("\n").map((step, idx) => (
+            <Text key={idx} style={styles.recipeDescription}>
+              {idx + 1}. {step.trim()}
+            </Text>
+          ))}
+
+          {/* Botão de excluir */}
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => {
+              Alert.alert(
+                "Confirmar exclusão",
+                "Tem certeza que deseja excluir esta receita?",
+                [
+                  { text: "Cancelar", style: "cancel" },
+                  {
+                    text: "Excluir",
+                    style: "destructive",
+                    onPress: async () => {
+                      const updatedRecipes = savedRecipes.filter(
+                        (r) =>
+                          !(
+                            r.recipeName === selectedRecipe.recipeName &&
+                            r.authorName === selectedRecipe.authorName
+                          )
+                      );
+                      setSavedRecipes(updatedRecipes);
+                      await saveRecipes(updatedRecipes);
+                      setRecipeDetailsModalVisible(false);
+                      Alert.alert("Sucesso", "Receita excluída!");
+                    },
+                  },
+                ]
+              );
+            }}
+          >
+            <Text style={styles.deleteButtonText}>Excluir Receita</Text>
+          </TouchableOpacity>
+        </>
+      )}
+    </View>
+  </View>
+</Modal>
+
     </ImageBackground>
   );
 }
@@ -619,4 +654,18 @@ const styles = StyleSheet.create({
     height: 150,
     marginLeft: 25,
   },
+  deleteButton: {
+  marginTop: 30,
+  backgroundColor: "red",
+  padding: 12,
+  borderRadius: 10,
+  alignItems: "center",
+},
+deleteButtonText: {
+  color: "white",
+  fontWeight: "bold",
+  fontSize: 16,
+  fontFamily: "Imprima",
+},
+
 });

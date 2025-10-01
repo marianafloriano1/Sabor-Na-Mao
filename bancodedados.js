@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USERS_KEY = 'USERS';
 const LOGGED_USER_KEY = 'LOGGED_USER';

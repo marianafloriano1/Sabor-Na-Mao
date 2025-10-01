@@ -2,17 +2,20 @@ import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
+import { anunciobola } from "./anunciobola"; // importe a função
+import { recompensa } from './recompensa';
+
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -109,6 +112,36 @@ export default function AlmondegasDeCarneDeJaca() {
   };
   const [modalVisible, setModalVisible] = useState(false);
 
+  const handleDownloadPress = () => {
+    recompensa(() => {
+      salvarListaDeCompras();
+    });
+  };
+
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = {
+      ...checkedItems,
+      [key]: !checkedItems[key],
+    };
+
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every(k => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true); // evitar que o anúncio apareça mais de uma vez
+        anunciobola(() => {
+          console.log("Anúncio fechado.");
+        });
+      }
+    }, 100); // Delay para garantir que o estado seja atualizado antes da verificação
+  };
+
+
+  const [adShown, setAdShown] = useState(false);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
@@ -137,7 +170,7 @@ export default function AlmondegasDeCarneDeJaca() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -153,7 +186,7 @@ export default function AlmondegasDeCarneDeJaca() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -231,10 +264,7 @@ export default function AlmondegasDeCarneDeJaca() {
             </View>
           </Modal>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
-        >
+        <TouchableOpacity style={styles.botaoCinza} onPress={handleDownloadPress}>
           <Feather
             name="download"
             size={20}
