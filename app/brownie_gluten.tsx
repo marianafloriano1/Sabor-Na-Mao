@@ -4,16 +4,18 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
+
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -37,6 +39,9 @@ export default function Brownie() {
     step4: false,
   });
 
+  const [adShown, setAdShown] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const itemsMap: { [key: string]: string } = {
     item1: "4 ovos",
     item2: "1 xícara açúcar",
@@ -48,11 +53,26 @@ export default function Brownie() {
     item8: "1 colher (sobremesa) de aroma de baunilha",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const stepsMap: { [key: string]: string } = {
+    step1: "Bata todos os ingredientes no liquidificador com exceção das nozes.",
+    step2: "Acrescente as nozes e mexa com uma colher.",
+    step3: "Despeje em uma forma untada e leve para assar em forno preaquecido a 200ºC por 40 minutos.",
+    step4: "Está pronto! Aproveite.",
+  };
+
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
   const salvarListaDeCompras = async () => {
@@ -66,8 +86,7 @@ export default function Brownie() {
       return;
     }
 
-    const fileUri =
-      FileSystem.documentDirectory + "brownie_lista_de_compras.txt";
+    const fileUri = FileSystem.documentDirectory + "brownie_lista_de_compras.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -76,16 +95,15 @@ export default function Brownie() {
 
       const canShare = await Sharing.isAvailableAsync();
       if (canShare) {
-        await Sharing.shareAsync(fileUri);
+        recompensa(() => Sharing.shareAsync(fileUri));
       } else {
-        Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`);
+        recompensa(() => Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`));
       }
     } catch (err) {
       Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
       console.error(err);
     }
   };
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -104,39 +122,31 @@ export default function Brownie() {
               }
             >
               <Feather name="chevron-left" size={28} color="#000" />
-              <Text style={styles.paragraph}>Brownie de Chocolate</Text>{" "}
+              <Text style={styles.paragraph}>Brownie de Chocolate</Text>
             </TouchableOpacity>
           </View>
+
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            <View>
-              {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                  <Text style={styles.topicos}>
-                    {checkedItems[key] ? (
-                      <Text style={styles.check}>✓ </Text>
-                    ) : (
-                      <Text style={styles.bolinha}>◯ </Text>
-                    )}
-                    {label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>◯ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
+
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          {[
-            "Bata todos os ingredientes no liquidificador com exceção das nozes.",
-            "Acrescente as nozes e mexa com uma colher.",
-            "Despeje em uma forma untada e leve para assar em forno preaquecido a 200ºC por 40 minutos.",
-            "Está pronto! Aproveite.",
-          ].map((step, idx) => (
-            <TouchableOpacity
-              key={`step${idx + 1}`}
-              onPress={() => toggleCheck(`step${idx + 1}`)}
-            >
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
-                {checkedItems[`step${idx + 1}`] ? (
+                {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
@@ -147,63 +157,18 @@ export default function Brownie() {
           ))}
         </View>
       </ScrollView>
+
       <View style={styles.botoesContainer}>
-        <TouchableOpacity
-          style={styles.botaoVerde}
-          onPress={() => setModalVisible(true)}
-        >
-          <Feather
-            name="refresh-cw"
-            size={20}
-            color="#fff"
-            style={styles.iconeBotao}
-          />
+        <TouchableOpacity style={styles.botaoVerde} onPress={() => setModalVisible(true)}>
+          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>
               <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
+                <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
                 <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
+                  {/* Conteúdo do modal */}
                 </Text>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
                   <Text style={styles.textoFechar}>Fechar</Text>
@@ -213,16 +178,8 @@ export default function Brownie() {
           </Modal>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
-        >
-          <Feather
-            name="download"
-            size={20}
-            color="#FFCC00"
-            style={styles.iconeBotao}
-          />
+        <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>

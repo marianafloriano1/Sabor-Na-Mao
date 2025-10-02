@@ -15,6 +15,9 @@ import {
   View,
 } from "react-native";
 
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
+
 type CheckedItems = {
   [key: string]: boolean;
 };
@@ -64,10 +67,22 @@ export default function BoloDeCaneca() {
     step7: "Leve ao fogo baixo até formar uma calda e despeje sobre o bolo.",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+   const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
+  // Salva lista de compras dos itens não marcados
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -80,7 +95,7 @@ export default function BoloDeCaneca() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolo_de_caneca.txt";
+      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_chocolate.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -98,6 +113,9 @@ export default function BoloDeCaneca() {
       console.error(err);
     }
   };
+
+  const [adShown, setAdShown] = useState(false);
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -125,7 +143,7 @@ export default function BoloDeCaneca() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -141,7 +159,7 @@ export default function BoloDeCaneca() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -222,7 +240,7 @@ export default function BoloDeCaneca() {
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"
