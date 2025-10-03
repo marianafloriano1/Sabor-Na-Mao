@@ -97,7 +97,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_biscoitos.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -161,10 +162,7 @@ export default function App() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity
-              key={key}
-              onPress={() => toggleCheckWithAd(key)}
-            >
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>

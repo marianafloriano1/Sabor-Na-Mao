@@ -78,7 +78,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras_vitamina.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_vitamina_franboesa.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -120,38 +121,55 @@ export default function App() {
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>◯ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           <TouchableOpacity onPress={() => toggleCheckWithAd("step1")}>
             <Text style={styles.topicos}>
-              {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>◯ </Text>}
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>◯ </Text>
+              )}
               Coloque todos os ingredientes no liquidificador.
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => toggleCheckWithAd("step2")}>
             <Text style={styles.topicos}>
-              {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>◯ </Text>}
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>◯ </Text>
+              )}
               Bata por cerca de 1 minuto ou até obter uma mistura homogênea.
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => toggleCheckWithAd("step3")}>
             <Text style={styles.topicos}>
-              {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>◯ </Text>}
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>◯ </Text>
+              )}
               Prove e ajuste o doce, se necessário. Sirva imediatamente!
             </Text>
           </TouchableOpacity>
@@ -193,13 +211,32 @@ export default function App() {
               O Que Fazer com Comida Estragada?
             </Text>
             <Text style={styles.modalTexto}>
-              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
-              <Text style={{ color: "blue", textDecorationLine: "underline" }}
-                onPress={() => Linking.openURL("https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/")}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e colocados no
+              lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados. Se estiverem
+              quebrados, embale bem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha (se seco e limpo), embalagens de papel e
+              papelão vão para a reciclagem. Se estiver engordurado ou muito
+              sujo, jogue no lixo comum.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
                 Manual de Compostagem
               </Text>
             </Text>

@@ -56,7 +56,7 @@ export default function OvoDePascoa() {
     step8: "Desenforme e decore do jeito que preferir.",
   };
 
-const toggleCheckWithAd = (key: string) => {
+  const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
     setCheckedItems(updatedCheckedItems);
 
@@ -84,7 +84,7 @@ const toggleCheckWithAd = (key: string) => {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras.txt";
+      FileSystem.documentDirectory + "lista_de_compras_ovo_chocolate.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -130,7 +130,10 @@ const toggleCheckWithAd = (key: string) => {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -153,7 +156,7 @@ const toggleCheckWithAd = (key: string) => {
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
                 )}
-               {label}
+                {label}
               </Text>
             </TouchableOpacity>
           ))}

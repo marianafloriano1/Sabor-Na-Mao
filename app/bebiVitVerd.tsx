@@ -78,7 +78,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras_vitamina_verde.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_vitamina_verde.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -120,25 +121,30 @@ export default function App() {
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>◯ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {[
             "Lave bem todos os ingredientes.",
             "Coloque no liquidificador: a couve picada, a maçã/abacaxi, o suco de limão, o pepino (se usar), o gengibre, a água (ou água de coco) e o adoçante, se desejar.",
-            "Bata bem até ficar homogêneo. Sirva com gelo e consuma na hora para aproveitar todos os nutrientes. Para uma vitamina mais cremosa, você pode adicionar meio abacate ou uma banana. Se quiser turbinar com fibras e proteína, adicione 1 colher de chia, linhaça ou aveia."
+            "Bata bem até ficar homogêneo. Sirva com gelo e consuma na hora para aproveitar todos os nutrientes. Para uma vitamina mais cremosa, você pode adicionar meio abacate ou uma banana. Se quiser turbinar com fibras e proteína, adicione 1 colher de chia, linhaça ou aveia.",
           ].map((step, idx) => (
             <TouchableOpacity
               key={`step${idx + 1}`}
@@ -194,13 +200,28 @@ export default function App() {
             <Text style={styles.modalTexto}>
               <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
               cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text>{" "}
-              potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
-              <Text style={{ color: "blue", textDecorationLine: "underline" }}
-                onPress={() => Linking.openURL("https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/")}>
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e colocados no
+              lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha (se seco e limpo), embalagens de papel e
+              papelão vão para a reciclagem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
                 Manual de Compostagem
               </Text>
             </Text>

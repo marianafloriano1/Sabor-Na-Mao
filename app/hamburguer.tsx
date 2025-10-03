@@ -78,7 +78,7 @@ export default function HamburguerDeSoja() {
     step8: "Sirva com chips, catchup ou mostarda.",
   };
 
-   const toggleCheckWithAd = (key: string) => {
+  const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
     setCheckedItems(updatedCheckedItems);
 
@@ -106,7 +106,7 @@ export default function HamburguerDeSoja() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+      FileSystem.documentDirectory + "lista_de_compras_hamburguer.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -126,7 +126,7 @@ export default function HamburguerDeSoja() {
   };
 
   const [modalVisible, setModalVisible] = useState(false);
-const [adShown, setAdShown] = useState(false);
+  const [adShown, setAdShown] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -155,7 +155,10 @@ const [adShown, setAdShown] = useState(false);
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -178,7 +181,7 @@ const [adShown, setAdShown] = useState(false);
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
                 )}
-               {label}
+                {label}
               </Text>
             </TouchableOpacity>
           ))}

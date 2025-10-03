@@ -22,7 +22,6 @@ type CheckedItems = {
 import { anunciobola } from "./anunciobola";
 import { recompensa } from "./recompensa";
 
-
 export default function PeruABrasileira() {
   const nav = useNavigation<NavigationProp<any>>();
 
@@ -102,7 +101,7 @@ export default function PeruABrasileira() {
       "Coloque no refratário de servir e decore com farofa e tempero verde.",
   };
 
- const toggleCheckWithAd = (key: string) => {
+  const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
     setCheckedItems(updatedCheckedItems);
 
@@ -129,8 +128,7 @@ export default function PeruABrasileira() {
       return;
     }
 
-    const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+    const fileUri = FileSystem.documentDirectory + "lista_de_compras_peru.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -177,7 +175,10 @@ export default function PeruABrasileira() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, item]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>

@@ -65,7 +65,7 @@ export default function PaoDeQueijoVegano() {
     step7: "Agora é só servir. Bom apetite!",
   };
 
- const toggleCheckWithAd = (key: string) => {
+  const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
     setCheckedItems(updatedCheckedItems);
 
@@ -93,7 +93,7 @@ export default function PaoDeQueijoVegano() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_pao.txt";
+      FileSystem.documentDirectory + "lista_de_compras_pao_queijo.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -113,7 +113,7 @@ export default function PaoDeQueijoVegano() {
   };
 
   const [modalVisible, setModalVisible] = useState(false);
-const [adShown, setAdShown] = useState(false);
+  const [adShown, setAdShown] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -141,7 +141,10 @@ const [adShown, setAdShown] = useState(false);
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -164,7 +167,7 @@ const [adShown, setAdShown] = useState(false);
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
                 )}
-               {label}
+                {label}
               </Text>
             </TouchableOpacity>
           ))}
@@ -238,8 +241,7 @@ const [adShown, setAdShown] = useState(false);
 
         <TouchableOpacity
           style={styles.botaoCinza}
-         onPress={() => recompensa(() => salvarListaDeCompras())}
-
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"

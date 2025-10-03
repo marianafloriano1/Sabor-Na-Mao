@@ -33,13 +33,13 @@ export default function App() {
   // Ingredientes
   const itemsMap: { [key: string]: string } = {
     item1: "Palitos de churrasco",
-    item2: "2 colheres (sopa) de manteiga",
-    item3: "1 manga firme cortada em cubos",
+    item8: "4 colheres (sopa) de\n açúcar mascavo ou demerara",
     item4: "1/2 abacaxi cortado em cubos",
+    item2: "2 colheres (sopa) de manteiga",
+    item7: "Morangos inteiros (sem folhas)",
+    item3: "1 manga firme cortada em cubos",
     item5: "1 colher (chá) de canela (opcional)",
     item6: "2 bananas cortadas em rodelas grossas",
-    item7: "Morangos inteiros (sem folhas)",
-    item8: "4 colheres (sopa) de açúcar mascavo ou demerara",
   };
 
   // Modo de preparo
@@ -50,8 +50,7 @@ export default function App() {
       "Em uma frigideira grande, derreta a manteiga, acrescente o açúcar e a canela, mexa até formar um caramelo leve. Adicione os espetinhos e vá virando até dourar.",
     step3:
       "Pincele os espetinhos com a calda de açúcar. Leve à churrasqueira por 2–3 minutos de cada lado ou ao forno a 200 °C por 10 minutos.",
-    step4:
-      "Sirva com sorvete, iogurte gelado ou puro como sobremesa.",
+    step4: "Sirva com sorvete, iogurte gelado ou puro como sobremesa.",
   };
 
   // Alternar check + verificar anúncio
@@ -82,7 +81,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_espetinho_tropical.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -135,7 +135,10 @@ export default function App() {
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <TouchableOpacity
+                key={key}
+                onPress={() => toggleCheckWithAd(key)}
+              >
                 <Text style={styles.topicos}>
                   {checkedItems[key] ? (
                     <Text style={styles.check}>✓ </Text>
@@ -204,16 +207,16 @@ export default function App() {
               O Que Fazer com Comida Estragada?
             </Text>
             <Text style={styles.modalTexto}>
-              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas e
-              sobras vão para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas e sobras vão para o lixo orgânico.{"\n\n"}
               <Text style={{ fontWeight: "bold" }}>Plásticos:</Text> limpos e
               recicláveis.{"\n\n"}
               <Text style={{ fontWeight: "bold" }}>Vidros:</Text> recicláveis,
               mas se quebrados devem ser embalados.{"\n\n"}
               <Text style={{ fontWeight: "bold" }}>Papéis:</Text> limpos para
               reciclagem, engordurados no lixo comum.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha:</Text> guarde
-              em garrafa e leve a ponto de coleta.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha:</Text>{" "}
+              guarde em garrafa e leve a ponto de coleta.{"\n\n"}
               <Text style={{ fontWeight: "bold" }}>Dica:</Text> veja o{" "}
               <Text
                 style={{ color: "blue", textDecorationLine: "underline" }}
@@ -254,14 +257,12 @@ const styles = StyleSheet.create({
     color: "#242424",
     textTransform: "uppercase",
     marginLeft: 5,
-    fontWeight: "bold",
   },
   ingredientes: {
     marginTop: 40,
     fontSize: 18,
     marginBottom: 20,
     left: 44,
-    fontWeight: "600",
   },
   ingredientesContainer: {
     flexDirection: "column",

@@ -64,7 +64,14 @@ export default function App() {
     setCheckedItems(updatedCheckedItems);
 
     setTimeout(() => {
-      const allKeys = [...Object.keys(itemsMap), "step1", "step2", "step3", "step4", "step5"];
+      const allKeys = [
+        ...Object.keys(itemsMap),
+        "step1",
+        "step2",
+        "step3",
+        "step4",
+        "step5",
+      ];
       const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
 
       if (allChecked && !adShown) {
@@ -86,7 +93,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_bolinho_queijo.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -137,7 +145,10 @@ export default function App() {
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <TouchableOpacity
+                key={key}
+                onPress={() => toggleCheckWithAd(key)}
+              >
                 <Text style={styles.topicos}>
                   {checkedItems[key] ? (
                     <Text style={styles.check}>✓ </Text>
@@ -152,16 +163,23 @@ export default function App() {
 
           {/* Modo de preparo */}
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          {["step1","step2","step3","step4","step5"].map((stepKey) => {
+          {["step1", "step2", "step3", "step4", "step5"].map((stepKey) => {
             const stepText: { [key: string]: string } = {
-              step1: "Frite o bacon até ficar dourado e crocante. Escorra o excesso de gordura e deixe esfriar.",
-              step2: "Em uma tigela, misture o queijo, o bacon frito, o requeijão, pimenta, orégano e salsinha. Vá adicionando a farinha de trigo aos poucos até formar uma massa que dê para moldar.",
+              step1:
+                "Frite o bacon até ficar dourado e crocante. Escorra o excesso de gordura e deixe esfriar.",
+              step2:
+                "Em uma tigela, misture o queijo, o bacon frito, o requeijão, pimenta, orégano e salsinha. Vá adicionando a farinha de trigo aos poucos até formar uma massa que dê para moldar.",
               step3: "Com as mãos, modele pequenas bolinhas com a massa.",
-              step4: "Passe cada bolinha no ovo batido e depois na farinha de rosca. Se quiser mais crocância, repita o processo (ovo + farinha de rosca).",
-              step5: "Aqueça o óleo e frite as bolinhas em fogo médio até dourarem. Retire e escorra em papel-toalha.",
+              step4:
+                "Passe cada bolinha no ovo batido e depois na farinha de rosca. Se quiser mais crocância, repita o processo (ovo + farinha de rosca).",
+              step5:
+                "Aqueça o óleo e frite as bolinhas em fogo médio até dourarem. Retire e escorra em papel-toalha.",
             };
             return (
-              <TouchableOpacity key={stepKey} onPress={() => toggleCheckWithAd(stepKey)}>
+              <TouchableOpacity
+                key={stepKey}
+                onPress={() => toggleCheckWithAd(stepKey)}
+              >
                 <Text style={styles.topicos}>
                   {checkedItems[stepKey] ? (
                     <Text style={styles.check}>✓ </Text>
@@ -179,14 +197,30 @@ export default function App() {
       {/* Botões */}
       <View style={styles.botoesContainer}>
         {/* Modal descarte */}
-        <TouchableOpacity style={styles.botaoVerde} onPress={() => setModalVisible(true)}>
-          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
         </TouchableOpacity>
 
         {/* Baixar lista com anúncio */}
-        <TouchableOpacity style={styles.botaoCinza} onPress={handleDownloadPress}>
-          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={handleDownloadPress}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
@@ -195,13 +229,28 @@ export default function App() {
       <Modal transparent visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTitulo}>
+              O Que Fazer com Comida Estragada?
+            </Text>
             <Text style={styles.modalTexto}>
-              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras e restos vão para o lixo orgânico.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas limpos vão para o lixo reciclável.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha seco e limpo, papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos vão para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas limpos vão para o lixo reciclável.
+              {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados. Se estiverem
+              quebrados, embale bem em jornal ou outro material.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha seco e limpo, papelão vão para a
+              reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo
+              comum.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
               <Text style={{ fontWeight: "bold" }}>Dica final:</Text> veja o{" "}
               <Text
                 style={{ color: "blue", textDecorationLine: "underline" }}

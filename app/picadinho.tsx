@@ -65,7 +65,7 @@ export default function Brigadeiro() {
       "Despeje sobre a carne reservada, polvilhe com a rúcula picada e sirva.",
   };
 
- const toggleCheckWithAd = (key: string) => {
+  const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
     setCheckedItems(updatedCheckedItems);
 
@@ -93,7 +93,7 @@ export default function Brigadeiro() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+      FileSystem.documentDirectory + "lista_de_compras_picadinho_carne.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -141,7 +141,10 @@ export default function Brigadeiro() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>

@@ -4,16 +4,18 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -27,34 +29,15 @@ export default function App() {
     item2: false,
     item3: false,
     item4: false,
-    item5: false,
-    item6: false,
-    item7: false,
-    item8: false,
-    item9: false,
-    item10: false,
-    item11: false,
-    item12: false,
-    item13: false,
-    item14: false,
-    item15: false,
-    item16: false,
-    item17: false,
-    item18: false,
-    item19: false,
-    item20: false,
     step1: false,
     step2: false,
     step3: false,
     step4: false,
     step5: false,
-    step6: false,
-    step7: false,
-    step8: false,
-    step9: false,
-    step10: false,
-    step11: false,
   });
+
+  const [adShown, setAdShown] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const itemsMap: { [key: string]: string } = {
     item1: "Sal a gosto",
@@ -63,13 +46,36 @@ export default function App() {
     item4: "(Opcional) Páprica, orégano ou queijo ralado para finalizar",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const stepsMap: { [key: string]: string } = {
+    step1:
+      "Corte em palitos médios (nem muito finos, nem muito grossos) para equilibrar crocância e maciez.",
+    step2:
+      "Coloque os palitos em uma tigela com água e gelo por pelo menos 30 minutos (ou até 2 horas).",
+    step3:
+      "Escorra e leve as batatas para cozinhar rapidamente em água fervente com sal por 3 a 4 minutos. Escorra bem e deixe secar completamente.",
+    step4:
+      "Aqueça o óleo a 160°C e frite as batatas por 3 a 4 minutos (não deixar dourar — essa etapa é só para cozinhar). Retire e deixe escorrer. Aumente a temperatura para 180 °C e frite novamente até dourar e ficar crocante.",
+    step5:
+      "Coloque em papel-toalha, salpique sal a gosto (e outros temperos, se quiser) e sirva na hora!",
   };
 
+  // Função para alternar check/uncheck e mostrar anúncio se tudo marcado
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
+  };
+
+  // Função para salvar lista com itens NÃO marcados
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -81,7 +87,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_batata_frita.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -99,7 +106,6 @@ export default function App() {
       console.error(err);
     }
   };
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -116,17 +122,21 @@ export default function App() {
               onPress={() => nav.navigate("snack")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-              <Text style={styles.paragraph}>Batata Frita</Text>{" "}
+              <Text style={styles.paragraph}>Batata Frita</Text>
             </TouchableOpacity>
           </View>
+
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
+                      <Text style={styles.check}>✓ </Text>
                     ) : (
                       <Text style={styles.bolinha}>◯ </Text>
                     )}
@@ -136,69 +146,24 @@ export default function App() {
               ))}
             </View>
           </View>
+
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Corte em palitos médios (nem muito finos, nem muito grossos) para
-              equilibrar crocância e maciez.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              EColoque os palitos em uma tigela com água e gelo por pelo menos
-              30 minutos (ou até 2 horas). Isso remove o excesso de amido e
-              ajuda a deixar mais crocante.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Escorra e leve as batatas para cozinhar rapidamente em água
-              fervente com sal por 3 a 4 minutos. Escorra bem e deixe secar
-              completamente (pode até levar à geladeira ou freezer por 10
-              minutos para acelerar).
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step4")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Aqueça o óleo a 160 °C e frite as batatas por 3 a 4 minutos (não
-              deixar dourar — essa etapa é só para cozinhar). Retire e deixe
-              escorrer. Aumente a temperatura do óleo para 180 °C e frite
-              novamente até dourar e ficar crocante.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step5")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step5 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Coloque em papel-toalha, salpique sal a gosto (e outros temperos,
-              se quiser) e sirva na hora!
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      </ScrollView>{" "}
+      </ScrollView>
+
+      {/* BOTÕES */}
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
@@ -211,63 +176,11 @@ export default function App() {
             style={styles.iconeBotao}
           />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
-
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"
@@ -278,6 +191,48 @@ export default function App() {
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
+
+      {/* MODAL */}
+      <Modal transparent visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>
+              O Que Fazer com Comida Estragada?
+            </Text>
+            <Text style={styles.modalTexto}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e colocados no
+              lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha (se seco e limpo), embalagens de papel e
+              papelão vão para a reciclagem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
+                Manual de Compostagem
+              </Text>
+            </Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.textoFechar}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

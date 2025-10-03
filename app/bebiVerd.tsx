@@ -51,7 +51,13 @@ export default function App() {
     setCheckedItems(updatedCheckedItems);
 
     setTimeout(() => {
-      const allKeys = [...Object.keys(itemsMap), "step1", "step2", "step3", "step4"];
+      const allKeys = [
+        ...Object.keys(itemsMap),
+        "step1",
+        "step2",
+        "step3",
+        "step4",
+      ];
       const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
 
       if (allChecked && !adShown) {
@@ -73,7 +79,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras_cha_verde.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_cha_verde.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -113,18 +120,23 @@ export default function App() {
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>◯ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
@@ -134,7 +146,10 @@ export default function App() {
             "Despeje a água quente sobre o chá.",
             "Deixe em infusão por 2 a 3 minutos – mais que isso pode deixar o chá amargo. Retire as folhas ou o sachê e, se quiser, adicione um pouco de mel ou limão. Evite adoçar demais: o ideal é aproveitar o sabor natural do chá.",
           ].map((step, idx) => (
-            <TouchableOpacity key={`step${idx + 1}`} onPress={() => toggleCheckWithAd(`step${idx + 1}`)}>
+            <TouchableOpacity
+              key={`step${idx + 1}`}
+              onPress={() => toggleCheckWithAd(`step${idx + 1}`)}
+            >
               <Text style={styles.topicos}>
                 {checkedItems[`step${idx + 1}`] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -179,15 +194,34 @@ export default function App() {
       <Modal transparent visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTitulo}>
+              O Que Fazer com Comida Estragada?
+            </Text>
             <Text style={styles.modalTexto}>
-              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
-              <Text style={{ color: "blue", textDecorationLine: "underline" }}
-                onPress={() => Linking.openURL("https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/")}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e colocados no
+              lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha (se seco e limpo), embalagens de papel e
+              papelão vão para a reciclagem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
                 Manual de Compostagem
               </Text>
             </Text>

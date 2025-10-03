@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 import { anunciobola } from "./anunciobola";
@@ -54,9 +54,11 @@ export default function Brownie() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: "Bata todos os ingredientes no liquidificador com exceção das nozes.",
+    step1:
+      "Bata todos os ingredientes no liquidificador com exceção das nozes.",
     step2: "Acrescente as nozes e mexa com uma colher.",
-    step3: "Despeje em uma forma untada e leve para assar em forno preaquecido a 200ºC por 40 minutos.",
+    step3:
+      "Despeje em uma forma untada e leve para assar em forno preaquecido a 200ºC por 40 minutos.",
     step4: "Está pronto! Aproveite.",
   };
 
@@ -86,7 +88,8 @@ export default function Brownie() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "brownie_lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_brownie.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -97,7 +100,9 @@ export default function Brownie() {
       if (canShare) {
         recompensa(() => Sharing.shareAsync(fileUri));
       } else {
-        recompensa(() => Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`));
+        recompensa(() =>
+          Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`)
+        );
       }
     } catch (err) {
       Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
@@ -129,7 +134,10 @@ export default function Brownie() {
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <TouchableOpacity
+                key={key}
+                onPress={() => toggleCheckWithAd(key)}
+              >
                 <Text style={styles.topicos}>
                   {checkedItems[key] ? (
                     <Text style={styles.check}>✓ </Text>
@@ -159,17 +167,25 @@ export default function Brownie() {
       </ScrollView>
 
       <View style={styles.botoesContainer}>
-        <TouchableOpacity style={styles.botaoVerde} onPress={() => setModalVisible(true)}>
-          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>
               <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
-                <Text style={styles.modalTexto}>
-                  {/* Conteúdo do modal */}
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
                 </Text>
+                <Text style={styles.modalTexto}>{/* Conteúdo do modal */}</Text>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
                   <Text style={styles.textoFechar}>Fechar</Text>
                 </TouchableOpacity>
@@ -178,8 +194,16 @@ export default function Brownie() {
           </Modal>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
-          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>

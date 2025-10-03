@@ -12,7 +12,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 import { anunciobola } from "./anunciobola";
@@ -67,8 +67,7 @@ export default function App() {
   const stepsMap: { [key: string]: string } = {
     step1: "Bata a manteiga com o açúcar até formar um creme.",
     step2: "Adicione o ovo e a essência de baunilha.",
-    step3:
-      "Misture a farinha, o fermento e o sal até formar uma massa lisa.",
+    step3: "Misture a farinha, o fermento e o sal até formar uma massa lisa.",
     step4:
       "Abra a massa com um rolo (espessura de 0,5 cm), corte com cortadores de Halloween.",
     step5:
@@ -106,7 +105,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_biscoitos.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -169,10 +169,7 @@ export default function App() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity
-              key={key}
-              onPress={() => toggleCheckWithAd(key)}
-            >
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -200,51 +197,51 @@ export default function App() {
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
         </TouchableOpacity>
 
-         <Modal transparent visible={modalVisible} animationType="slide">
-                  <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                      <Text style={styles.modalTitulo}>
-                        O Que Fazer com Comida Estragada?
-                      </Text>
-                      <Text style={styles.modalTexto}>
-                        <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                        cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
-                        <Text style={{ fontWeight: "bold" }}>
-                          Plásticos e embalagens:
-                        </Text>{" "}
-                        potes, sacos, tampas e garrafas devem ser limpos e colocados no
-                        lixo reciclável. {"\n\n"}
-                        <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                        conservas, garrafas e frascos podem ser reciclados. {"\n\n"}
-                        <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                        alimentos, papel toalha (se seco e limpo), embalagens de papel e
-                        papelão vão para a reciclagem. {"\n\n"}
-                        <Text style={{ fontWeight: "bold" }}>
-                          Óleo de cozinha usado:
-                        </Text>{" "}
-                        nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica
-                        e leve até um ponto de coleta. {"\n\n"}
-                        <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                        alimentos e bebidas devem ser enxaguadas e recicladas. {"\n\n"}
-                        <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                        um manual completo aqui:{" "}
-                        <Text
-                          style={{ color: "blue", textDecorationLine: "underline" }}
-                          onPress={() =>
-                            Linking.openURL(
-                              "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                            )
-                          }
-                        >
-                          Manual de Compostagem
-                        </Text>
-                      </Text>
-                      <TouchableOpacity onPress={() => setModalVisible(false)}>
-                        <Text style={styles.textoFechar}>Fechar</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </Modal>
+        <Modal transparent visible={modalVisible} animationType="slide">
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitulo}>
+                O Que Fazer com Comida Estragada?
+              </Text>
+              <Text style={styles.modalTexto}>
+                <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
+                <Text style={{ fontWeight: "bold" }}>
+                  Plásticos e embalagens:
+                </Text>{" "}
+                potes, sacos, tampas e garrafas devem ser limpos e colocados no
+                lixo reciclável. {"\n\n"}
+                <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                conservas, garrafas e frascos podem ser reciclados. {"\n\n"}
+                <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                alimentos, papel toalha (se seco e limpo), embalagens de papel e
+                papelão vão para a reciclagem. {"\n\n"}
+                <Text style={{ fontWeight: "bold" }}>
+                  Óleo de cozinha usado:
+                </Text>{" "}
+                nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica
+                e leve até um ponto de coleta. {"\n\n"}
+                <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                alimentos e bebidas devem ser enxaguadas e recicladas. {"\n\n"}
+                <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                um manual completo aqui:{" "}
+                <Text
+                  style={{ color: "blue", textDecorationLine: "underline" }}
+                  onPress={() =>
+                    Linking.openURL(
+                      "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                    )
+                  }
+                >
+                  Manual de Compostagem
+                </Text>
+              </Text>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text style={styles.textoFechar}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
 
         <TouchableOpacity
           style={styles.botaoCinza}

@@ -4,16 +4,19 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -32,6 +35,9 @@ export default function Brigadeiro() {
     step3: false,
   });
 
+  const [adShown, setAdShown] = useState(false); // adicionei aqui
+  const [modalVisible, setModalVisible] = useState(false);
+
   const itemsMap: { [key: string]: string } = {
     item1: "1 colher (café) de páprica",
     item2: "4 fatias de queijo mussarela",
@@ -48,10 +54,23 @@ export default function Brigadeiro() {
       "Por último, vire as fatias do outro lado para dourar ou até que o queijo derreta completamente.",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  // Função que troca o ✓ / ◯ e exibe anúncio quando tudo marcado
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
+  // Salva lista de compras dos itens não marcados
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -64,7 +83,7 @@ export default function Brigadeiro() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_queijoquente.txt";
+      FileSystem.documentDirectory + "lista_de_compras_queijo_quente.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -82,14 +101,13 @@ export default function Brigadeiro() {
       console.error(err);
     }
   };
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         <View style={styles.container}>
           <Image
-            source={require("../assets/images/fundo_queijoquente.png")} // Certifique-se de que o caminho está correto
+            source={require("../assets/images/fundo_queijoquente.png")} // Certifique-se do caminho
             style={styles.decorativeImage}
             resizeMode="contain"
           />
@@ -110,7 +128,10 @@ export default function Brigadeiro() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)} // aqui a alteração
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -126,7 +147,10 @@ export default function Brigadeiro() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity
+              key={key}
+              onPress={() => toggleCheckWithAd(key)} // aqui tbm
+            >
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -207,7 +231,7 @@ export default function Brigadeiro() {
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())} // aqui chamei recompensa antes de salvar lista
         >
           <Feather
             name="download"

@@ -72,7 +72,7 @@ export default function PicoleIogurteFrutas() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+      FileSystem.documentDirectory + "lista_de_compras_picole_iogurte.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -91,7 +91,7 @@ export default function PicoleIogurteFrutas() {
     }
   };
   const [modalVisible, setModalVisible] = useState(false);
-const [adShown, setAdShown] = useState(false);
+  const [adShown, setAdShown] = useState(false);
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -123,7 +123,10 @@ const [adShown, setAdShown] = useState(false);
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>

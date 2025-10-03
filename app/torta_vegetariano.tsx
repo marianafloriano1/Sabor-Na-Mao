@@ -4,16 +4,17 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { anunciobola } from "./anunciobola";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -89,26 +90,38 @@ export default function TortaDeLegumesRicota() {
     "Cubra com a massa restante, polvilhe com parmesão e leve ao forno médio (180º C), preaquecido, por 40 minutos ou até dourar. Sirva.",
   ];
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(steps)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
+  // Salva lista de compras dos itens não marcados
   const salvarListaDeCompras = async () => {
-    const naoMarcados = Object.keys(itemsMap)
+    const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
       .map((key) => `- ${itemsMap[key]}`)
       .join("\n");
 
-    if (!naoMarcados) {
+    if (!naoSelecionados) {
       Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
       return;
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_torta_legumes.txt";
+      FileSystem.documentDirectory + "lista_de_compras_queijo_quente.txt";
 
     try {
-      await FileSystem.writeAsStringAsync(fileUri, naoMarcados, {
+      await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
         encoding: FileSystem.EncodingType.UTF8,
       });
 
@@ -123,6 +136,8 @@ export default function TortaDeLegumesRicota() {
       console.error(err);
     }
   };
+  const [adShown, setAdShown] = useState(false);
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -151,7 +166,10 @@ export default function TortaDeLegumesRicota() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -166,18 +184,15 @@ export default function TortaDeLegumesRicota() {
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          {steps.map((step, index) => (
-            <TouchableOpacity
-              key={`step${index + 1}`}
-              onPress={() => toggleCheck(`step${index + 1}`)}
-            >
+          {Object.entries(steps).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
-                {checkedItems[`step${index + 1}`] ? (
+                {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
                 )}
-                {index + 1}. {step}
+                {step}
               </Text>
             </TouchableOpacity>
           ))}

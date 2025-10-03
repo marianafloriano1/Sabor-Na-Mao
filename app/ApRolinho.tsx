@@ -67,7 +67,8 @@ export default function App() {
     item1: "Palitos de dente ou palitos \nde bambu",
     item2: "1/2 melão (tipo cantaloupe ou orange melon)",
     item3: "Hortelã fresca (opcional, para decorar ou aromatizar)",
-    item4: "12 fatias finas de presunto cru (como presunto de Parma ou jamón serrano)",
+    item4:
+      "12 fatias finas de presunto cru (como presunto de Parma ou jamón serrano)",
   };
 
   const toggleCheckWithAd = (key: string) => {
@@ -96,7 +97,9 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory +
+      "lista_de_compras_rolinho_presunto_melao.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -130,7 +133,9 @@ export default function App() {
               onPress={() => nav.navigate("aperitivos")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-              <Text style={styles.paragraph}>Rolinho de Presunto com Melão</Text>
+              <Text style={styles.paragraph}>
+                Rolinho de Presunto com Melão
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -138,9 +143,16 @@ export default function App() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
-                    {checkedItems[key] ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>◯ </Text>}
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓</Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
                     {label}
                   </Text>
                 </TouchableOpacity>
@@ -151,20 +163,36 @@ export default function App() {
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           <TouchableOpacity onPress={() => toggleCheckWithAd("step1")}>
             <Text style={styles.topicos}>
-              {checkedItems.step1 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>◯ </Text>} 
-              Retire as sementes e a casca do melão. Corte a polpa em tiras ou cubos pequenos (cerca de 4 a 5 cm de comprimento).
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>◯ </Text>
+              )}
+              Retire as sementes e a casca do melão. Corte a polpa em tiras ou
+              cubos pequenos (cerca de 4 a 5 cm de comprimento).
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => toggleCheckWithAd("step2")}>
             <Text style={styles.topicos}>
-              {checkedItems.step2 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>◯ </Text>} 
-              Pegue uma fatia de presunto e enrole ao redor de um pedaço de melão. Prenda com um palito se necessário.
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>◯ </Text>
+              )}
+              Pegue uma fatia de presunto e enrole ao redor de um pedaço de
+              melão. Prenda com um palito se necessário.
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => toggleCheckWithAd("step3")}>
             <Text style={styles.topicos}>
-              {checkedItems.step3 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>◯ </Text>} 
-              Disponha os rolinhos em um prato, decore com folhas de hortelã se desejar e sirva imediatamente ou leve à geladeira até a hora de servir.
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>◯ </Text>
+              )}
+              Disponha os rolinhos em um prato, decore com folhas de hortelã se
+              desejar e sirva imediatamente ou leve à geladeira até a hora de
+              servir.
             </Text>
           </TouchableOpacity>
         </View>
@@ -175,7 +203,12 @@ export default function App() {
           style={styles.botaoVerde}
           onPress={() => setModalVisible(true)}
         >
-          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
         </TouchableOpacity>
 
@@ -183,7 +216,12 @@ export default function App() {
           style={styles.botaoCinza}
           onPress={() => recompensa(() => salvarListaDeCompras())}
         >
-          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
@@ -191,15 +229,36 @@ export default function App() {
       <Modal transparent visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTitulo}>
+              O Que Fazer com Comida Estragada?
+            </Text>
             <Text style={styles.modalTexto}>
-              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos, papel toalha seco e limpo, papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
-              <Text style={{ color: "blue", textDecorationLine: "underline" }}
-                onPress={() => Linking.openURL("https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/")}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e colocados no
+              lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados. Se estiverem
+              quebrados, embale bem em jornal ou outro material.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha seco e limpo, papelão vão para a
+              reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo
+              comum.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              guarde em garrafa e leve até um ponto de coleta.{"\n\n"}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
                 Manual de Compostagem
               </Text>
             </Text>

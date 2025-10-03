@@ -33,14 +33,15 @@ export default function SaladaDeLentilha() {
 
   // ingredientes
   const itemsMap: { [key: string]: string } = {
+    item10: "Sal a gosto",
+    item11: "Pimenta-do-reino a gosto",
     item1: "1 xícara de lentilha crua",
     item2: "1/2 pimentão vermelho picado",
     item3: "1/2 pepino em cubos pequenos",
-    item4: "2 colheres (sopa) de azeite de oliva",
-    item5: "1/2 cebola roxa picada em cubinhos",
+    item5: "Salsinha ou coentro picado a gosto",
     item6: "10 tomates-cereja cortados ao meio",
-    item7: "Sal e pimenta-do-reino a gosto",
-    item8: "Salsinha ou coentro picado a gosto",
+    item7: "1/2 cebola roxa picada em cubinhos",
+    item8: "2 colheres (sopa) de azeite de oliva",
     item9: "Suco de 1 limão ou 2 colheres (sopa) de vinagre",
   };
 
@@ -49,9 +50,11 @@ export default function SaladaDeLentilha() {
     step1:
       "Lave bem e cozinhe em água com sal por cerca de 20 minutos, até que fique macia mas firme. Escorra e deixe esfriar.",
     step2: "Corte todos os ingredientes em cubinhos ou tiras pequenas.",
-    step3: "Em uma tigela grande, junte a lentilha fria com os vegetais e ervas.",
+    step3:
+      "Em uma tigela grande, junte a lentilha fria com os vegetais e ervas.",
     step4: "Adicione o limão (ou vinagre), azeite, sal e pimenta. Misture bem.",
-    step5: "Leve à geladeira por 30 minutos para que os sabores se integrem melhor.",
+    step5:
+      "Leve à geladeira por 30 minutos para que os sabores se integrem melhor.",
   };
 
   // alternar check/uncheck + verificação de anúncio
@@ -88,7 +91,8 @@ export default function SaladaDeLentilha() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_lentilha.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -139,18 +143,23 @@ export default function SaladaDeLentilha() {
           {/* ingredientes */}
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>◯ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
 
           {/* modo de preparo */}
@@ -177,13 +186,26 @@ export default function SaladaDeLentilha() {
           style={styles.botaoVerde}
           onPress={() => setModalVisible(true)}
         >
-          <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
         </TouchableOpacity>
 
         {/* botão salvar lista com anúncio */}
-        <TouchableOpacity style={styles.botaoCinza} onPress={handleDownloadPress}>
-          <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={handleDownloadPress}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
@@ -192,23 +214,31 @@ export default function SaladaDeLentilha() {
       <Modal transparent visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitulo}>O Que Fazer com Comida Estragada?</Text>
+            <Text style={styles.modalTitulo}>
+              O Que Fazer com Comida Estragada?
+            </Text>
             <Text style={styles.modalTexto}>
-              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text> cascas, sobras
-              e restos podem ir para o lixo orgânico.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Plásticos e embalagens:</Text> potes,
-              sacos, tampas e garrafas devem ser limpos e reciclados.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de conservas,
-              garrafas e frascos podem ser reciclados.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de alimentos e
-              papelão limpos vão para a reciclagem.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Óleo de cozinha usado:</Text> nunca
-              jogue no ralo. Guarde em garrafa plástica e leve até um ponto de coleta.
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos podem ir para o lixo orgânico.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e reciclados.
               {"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Latas:</Text> enxágue e coloque no lixo
-              reciclável.{"\n\n"}
-              <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Veja um manual
-              completo sobre compostagem em:{" "}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos e papelão limpos vão para a reciclagem.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              nunca jogue no ralo. Guarde em garrafa plástica e leve até um
+              ponto de coleta.
+              {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Latas:</Text> enxágue e
+              coloque no lixo reciclável.{"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Veja um
+              manual completo sobre compostagem em:{" "}
               <Text
                 style={{ color: "blue", textDecorationLine: "underline" }}
                 onPress={() =>

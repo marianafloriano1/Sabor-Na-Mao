@@ -75,7 +75,7 @@ export default function PaozinhoDeBatataDoce() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+      FileSystem.documentDirectory + "lista_de_compras_paozinho.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -122,7 +122,10 @@ export default function PaozinhoDeBatataDoce() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -145,7 +148,7 @@ export default function PaozinhoDeBatataDoce() {
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
                 )}
-               {label}
+                {label}
               </Text>
             </TouchableOpacity>
           ))}

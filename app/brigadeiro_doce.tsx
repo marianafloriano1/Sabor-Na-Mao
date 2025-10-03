@@ -77,7 +77,7 @@ export default function Brigadeiro() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+      FileSystem.documentDirectory + "lista_de_compras_brigadeiro.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -99,7 +99,6 @@ export default function Brigadeiro() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [adShown, setAdShown] = useState(false);
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -125,7 +124,10 @@ export default function Brigadeiro() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>

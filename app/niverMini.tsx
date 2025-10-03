@@ -94,7 +94,8 @@ export default function App() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_mini_hamburguer.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {

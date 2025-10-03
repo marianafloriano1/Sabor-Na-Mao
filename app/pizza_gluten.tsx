@@ -95,7 +95,7 @@ export default function Brigadeiro() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
+      FileSystem.documentDirectory + "lista_de_compras_pizza_sem_gluten.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
