@@ -4,16 +4,19 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -34,26 +37,8 @@ export default function App() {
     item9: false,
     item10: false,
     item11: false,
-    item12: false,
-    item13: false,
-    item14: false,
-    item15: false,
-    item16: false,
-    item17: false,
-    item18: false,
-    item19: false,
-    item20: false,
     step1: false,
     step2: false,
-    step3: false,
-    step4: false,
-    step5: false,
-    step6: false,
-    step7: false,
-    step8: false,
-    step9: false,
-    step10: false,
-    step11: false,
   });
 
   const itemsMap: { [key: string]: string } = {
@@ -72,13 +57,32 @@ export default function App() {
       "Mini pães de hambúrguer (ou pães de leite cortados com aro redondo)",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const stepsMap: { [key: string]: string } = {
+    step1:
+      "Misture todos os ingredientes da carne e modele pequenas bolinhas, achatando-as para formar mini discos. Frite ou grelhe em frigideira antiaderente por 2–3 minutos de cada lado, até dourar bem. Coloque o queijo por cima nos últimos segundos para derreter.",
+    step2:
+      "Corte os mini pães ao meio, passe o molho de sua preferência, adicione o hambúrguer com queijo, uma folha de alface e uma rodela de tomate. Feche o pão e espete com um palito para segurar tudo no lugar.",
   };
 
+  const [adShown, setAdShown] = useState(false);
+
+  // Toggle com anúncio
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
+  };
+
+  // Salvar lista de compras (com recompensa antes)
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -108,6 +112,7 @@ export default function App() {
       console.error(err);
     }
   };
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -125,17 +130,21 @@ export default function App() {
               onPress={() => nav.navigate("niver")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-              <Text style={styles.paragraph}>mini hamburguer</Text>{" "}
+              <Text style={styles.paragraph}>Mini Hambúrguer</Text>
             </TouchableOpacity>
           </View>
+
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
+                      <Text style={styles.check}>✓ </Text>
                     ) : (
                       <Text style={styles.bolinha}>◯ </Text>
                     )}
@@ -145,35 +154,23 @@ export default function App() {
               ))}
             </View>
           </View>
+
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Misture todos os ingredientes da carne e modele pequenas bolinhas,
-              achatando-as para formar mini discos. Frite ou grelhe em
-              frigideira antiaderente por 2–3 minutos de cada lado, até dourar
-              bem. Coloque o queijo por cima nos últimos segundos para derreter.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Corte os mini pães ao meio, passe o molho de sua preferência,
-              adicione o hambúrguer com queijo, uma folha de alface e uma rodela
-              de tomate. Feche o pão e espete com um palito para segurar tudo no
-              lugar.
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, label]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {label}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
+
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
@@ -186,63 +183,11 @@ export default function App() {
             style={styles.iconeBotao}
           />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
-
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"
@@ -253,6 +198,52 @@ export default function App() {
           <Text style={styles.textoBotao}>Baixar lista de compra</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal */}
+      <Modal transparent visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>
+              O Que Fazer com Comida Estragada?
+            </Text>
+            <Text style={styles.modalTexto}>
+              <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+              cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Plásticos e embalagens:
+              </Text>{" "}
+              potes, sacos, tampas e garrafas devem ser limpos e colocados no
+              lixo reciclável. {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+              conservas, garrafas e frascos podem ser reciclados. {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+              alimentos, papel toalha (se seco e limpo), embalagens de papel e
+              papelão vão para a reciclagem. {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>
+                Óleo de cozinha usado:
+              </Text>{" "}
+              nunca descarte no ralo. Guarde em uma garrafa plástica e leve até
+              um ponto de coleta. {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+              alimentos e bebidas devem ser enxaguadas e recicladas. {"\n\n"}
+              <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse o{" "}
+              <Text
+                style={{ color: "blue", textDecorationLine: "underline" }}
+                onPress={() =>
+                  Linking.openURL(
+                    "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                  )
+                }
+              >
+                Manual de Compostagem
+              </Text>
+            </Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.textoFechar}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -261,12 +252,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "50%",
     backgroundColor: "#ECECEC",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   tituloContainer: {
     flexDirection: "row",
@@ -281,13 +267,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     width: 250,
   },
-
   ingredientes: {
     marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
+    color: "#000",
   },
   ingredientesContainer: {
     flexDirection: "row",
@@ -307,43 +293,34 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 55,
-  },
-
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: "#009B4D",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: "#2F4B54",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   iconeBotao: {
     marginRight: 10,
   },
-
   textoBotao: {
     color: "#fff",
     fontSize: 16,
   },
-
   decorativeImage: {
     position: "absolute",
     left: 135,
@@ -352,16 +329,6 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
-  },
-  modalButton: {
-    backgroundColor: "#009E60",
-    alignItems: "center",
-    marginHorizontal: 20,
-    width: "100%",
-    resizeMode: "contain",
-    marginLeft: "auto",
-    height: 40,
-    marginTop: 30,
   },
   modalContainer: {
     flex: 1,
@@ -391,17 +358,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  toggleText: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#fff",
-    textTransform: "uppercase",
-  },
   touchTitulo: {
     flexDirection: "row",
     alignItems: "center",
-    width: "100%", // ocupa toda a largura do container
-    paddingVertical: 10, // aumenta a área de toque vertical
-    paddingHorizontal: 10, // aumenta a área de toque horizontal
+    width: "100%",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });

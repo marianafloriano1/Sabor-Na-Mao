@@ -12,7 +12,9 @@ import {
   GestureResponderEvent,
   Image,
   ImageBackground,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -21,6 +23,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 type Recipe = {
   recipeName: string;
   authorName: string;
@@ -51,7 +54,7 @@ export default function App(): JSX.Element {
     return profilePics[Math.floor(Math.random() * profilePics.length)];
   };
 
-  const [profilePic, setProfilePic] = useState<any>(getRandomPic());
+  const [profilePic] = useState<any>(getRandomPic());
 
   const nav = useNavigation<NativeStackNavigationProp<any>>();
 
@@ -59,9 +62,7 @@ export default function App(): JSX.Element {
     useState<boolean>(false);
   const [recipeDetailsModalVisible, setRecipeDetailsModalVisible] =
     useState<boolean>(false);
-  const [cameraPermission, setCameraPermission] = useState<boolean | null>(
-    null
-  );
+  const [cameraPermission, setCameraPermission] = useState<boolean | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
   const [recipeName, setRecipeName] = useState<string>("");
   const [authorName, setAuthorName] = useState<string>("");
@@ -119,10 +120,7 @@ export default function App(): JSX.Element {
 
   const handleSaveData = () => {
     if (!recipeName || !authorName || !ingredients || !instructions || !photo) {
-      Alert.alert(
-        "Erro",
-        "Por favor, preencha todos os campos e tire uma foto."
-      );
+      Alert.alert("Erro", "Por favor, preencha todos os campos e tire uma foto.");
       return;
     }
 
@@ -162,8 +160,11 @@ export default function App(): JSX.Element {
       source={require("../assets/images/fundo_heranca.png")}
       style={styles.container}
     >
-      
-      <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+      {/* Scroll principal */}
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.headerContainer}>
           <TouchableOpacity
             style={styles.seta}
@@ -212,150 +213,168 @@ export default function App(): JSX.Element {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Modal de Adicionar Receita */}
+      {/* Modal de Adicionar Receita com scroll e teclado */}
       <Modal
         visible={addRecipeModalVisible}
         animationType="slide"
         transparent={true}
         onRequestClose={() => setAddRecipeModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity
-              style={styles.x}
-              onPress={() => setAddRecipeModalVisible(false)}
-            >
-              <Feather name="x" size={22} color="red" />
-            </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={styles.modalContainer}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        >
+          <ScrollView
+            contentContainerStyle={styles.modalScroll}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={styles.x}
+                onPress={() => setAddRecipeModalVisible(false)}
+              >
+                <Feather name="x" size={22} color="red" />
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleTakePhoto}>
-              {photo ? (
-                <Image source={{ uri: photo }} style={styles.photo} />
-              ) : (
-                <Image
-                  style={styles.img_heranca}
-                  source={require("../assets/images/image 9.png")}
-                />
-              )}
-            </TouchableOpacity>
+              <TouchableOpacity onPress={handleTakePhoto}>
+                {photo ? (
+                  <Image source={{ uri: photo }} style={styles.photo} />
+                ) : (
+                  <Image
+                    style={styles.img_heranca}
+                    source={require("../assets/images/image 9.png")}
+                  />
+                )}
+              </TouchableOpacity>
 
-            <Text style={styles.label}>Nome da receita:</Text>
-            <TextInput
-              value={recipeName}
-              onChangeText={setRecipeName}
-              style={styles.input4}
-            />
-            <Text style={styles.label}>Autor da receita:</Text>
-            <TextInput
-              value={authorName}
-              onChangeText={setAuthorName}
-              style={styles.input}
-            />
-            <Text style={styles.label}>Digite os ingredientes:</Text>
-            <TextInput
-              value={ingredients}
-              onChangeText={setIngredients}
-              style={styles.input2}
-              multiline
-            />
-            <Text style={styles.label}>Digite o modo de preparo:</Text>
-            <TextInput
-              value={instructions}
-              onChangeText={setInstructions}
-              style={styles.input3}
-              multiline
-            />
+              <Text style={styles.label}>Nome da receita:</Text>
+              <TextInput
+                value={recipeName}
+                onChangeText={setRecipeName}
+                style={styles.input4}
+              />
+              <Text style={styles.label}>Autor da receita:</Text>
+              <TextInput
+                value={authorName}
+                onChangeText={setAuthorName}
+                style={styles.input}
+              />
+              <Text style={styles.label}>Digite os ingredientes:</Text>
+              <TextInput
+                value={ingredients}
+                onChangeText={setIngredients}
+                style={styles.input2}
+                multiline
+              />
+              <Text style={styles.label}>Digite o modo de preparo:</Text>
+              <TextInput
+                value={instructions}
+                onChangeText={setInstructions}
+                style={styles.input3}
+                multiline
+              />
 
-            <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
-              <Text style={styles.texto_botao}>Salvar</Text>
-            </Pressable>
-          </View>
-        </View>
+              <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
+                <Text style={styles.texto_botao}>Salvar</Text>
+              </Pressable>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </Modal>
 
       {/* Modal Detalhes da Receita */}
-<Modal
-  visible={recipeDetailsModalVisible}
-  animationType="slide"
-  transparent={true}
-  onRequestClose={() => setRecipeDetailsModalVisible(false)}
->
-  <View style={styles.modalContainer2}>
-    <View style={styles.modalContent2}>
-      {selectedRecipe && (
-        <>
-          <TouchableOpacity
-            style={styles.x}
-            onPress={() => setRecipeDetailsModalVisible(false)}
+      <Modal
+        visible={recipeDetailsModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setRecipeDetailsModalVisible(false)}
+      >
+        <KeyboardAvoidingView
+          style={styles.modalContainer2}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        >
+          <ScrollView
+            contentContainerStyle={styles.modalScroll}
+            keyboardShouldPersistTaps="handled"
           >
-            <Feather name="x" size={34} color="red" />
-          </TouchableOpacity>
+            <View style={styles.modalContent2}>
+              {selectedRecipe && (
+                <>
+                  <TouchableOpacity
+                    style={styles.x}
+                    onPress={() => setRecipeDetailsModalVisible(false)}
+                  >
+                    <Feather name="x" size={34} color="red" />
+                  </TouchableOpacity>
 
-          <Image
-            source={{ uri: selectedRecipe.photo }}
-            style={styles.modalImage}
-          />
+                  <Image
+                    source={{ uri: selectedRecipe.photo }}
+                    style={styles.modalImage}
+                  />
 
-          <Text style={styles.modalTitle}>{selectedRecipe.recipeName}</Text>
-          <Text style={styles.modal_authorName}>
-            por {selectedRecipe.authorName}
-          </Text>
+                  <Text style={styles.modalTitle}>
+                    {selectedRecipe.recipeName}
+                  </Text>
+                  <Text style={styles.modal_authorName}>
+                    por {selectedRecipe.authorName}
+                  </Text>
 
-          <Text style={styles.modalText}>Ingredientes:</Text>
-          {selectedRecipe.ingredients.split("\n").map((item, idx) => (
-            <Text key={idx} style={styles.recipeDescription}>
-              • {item.trim()}
-            </Text>
-          ))}
+                  <Text style={styles.modalText}>Ingredientes:</Text>
+                  {selectedRecipe.ingredients.split("\n").map((item, idx) => (
+                    <Text key={idx} style={styles.recipeDescription}>
+                      • {item.trim()}
+                    </Text>
+                  ))}
 
-          <Text style={styles.modal_preparo}>Modo de Preparo:</Text>
-          {selectedRecipe.instructions.split("\n").map((step, idx) => (
-            <Text key={idx} style={styles.recipeDescription}>
-              {idx + 1}. {step.trim()}
-            </Text>
-          ))}
+                  <Text style={styles.modal_preparo}>Modo de Preparo:</Text>
+                  {selectedRecipe.instructions.split("\n").map((step, idx) => (
+                    <Text key={idx} style={styles.recipeDescription}>
+                      {idx + 1}. {step.trim()}
+                    </Text>
+                  ))}
 
-          {/* Botão de excluir */}
-          <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={() => {
-              Alert.alert(
-                "Confirmar exclusão",
-                "Tem certeza que deseja excluir esta receita?",
-                [
-                  { text: "Cancelar", style: "cancel" },
-                  {
-                    text: "Excluir",
-                    style: "destructive",
-                    onPress: async () => {
-                      const updatedRecipes = savedRecipes.filter(
-                        (r) =>
-                          !(
-                            r.recipeName === selectedRecipe.recipeName &&
-                            r.authorName === selectedRecipe.authorName
-                          )
+                  {/* Botão de excluir */}
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => {
+                      Alert.alert(
+                        "Confirmar exclusão",
+                        "Tem certeza que deseja excluir esta receita?",
+                        [
+                          { text: "Cancelar", style: "cancel" },
+                          {
+                            text: "Excluir",
+                            style: "destructive",
+                            onPress: async () => {
+                              const updatedRecipes = savedRecipes.filter(
+                                (r) =>
+                                  !(
+                                    r.recipeName === selectedRecipe.recipeName &&
+                                    r.authorName === selectedRecipe.authorName
+                                  )
+                              );
+                              setSavedRecipes(updatedRecipes);
+                              await saveRecipes(updatedRecipes);
+                              setRecipeDetailsModalVisible(false);
+                              Alert.alert("Sucesso", "Receita excluída!");
+                            },
+                          },
+                        ]
                       );
-                      setSavedRecipes(updatedRecipes);
-                      await saveRecipes(updatedRecipes);
-                      setRecipeDetailsModalVisible(false);
-                      Alert.alert("Sucesso", "Receita excluída!");
-                    },
-                  },
-                ]
-              );
-            }}
-          >
-            <Text style={styles.deleteButtonText}>Excluir Receita</Text>
-          </TouchableOpacity>
-        </>
-      )}
-    </View>
-  </View>
-</Modal>
-
+                    }}
+                  >
+                    <Text style={styles.deleteButtonText}>Excluir Receita</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </Modal>
     </ImageBackground>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -363,11 +382,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "auto",
   },
-  scroll: {
+ scroll: {
     flexGrow: 1,
-    paddingTop: 35, // manteve o deslocamento do que era top:35 antes absoluto
+    paddingTop: 35,
     paddingHorizontal: 10,
     paddingBottom: 20,
+  },
+  modalScroll: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 40,
   },
   headerContainer: {
     marginBottom: 40,

@@ -15,6 +15,9 @@ import {
   View,
 } from "react-native";
 
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
+
 type CheckedItems = {
   [key: string]: boolean;
 };
@@ -29,36 +32,17 @@ export default function App() {
     item4: false,
     item5: false,
     item6: false,
-    item7: false,
-    item8: false,
-    item9: false,
-    item10: false,
-    item11: false,
-    item12: false,
-    item13: false,
-    item14: false,
-    item15: false,
-    item16: false,
-    item17: false,
-    item18: false,
-    item19: false,
-    item20: false,
     step1: false,
     step2: false,
     step3: false,
-    step4: false,
-    step5: false,
-    step6: false,
-    step7: false,
-    step8: false,
-    step9: false,
-    step10: false,
-    step11: false,
   });
 
+  const [adShown, setAdShown] = useState(false);
+
+  // Ingredientes
   const itemsMap: { [key: string]: string } = {
     item1: "Sal a gosto",
-    item2: "4 batatas médias ou \nbatata-doce ",
+    item2: "4 batatas médias ou batata-doce",
     item3: "2 colheres (sopa) de azeite de oliva",
     item4: "Páprica doce ou defumada (opcional)",
     item5: "Alecrim ou ervas secas (opcional)",
@@ -66,13 +50,33 @@ export default function App() {
       "Cortador de canudo + palito de churrasco ou utensílios de confeitaria para fazer os rostos",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  // Modo de preparo
+  const stepsMap: { [key: string]: string } = {
+    step1:
+      "Para deixar mais crocante, deixe as batatas de molho em água gelada por 30 minutos antes de assar (e seque bem depois). Descasque as batatas e corte fatias com cerca de 1 cm de espessura. Com um canudo, fure duas vezes para fazer os olhos. Use a ponta de uma colher, faca ou palito de churrasco para desenhar a boca.",
+    step2:
+      "Coloque as rodelas em uma tigela, regue com azeite e tempere com sal, páprica e ervas a gosto. Misture delicadamente para não quebrar os rostinhos.",
+    step3:
+      "Disponha as carinhas em uma assadeira forrada com papel manteiga. Leve ao forno preaquecido a 200 °C por cerca de 25–35 minutos ou até ficarem douradas e crocantes, virando na metade do tempo.",
   };
 
+  // Toggle com anúncio
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
+  };
+
+  // Salvar lista de compras
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -102,6 +106,7 @@ export default function App() {
       console.error(err);
     }
   };
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -122,18 +127,21 @@ export default function App() {
               onPress={() => nav.navigate("hallow")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-
               <Text style={styles.paragraph}>Almas Assustadas de batata</Text>
             </TouchableOpacity>
           </View>
+
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
+                      <Text style={styles.check}>✓ </Text>
                     ) : (
                       <Text style={styles.bolinha}>◯ </Text>
                     )}
@@ -143,48 +151,26 @@ export default function App() {
               ))}
             </View>
           </View>
+
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Para deixar mais crocante, deixe as batatas de molho em água
-              gelada por 30 minutos antes de assar (e seque bem depois).
-              Descasque as batatas e corte fatias com cerca de 1 cm de
-              espessura. Com um canudo, fure duas vezes para fazer os olhos. Use
-              a ponta de uma colher, faca ou palito de churrasco para desenhar a
-              boca (sorriso, susto, zigue-zague… seja criativo!).
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Coloque as rodelas em uma tigela, regue com azeite e tempere com
-              sal, páprica e ervas a gosto. Misture delicadamente para não
-              quebrar os rostinhos.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Disponha as carinhas em uma assadeira forrada com papel manteiga.
-              Leve ao forno preaquecido a 200 °C por cerca de 25–35 minutos ou
-              até ficarem douradas e crocantes, virando na metade do tempo.
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity
+              key={key}
+              onPress={() => toggleCheckWithAd(key)}
+            >
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
+
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
@@ -212,26 +198,21 @@ export default function App() {
                   Plásticos e embalagens:
                 </Text>{" "}
                 potes, sacos, tampas e garrafas devem ser limpos e colocados no
-                lixo reciclável. Não precisa lavar tudo com sabão, só tirar o
-                grosso da sujeira já ajuda bastante.{"\n\n"}
+                lixo reciclável. {"\n\n"}
                 <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                conservas, garrafas e frascos podem ser reciclados. Se estiverem
-                quebrados, embale bem em jornal ou outro material para evitar
-                acidentes.{"\n\n"}
+                conservas, garrafas e frascos podem ser reciclados. {"\n\n"}
                 <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
                 alimentos, papel toalha (se seco e limpo), embalagens de papel e
-                papelão vão para a reciclagem. Se estiver engordurado ou muito
-                sujo, jogue no lixo comum.{"\n\n"}
+                papelão vão para a reciclagem. {"\n\n"}
                 <Text style={{ fontWeight: "bold" }}>
                   Óleo de cozinha usado:
                 </Text>{" "}
                 nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica
-                e leve até um ponto de coleta.{"\n\n"}
+                e leve até um ponto de coleta. {"\n\n"}
                 <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                reciclável.{"\n\n"}
+                alimentos e bebidas devem ser enxaguadas e recicladas. {"\n\n"}
                 <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                um manual completo sobre compostagem aqui:{" "}
+                um manual completo aqui:{" "}
                 <Text
                   style={{ color: "blue", textDecorationLine: "underline" }}
                   onPress={() =>
@@ -249,9 +230,10 @@ export default function App() {
             </View>
           </View>
         </Modal>
+
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"
@@ -273,14 +255,12 @@ const styles = StyleSheet.create({
     height: "50%",
     backgroundColor: "#ECECEC",
   },
-
   tituloContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 90,
     marginLeft: 10,
   },
-
   paragraph: {
     fontSize: 22,
     color: "#242424",
@@ -289,7 +269,6 @@ const styles = StyleSheet.create({
     width: 210,
     top: 15,
   },
-
   ingredientes: {
     marginTop: 100,
     fontSize: 18,
@@ -315,43 +294,34 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 55,
-  },
-
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: "#009B4D",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: "#2F4B54",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   iconeBotao: {
     marginRight: 10,
   },
-
   textoBotao: {
     color: "#fff",
     fontSize: 16,
   },
-
   decorativeImage: {
     position: "absolute",
     left: 135,
@@ -360,17 +330,6 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
-  },
-
-  modalButton: {
-    backgroundColor: "#009E60",
-    alignItems: "center",
-    marginHorizontal: 20,
-    width: "100%",
-    resizeMode: "contain",
-    marginLeft: "auto",
-    height: 40,
-    marginTop: 30,
   },
   modalContainer: {
     flex: 1,
@@ -400,17 +359,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  toggleText: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#fff",
-    textTransform: "uppercase",
-  },
   touchTitulo: {
     flexDirection: "row",
     alignItems: "center",
-    width: "100%", // ocupa toda a largura do container
-    paddingVertical: 10, // aumenta a área de toque vertical
-    paddingHorizontal: 10, // aumenta a área de toque horizontal
+    width: "100%",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });

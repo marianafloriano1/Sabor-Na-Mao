@@ -19,6 +19,9 @@ type CheckedItems = {
   [key: string]: boolean;
 };
 
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
+
 export default function PaozinhoDeBatataDoce() {
   const nav = useNavigation<NavigationProp<any>>();
 
@@ -44,13 +47,22 @@ export default function PaozinhoDeBatataDoce() {
     step3: "Sirva e aproveite!",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
+  // Salva lista de compras dos itens não marcados
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -63,8 +75,7 @@ export default function PaozinhoDeBatataDoce() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory +
-      "lista_de_compras_paozinho_batata_doce.txt";
+      FileSystem.documentDirectory + "lista_de_compras_bolinho_de_arroz.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -83,6 +94,8 @@ export default function PaozinhoDeBatataDoce() {
     }
   };
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [adShown, setAdShown] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -109,7 +122,7 @@ export default function PaozinhoDeBatataDoce() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -125,7 +138,7 @@ export default function PaozinhoDeBatataDoce() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, label], index) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -213,7 +226,7 @@ export default function PaozinhoDeBatataDoce() {
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"

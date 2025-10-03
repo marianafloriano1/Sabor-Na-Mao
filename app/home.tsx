@@ -1,3 +1,4 @@
+import { Feather } from "@expo/vector-icons"; // ← adicionado para as setas
 import type { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -5,6 +6,8 @@ import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import Tooltip from "react-native-walkthrough-tooltip";
 
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Animated,
   Image,
@@ -62,11 +65,11 @@ export default function App() {
     "Panela Quente",
     "Sabor Divino",
     "Mestre Miojo",
-"Doutor Feijão",
-"Chef X-Tudo",
-"Capitão Cuscuz",
-"General Brigadeiro",
-"Lord Pastel",
+    "Doutor Feijão",
+    "Chef X-Tudo",
+    "Capitão Cuscuz",
+    "General Brigadeiro",
+    "Lord Pastel",
   ];
   const profilePics = [
     require("../assets/images/perfil1.png"),
@@ -153,8 +156,12 @@ export default function App() {
   const [creditsVisible, setCreditsVisible] = useState(false);
 
 
-  function logout() {
-    throw new Error("Function not implemented.");
+  async function logout() {
+    try {
+      await AsyncStorage.removeItem("LOGGED_USER"); // remove o usuário logado
+    } catch (error) {
+      console.log("Erro ao limpar usuário logado:", error);
+    }
   }
 
   return (
@@ -166,8 +173,8 @@ export default function App() {
               isVisible={toolTipVisible}
               content={
                 <View style={styles.tooltipContainer}>
-                   <TouchableOpacity
-                   style={styles.infoButton}
+                  <TouchableOpacity
+                    style={styles.infoButton}
                     onPress={() => setCreditsVisible(true)}
                   >
                     <Text style={{ fontSize: 22 }} >©</Text>
@@ -228,7 +235,8 @@ export default function App() {
                   >
                     <Text style={styles.logoutText}>Sair</Text>
                   </TouchableOpacity>
-                 
+
+
 
                 </View>
               }
@@ -306,28 +314,34 @@ export default function App() {
             ></Image>
 
             <View style={styles.buttonRow}>
+              {/* Seta esquerda */}
+              <TouchableOpacity
+                onPress={() =>
+                  setCurrentIndex((prev) => (prev > 0 ? prev - 1 : items.length - 1))
+                }
+              >
+                <Feather name="chevron-left" size={22} color="#565656" right={10} />
+              </TouchableOpacity>
+
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ height: 140 }}
               >
                 {items
-                  .slice(currentIndex, currentIndex + 6)
+                  .slice(currentIndex, currentIndex + 3) // mostra 3 por vez
                   .map((item, index) => (
                     <TouchableOpacity
                       key={index}
-                      onPress={() => {
-                        nav.navigate(item.route as keyof RootStackParamList);
-                      }}
+                      onPress={() => nav.navigate(item.route as keyof RootStackParamList)}
                       style={[
                         styles.carouselItem,
                         {
                           shadowColor: shadowColors[index % shadowColors.length],
-                          shadowOffset: { width: 0, height: 12 }, // mais deslocada pra baixo
-                          shadowOpacity: 4,                     // mais forte
-                          shadowRadius: 16,                       // mais espalhada
-                          elevation: 20,                          // Android mais intenso
-
+                          shadowOffset: { width: 0, height: 15 },  // maior deslocamento vertical
+                          shadowOpacity: 0.9,                       // opacidade forte
+                          shadowRadius: 20,                          // raio maior para espalhar
+                          elevation: 35,
                         },
                       ]}
                     >
@@ -336,7 +350,17 @@ export default function App() {
                     </TouchableOpacity>
                   ))}
               </ScrollView>
+
+              {/* Seta direita */}
+              <TouchableOpacity
+                onPress={() =>
+                  setCurrentIndex((prev) => (prev < items.length - 1 ? prev + 1 : 0))
+                }
+              >
+                <Feather name="chevron-right" size={22} color="#565656" left={10} />
+              </TouchableOpacity>
             </View>
+
 
             <Text style={styles.texto_filtro}>Filtros:</Text>
             <View style={styles.categorias}>
@@ -813,7 +837,7 @@ const styles = StyleSheet.create({
   },
   infoButton: {
     position: "absolute",
-    right: -10, 
+    right: -10,
     top: -10,
     padding: 6,
   },

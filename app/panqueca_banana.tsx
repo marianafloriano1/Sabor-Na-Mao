@@ -4,16 +4,19 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -48,10 +51,22 @@ export default function Brigadeiro() {
     step5: "Para rechear, coloque banana picada e o mel a gosto.",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
+  // Salva lista de compras dos itens não marcados
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -64,7 +79,7 @@ export default function Brigadeiro() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_panquecabanana.txt";
+      FileSystem.documentDirectory + "lista_de_compras_panqueca.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -83,6 +98,7 @@ export default function Brigadeiro() {
     }
   };
   const [modalVisible, setModalVisible] = useState(false);
+const [adShown, setAdShown] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -109,7 +125,7 @@ export default function Brigadeiro() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -125,7 +141,7 @@ export default function Brigadeiro() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -205,7 +221,7 @@ export default function Brigadeiro() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"

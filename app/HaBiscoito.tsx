@@ -4,16 +4,19 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
+
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -34,15 +37,6 @@ export default function App() {
     item9: false,
     item10: false,
     item11: false,
-    item12: false,
-    item13: false,
-    item14: false,
-    item15: false,
-    item16: false,
-    item17: false,
-    item18: false,
-    item19: false,
-    item20: false,
     step1: false,
     step2: false,
     step3: false,
@@ -50,16 +44,15 @@ export default function App() {
     step5: false,
     step6: false,
     step7: false,
-    step8: false,
-    step9: false,
-    step10: false,
-    step11: false,
   });
 
+  const [adShown, setAdShown] = useState(false);
+
+  // Ingredientes
   const itemsMap: { [key: string]: string } = {
     item1: "1 ovo",
-    item2: "1 clara ",
-    item3: "corantes ",
+    item2: "1 clara",
+    item3: "corantes",
     item4: "gotas de limão",
     item5: "1 pitada de sal",
     item6: "1/2 xícara de açúcar",
@@ -70,13 +63,38 @@ export default function App() {
     item11: "2 xícaras de farinha de trigo",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  // Passos
+  const stepsMap: { [key: string]: string } = {
+    step1: "Bata a manteiga com o açúcar até formar um creme.",
+    step2: "Adicione o ovo e a essência de baunilha.",
+    step3:
+      "Misture a farinha, o fermento e o sal até formar uma massa lisa.",
+    step4:
+      "Abra a massa com um rolo (espessura de 0,5 cm), corte com cortadores de Halloween.",
+    step5:
+      "Leve ao forno a 180 °C por 10–12 minutos ou até dourar levemente nas bordas.",
+    step6:
+      "Cobertura: (1 xícara de açúcar de confeiteiro + 1 clara + gotas de limão).",
+    step7: "Divida em potinhos, adicione corantes e decore como preferir!",
   };
 
+  // Toggle com anúncio
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
+  };
+
+  // Salvar lista
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -106,6 +124,7 @@ export default function App() {
       console.error(err);
     }
   };
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -123,17 +142,21 @@ export default function App() {
               onPress={() => nav.navigate("hallow")}
             >
               <Feather name="chevron-left" size={28} color="#000" />
-              <Text style={styles.paragraph}>Biscoito de mosntruosos</Text>{" "}
+              <Text style={styles.paragraph}>Biscoito de Monstruosos</Text>
             </TouchableOpacity>
           </View>
+
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
-                      <Text style={styles.check}>✓</Text>
+                      <Text style={styles.check}>✓ </Text>
                     ) : (
                       <Text style={styles.bolinha}>◯ </Text>
                     )}
@@ -143,84 +166,26 @@ export default function App() {
               ))}
             </View>
           </View>
+
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Bata a manteiga com o açúcar até formar um creme.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Adicione o ovo e a essência de baunilha.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Misture a farinha, o fermento e o sal até formar uma massa lisa.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step4")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Abra a massa com um rolo (espessura de cerca de 0,5 cm), corte com
-              cortadores de Halloween (fantasmas, caveiras, monstros etc).
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step5")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step5 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Leve ao forno a 180 °C por 10–12 minutos ou até dourar levemente
-              nas bordas. Deixe esfriar antes de decorar.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step6")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step6 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              (1 xícara de açúcar de confeiteiro + 1 clara + gotas de limão) –
-              Divida em potinhos e adicione corantes (preto, verde, roxo,
-              vermelho). Use saquinhos com bico fino para desenhar olhos, bocas
-              assustadoras ou costuras de múmia.
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => toggleCheck("step6")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step6 ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}{" "}
-              Se divirta! Decore como preferir.
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity
+              key={key}
+              onPress={() => toggleCheckWithAd(key)}
+            >
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
+
       <View style={styles.botoesContainer}>
         <TouchableOpacity
           style={styles.botaoVerde}
@@ -233,63 +198,57 @@ export default function App() {
             style={styles.iconeBotao}
           />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
-
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </TouchableOpacity>
+
+         <Modal transparent visible={modalVisible} animationType="slide">
+                  <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                      <Text style={styles.modalTitulo}>
+                        O Que Fazer com Comida Estragada?
+                      </Text>
+                      <Text style={styles.modalTexto}>
+                        <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                        cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
+                        <Text style={{ fontWeight: "bold" }}>
+                          Plásticos e embalagens:
+                        </Text>{" "}
+                        potes, sacos, tampas e garrafas devem ser limpos e colocados no
+                        lixo reciclável. {"\n\n"}
+                        <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                        conservas, garrafas e frascos podem ser reciclados. {"\n\n"}
+                        <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                        alimentos, papel toalha (se seco e limpo), embalagens de papel e
+                        papelão vão para a reciclagem. {"\n\n"}
+                        <Text style={{ fontWeight: "bold" }}>
+                          Óleo de cozinha usado:
+                        </Text>{" "}
+                        nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica
+                        e leve até um ponto de coleta. {"\n\n"}
+                        <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                        alimentos e bebidas devem ser enxaguadas e recicladas. {"\n\n"}
+                        <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                        um manual completo aqui:{" "}
+                        <Text
+                          style={{ color: "blue", textDecorationLine: "underline" }}
+                          onPress={() =>
+                            Linking.openURL(
+                              "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                            )
+                          }
+                        >
+                          Manual de Compostagem
+                        </Text>
+                      </Text>
+                      <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <Text style={styles.textoFechar}>Fechar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Modal>
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"

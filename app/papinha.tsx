@@ -14,6 +14,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -36,6 +38,8 @@ export default function PapinhaDeCarne() {
     step4: false,
   });
 
+  const [adShown, setAdShown] = useState(false);
+
   const itemsMap: { [key: string]: string } = {
     item1: "1/2 cebola picada",
     item2: "1 dente de alho pequeno",
@@ -46,13 +50,30 @@ export default function PapinhaDeCarne() {
     item7: "2 colheres de abóbora cortada em cubos",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const stepsMap: { [key: string]: string } = {
+    step1: "Em uma panela, aqueça o óleo e refogue a cebola, o alho e a carne moída.",
+    step2: "Em seguida, acrescente a batata, o inhame e a abóbora.",
+    step3: "Cubra com água, tampe a panela e cozinhe até que todos os ingredientes estejam macios.",
+    step4: "Amasse todos os ingredientes com um garfo e sirva.",
   };
 
+  // Lógica de marcar + anúncio
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
+  };
+
+  // Salvar lista de compras com recompensa
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -64,8 +85,7 @@ export default function PapinhaDeCarne() {
       return;
     }
 
-    const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_papinha.txt";
+    const fileUri = FileSystem.documentDirectory + "lista_de_compras_papinha.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -83,6 +103,7 @@ export default function PapinhaDeCarne() {
       console.error(err);
     }
   };
+
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -90,7 +111,7 @@ export default function PapinhaDeCarne() {
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         <View style={styles.container}>
           <Image
-            source={require("../assets/images/fundo_papinha.png")} // verifique se o caminho está correto
+            source={require("../assets/images/fundo_papinha.png")}
             style={styles.decorativeImage}
             resizeMode="contain"
           />
@@ -111,7 +132,7 @@ export default function PapinhaDeCarne() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -126,52 +147,18 @@ export default function PapinhaDeCarne() {
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-
-          <TouchableOpacity onPress={() => toggleCheck("step1")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step1 ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}
-              Em uma panela, aqueça o óleo e refogue a cebola, o alho e a carne
-              moída.
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => toggleCheck("step2")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step2 ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}
-              Em seguida, acrescente a batata, o inhame e a abóbora.
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => toggleCheck("step3")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step3 ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}
-              Cubra com água, tampe a panela e cozinhe até que todos os
-              ingredientes estejam macios.
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => toggleCheck("step4")}>
-            <Text style={styles.topicos}>
-              {checkedItems.step4 ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>◯ </Text>
-              )}
-              Amasse todos os ingredientes com um garfo e sirva.
-            </Text>
-          </TouchableOpacity>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>◯ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
 
           <Text style={[styles.ingredientes, { marginTop: 40 }]}>ATENÇÃO!</Text>
           <Text
@@ -200,62 +187,62 @@ export default function PapinhaDeCarne() {
           />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
 
-          <Modal transparent visible={modalVisible} animationType="slide">
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitulo}>
-                  O Que Fazer com Comida Estragada?
-                </Text>
-                <Text style={styles.modalTexto}>
-                  <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
-                  cascas, sobras e restos podem ir para o lixo orgânico.{" "}
-                  {"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Plásticos e embalagens:
-                  </Text>{" "}
-                  potes, sacos, tampas e garrafas devem ser limpos e colocados
-                  no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
-                  o grosso da sujeira já ajuda bastante.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
-                  conservas, garrafas e frascos podem ser reciclados. Se
-                  estiverem quebrados, embale bem em jornal ou outro material
-                  para evitar acidentes.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
-                  alimentos, papel toalha (se seco e limpo), embalagens de papel
-                  e papelão vão para a reciclagem. Se estiver engordurado ou
-                  muito sujo, jogue no lixo comum.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>
-                    Óleo de cozinha usado:
-                  </Text>{" "}
-                  nunca descarte no ralo ou na pia. Guarde em uma garrafa
-                  plástica e leve até um ponto de coleta.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
-                  alimentos e bebidas devem ser enxaguadas e colocadas no lixo
-                  reciclável.{"\n\n"}
-                  <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
-                  um manual completo sobre compostagem aqui:{" "}
-                  <Text
-                    style={{ color: "blue", textDecorationLine: "underline" }}
-                    onPress={() =>
-                      Linking.openURL(
-                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
-                      )
-                    }
-                  >
-                    Manual de Compostagem
-                  </Text>
-                </Text>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <Text style={styles.textoFechar}>Fechar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
+           <Modal transparent visible={modalVisible} animationType="slide">
+                      <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                          <Text style={styles.modalTitulo}>
+                            O Que Fazer com Comida Estragada?
+                          </Text>
+                          <Text style={styles.modalTexto}>
+                            <Text style={{ fontWeight: "bold" }}>Restos de comida:</Text>{" "}
+                            cascas, sobras e restos podem ir para o lixo orgânico.{" "}
+                            {"\n\n"}
+                            <Text style={{ fontWeight: "bold" }}>
+                              Plásticos e embalagens:
+                            </Text>{" "}
+                            potes, sacos, tampas e garrafas devem ser limpos e colocados
+                            no lixo reciclável. Não precisa lavar tudo com sabão, só tirar
+                            o grosso da sujeira já ajuda bastante.{"\n\n"}
+                            <Text style={{ fontWeight: "bold" }}>Vidros:</Text> potes de
+                            conservas, garrafas e frascos podem ser reciclados. Se
+                            estiverem quebrados, embale bem em jornal ou outro material
+                            para evitar acidentes.{"\n\n"}
+                            <Text style={{ fontWeight: "bold" }}>Papéis:</Text> caixas de
+                            alimentos, papel toalha (se seco e limpo), embalagens de papel
+                            e papelão vão para a reciclagem. Se estiver engordurado ou
+                            muito sujo, jogue no lixo comum.{"\n\n"}
+                            <Text style={{ fontWeight: "bold" }}>
+                              Óleo de cozinha usado:
+                            </Text>{" "}
+                            nunca descarte no ralo ou na pia. Guarde em uma garrafa
+                            plástica e leve até um ponto de coleta.{"\n\n"}
+                            <Text style={{ fontWeight: "bold" }}>Latas:</Text> latas de
+                            alimentos e bebidas devem ser enxaguadas e colocadas no lixo
+                            reciclável.{"\n\n"}
+                            <Text style={{ fontWeight: "bold" }}>Dica final:</Text> Acesse
+                            um manual completo sobre compostagem aqui:{" "}
+                            <Text
+                              style={{ color: "blue", textDecorationLine: "underline" }}
+                              onPress={() =>
+                                Linking.openURL(
+                                  "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                                )
+                              }
+                            >
+                              Manual de Compostagem
+                            </Text>
+                          </Text>
+                          <TouchableOpacity onPress={() => setModalVisible(false)}>
+                            <Text style={styles.textoFechar}>Fechar</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </Modal>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"
@@ -269,7 +256,6 @@ export default function PapinhaDeCarne() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

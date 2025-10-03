@@ -14,6 +14,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -48,13 +50,22 @@ export default function PanquequinhaDeMaca() {
     step4: "Sirva e aproveite!",
   };
 
-  const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+  const toggleCheckWithAd = (key: string) => {
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
+
+    setTimeout(() => {
+      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
+      if (allChecked && !adShown) {
+        setAdShown(true);
+        anunciobola(() => console.log("Anúncio fechado."));
+      }
+    }, 100);
   };
 
+  // Salva lista de compras dos itens não marcados
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
@@ -67,7 +78,7 @@ export default function PanquequinhaDeMaca() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_panquequinha.txt";
+      FileSystem.documentDirectory + "lista_de_compras_panqueca.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -86,6 +97,8 @@ export default function PanquequinhaDeMaca() {
     }
   };
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [adShown, setAdShown] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -113,7 +126,7 @@ export default function PanquequinhaDeMaca() {
           <View style={styles.ingredientesContainer}>
             <View>
               {Object.entries(itemsMap).map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
                   <Text style={styles.topicos}>
                     {checkedItems[key] ? (
                       <Text style={styles.check}>✓ </Text>
@@ -129,7 +142,7 @@ export default function PanquequinhaDeMaca() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, label], index) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
                   <Text style={styles.check}>✓ </Text>
@@ -216,7 +229,7 @@ export default function PanquequinhaDeMaca() {
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"
