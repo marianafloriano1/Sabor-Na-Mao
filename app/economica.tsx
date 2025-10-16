@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { router, useFocusEffect } from 'expo-router';
@@ -5,6 +6,7 @@ import React, { useCallback, useRef, useState } from "react";
 import {
     Animated,
     Image,
+    Linking,
     Modal,
     Pressable,
     ScrollView,
@@ -390,12 +392,73 @@ export default function App() {
 
                             </Pressable>
                         </View>
+
+
                     </View>
 
+                    <TouchableOpacity
+                        style={styles.modalButton2}
+                        onPress={() => setModalVisible(true)
+
+                        }
+                    >
+                        <Text style={styles.toggleText2}>Por que não comer ultraprocessados?</Text>
+                    </TouchableOpacity>
+
+                    <Modal transparent visible={modalVisible} animationType="fade">
+                        <View style={styles.modalContainer2}>
+                            <View style={styles.modalContent2}>
+                                <TouchableOpacity
+                                    onPress={() => setModalVisible(false)}
+                                    style={styles.fecharModal2}
+                                >
+                                    <Feather name="x" size={28} color="red" />
+                                </TouchableOpacity>
+
+                                <ScrollView showsVerticalScrollIndicator={true}>
+                                    <Text style={styles.modalTitulo2}>
+                                        Por Que Evitar Ultraprocessados?
+                                    </Text>
+
+                                    <Text style={styles.modalTexto2}>
+                                        Você sabia que consumir muitos alimentos ultraprocessados pode fazer mal para a sua saúde?
+                                        Esses produtos geralmente contêm muito açúcar, sal, gorduras ruins e aditivos químicos,
+                                        que podem causar problemas como obesidade, diabetes, pressão alta e até doenças do coração.{"\n\n"}
+
+                                        Além disso, ultraprocessados não têm os nutrientes naturais dos alimentos frescos,
+                                        o que prejudica a sua alimentação equilibrada.{"\n\n"}
+
+                                        Evitar esses alimentos e preferir frutas, legumes e comidas feitas em casa ajuda você a se sentir melhor,
+                                        ter mais energia e proteger seu corpo. Também é uma forma de cuidar do meio ambiente,
+                                        já que ultraprocessados costumam gerar muito lixo embalado e difícil de reciclar.{"\n\n"}
+
+                                        Que tal dar uma chance para alimentos naturais e mais saudáveis hoje mesmo?
+                                        Seu corpo e o planeta agradecem!{"\n\n"}
+
+                                        Acesse o Guia Alimentar para a População Brasileira e entenda mais sobre isso:{" "}
+                                        <Text
+                                            style={{
+                                                color: "blue",
+                                                borderBottomColor: "blue",
+                                                borderBottomWidth: 1,
+                                            }}
+                                            onPress={() =>
+                                                Linking.openURL(
+                                                    "https://www.gov.br/saude/pt-br/assuntos/saude-brasil/eu-quero-me-alimentar-melhor/noticias/2022/por-que-limitar-o-consumo-de-alimentos-processados-e-evitar-alimentos-ultraprocessados"
+                                                )
+                                            }
+                                        >
+                                            Guia Alimentar
+                                        </Text>
+                                    </Text>
+                                </ScrollView>
+                            </View>
+                        </View>
+                    </Modal>
 
                 </ScrollView>
             </Animated.View>
-        </View>
+        </View >
     );
 }
 
@@ -740,5 +803,58 @@ const styles = StyleSheet.create({
         fontFamily: "Imprima",
         fontSize: 16
     },
+    modalButton2: {
+        backgroundColor: "#009E60",
+        alignItems: "center",
+        marginHorizontal: 20,
+        width: "100%",
+        resizeMode: "contain",
+        marginLeft: "auto",
+        height: 40,
+        marginTop: 30,
+    },
+    modalContainer2: {
+        flex: 1,
+        backgroundColor: "rgba(255, 255, 255, 0.96)",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalContent2: {
+        backgroundColor: "rgba(255, 255, 255, 0)",
+        borderRadius: 20,
+        padding: 40,
+        width: "100%",
+        maxWidth: 360,
+        height: "90%",
 
+    },
+    modalTitulo2: {
+        fontSize: 22,
+        marginBottom: 10,
+        fontFamily: "Chewy",
+        color: "#385A64"
+    },
+    modalTexto2: {
+        fontSize: 16,
+        marginBottom: 20,
+        fontFamily: "Imprima",
+        top: 20,
+        lineHeight: 24
+    },
+    fecharModal2: {
+        left: 270,
+        top: -30
+    },
+    toggleText2: {
+        marginTop: 10,
+        fontSize: 17,
+        color: "#fff",
+        fontFamily: "Imprima"
+    },
+    infoButton2: {
+        position: "absolute",
+        right: -10,
+        top: -10,
+        padding: 6,
+    },
 });
