@@ -39,26 +39,30 @@ export default function App() {
 
   const [adShown, setAdShown] = useState(false);
 
-  // Ingredientes
-  const itemsMap: { [key: string]: string } = {
-    item1: "Sal a gosto",
-    item2: "4 batatas médias ou batata-doce",
-    item3: "2 colheres (sopa) de azeite de oliva",
-    item4: "Páprica doce ou defumada (opcional)",
-    item5: "Alecrim ou ervas secas (opcional)",
-    item6:
-      "Cortador de canudo + palito de churrasco ou utensílios de confeitaria para fazer os rostos",
-  };
+ // Ingredientes
+const itemsMap: { [key: string]: string } = {
+  item1: "4 batatas médias ou batata-doce (inteiras e bem lavadas)",
+  item2: "2 colheres (sopa) de azeite de oliva",
+  item3: "Sal a gosto",
+  item4: "Páprica doce ou defumada (opcional)",
+  item5: "Alecrim ou ervas secas (opcional)",
+  item6:
+    "Canudo, palito de churrasco ou utensílios de confeitaria para esculpir os rostos",
+};
 
-  // Modo de preparo
-  const stepsMap: { [key: string]: string } = {
-    step1:
-      "Para deixar mais crocante, deixe as batatas de molho em água gelada por 30 minutos antes de assar (e seque bem depois). Descasque as batatas e corte fatias com cerca de 1 cm de espessura. Com um canudo, fure duas vezes para fazer os olhos. Use a ponta de uma colher, faca ou palito de churrasco para desenhar a boca.",
-    step2:
-      "Coloque as rodelas em uma tigela, regue com azeite e tempere com sal, páprica e ervas a gosto. Misture delicadamente para não quebrar os rostinhos.",
-    step3:
-      "Disponha as carinhas em uma assadeira forrada com papel manteiga. Leve ao forno preaquecido a 200 °C por cerca de 25–35 minutos ou até ficarem douradas e crocantes, virando na metade do tempo.",
-  };
+// Modo de preparo
+const stepsMap: { [key: string]: string } = {
+  step1:
+    "Lave bem as batatas e seque-as com um pano limpo. Se quiser, descasque parcialmente para criar texturas diferentes na casca.",
+  step2:
+    "Com um canudo, faça dois furos para os olhos. Use a ponta de uma faca pequena, colher ou palito de churrasco para esculpir a boca e outros detalhes assustadores — quanto mais torto, mais sinistro!",
+  step3:
+    "Coloque as batatas em uma tigela, regue com azeite e tempere com sal, páprica e ervas a gosto. Misture bem para que fiquem completamente envolvidas.",
+  step4:
+    "Disponha as batatas em uma assadeira forrada com papel manteiga. Leve ao forno preaquecido a 200 °C por cerca de 40–50 minutos, até ficarem douradas e macias por dentro.",
+  step5:
+    "Retire do forno, espere alguns minutos e sirva as batatas assustadoras inteiras — perfeitas para decorar a mesa e saborear!",
+};
 
   // Toggle com anúncio
   const toggleCheckWithAd = (key: string) => {
@@ -180,7 +184,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <Modal transparent visible={modalVisible} animationType="slide">

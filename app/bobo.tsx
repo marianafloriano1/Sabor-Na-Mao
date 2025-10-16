@@ -50,33 +50,35 @@ export default function BoboDeCamarao() {
 
   const [adShown, setAdShown] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+const itemsMap: { [key: string]: string } = {
+  item1: "1 kg de camarão fresco limpo",
+  item2: "Suco de 1 limão",
+  item3: "Sal e pimenta-do-reino a gosto",
+  item4: "3 dentes de alho picados",
+  item5: "1 cebola média picada",
+  item6: "1 kg de mandioca (aipim) descascada e cortada em pedaços",
+  item7: "2 colheres (sopa) de azeite de dendê",
+  item8: "2 colheres (sopa) de azeite de oliva",
+  item9: "2 pimentões (1 verde e 1 vermelho) picados",
+  item10: "2 tomates sem pele picados ou 1 lata de molho pronto",
+  item11: "2 vidros de leite de coco",
+  item12: "1 maço de cheiro-verde picado",
+  item13: "1 folha de louro",
+};
 
-  const itemsMap: { [key: string]: string } = {
-    item1: "Sal a gosto",
-    item2: "Suco de 1 limão",
-    item3: "1 folha de louro",
-    item4: "1 kg de mandioca",
-    item5: "1 kg de camarão fresco",
-    item6: "1 maço de cheiro-verde picado",
-    item7: "2 colheres (sopa) de azeite de dendê",
-    item8: "2 pimentões verdes bem picadinhos",
-    item9: "2 latas de molho pronto de tomate",
-    item10: "2 vidros de leite de coco",
-    item11: "3 dentes de alho picados e amassados",
-    item12: "6 colheres (sopa) de azeite de oliva",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1: "Tempere o camarão com sal, pimenta, alho e suco de limão. Deixe marinar por 15 minutos.",
+  step2: "Cozinhe a mandioca com o louro até ficar bem macia. Retire o louro e reserve um pouco da água do cozimento.",
+  step3: "Bata a mandioca cozida no liquidificador com o leite de coco e um pouco da água do cozimento até formar um creme homogêneo.",
+  step4: "Em uma panela grande, aqueça o azeite de oliva e refogue a cebola e os pimentões até murcharem.",
+  step5: "Acrescente os tomates picados (ou o molho) e cozinhe até formar um molho encorpado.",
+  step6: "Adicione o camarão marinado e refogue por alguns minutos, até começarem a ficar rosados.",
+  step7: "Junte o creme de mandioca à panela e misture bem em fogo baixo.",
+  step8: "Adicione o azeite de dendê e mexa até ficar bem incorporado.",
+  step9: "Ajuste o sal e, se necessário, acrescente um pouco da água do cozimento para ajustar a consistência.",
+  step10: "Finalize com cheiro-verde picado e sirva quente.",
+};
 
-  const stepsMap: { [key: string]: string } = {
-    step1: "Lave os camarões e tempere com sal, alho, pimenta e limão, deixe marinar.",
-    step2: "Cozinhe a mandioca em pedacinhos, com louro e a cebola em rodelas.",
-    step3: "Quando estiver mole, acrescente um vidro de leite de coco.",
-    step4: "Deixe esfriar um pouco e bata no liquidificador.",
-    step5: "Esquente o azeite de oliva, junte a cebola ralada e deixe dourar.",
-    step6: "Acrescente os camarões e frite.",
-    step7: "Acrescente o molho de tomate e deixe cozinhar por 5 minutos.",
-    step8: "Junte o azeite de dendê, misture bem e cozinhe por mais 10 minutos.",
-    step9: "Sirva quente, decorado com cheiro-verde.",
-  };
 
   // Alterna bolinha ✓/◯ e exibe anúncio se todos forem marcados
   const toggleCheckWithAd = (key: string) => {
@@ -192,7 +194,7 @@ export default function BoboDeCamarao() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

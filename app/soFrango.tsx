@@ -42,23 +42,32 @@ export default function soArForno() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Óleo para fritar",
-    item2: "2 ovos batidos",
-    item3: "1 colher (chá) de sal",
-    item4: "1/2 colher (chá) de pimenta-do-reino",
-    item5: "1 xícara de farinha de trigo",
-    item6: "1 xícara de farinha de rosca",
-    item7: "500g de peito de frango em tiras",
-  };
+  item1: "2 ovos batidos",
+  item2: "1 colher (chá) de sal",
+  item3: "1/2 colher (chá) de pimenta-do-reino",
+  item4: "1 xícara de farinha de trigo",
+  item5: "1 xícara de farinha de rosca",
+  item6: "500g de peito de frango em tiras",
+  item7: "1 colher (sopa) de azeite (opcional, para deixar mais crocante)",
+};
 
-  const stepsMap: { [key: string]: string } = {
-    step1: "Tempere as tiras de frango com sal e pimenta.",
-    step2:
-      "Passe as tiras na farinha de trigo, depois nos ovos batidos e por fim na farinha de rosca.",
-    step3: "Aqueça o óleo em uma frigideira funda.",
-    step4: "Frite as tiras em fogo médio até ficarem douradas e crocantes.",
-    step5: "Retire e escorra em papel absorvente antes de servir.",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1:
+    "Tempere as tiras de frango com sal e pimenta-do-reino. Misture bem e deixe descansar por alguns minutos.",
+  step2:
+    "Passe cada tira de frango na farinha de trigo, depois nos ovos batidos e, por fim, na farinha de rosca, cobrindo bem todos os lados.",
+  step3:
+    "Preaqueça a Air Fryer a 200°C por 5 minutos.",
+  step4:
+    "Disponha as tiras de frango na cesta da Air Fryer em uma única camada (não sobreponha).",
+  step5:
+    "Se desejar um resultado mais dourado, pincele levemente as tiras com azeite.",
+  step6:
+    "Asse por 15 a 20 minutos a 200°C, virando as tiras na metade do tempo para dourar dos dois lados.",
+  step7:
+    "Retire quando estiverem crocantes e bem cozidas por dentro. Sirva quente e aproveite!",
+};
+
 
   const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
@@ -177,7 +186,7 @@ export default function soArForno() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

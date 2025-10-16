@@ -38,6 +38,7 @@ export default function CoelhoDeChocolate() {
   });
 
   const itemsMap: { [key: string]: string } = {
+    item7: "Formas para pirulito no formato de coelhinhos",
     item1: "250 gramas de chocolate \nmeio amargo em pedaços",
     item3: "1 xícara (chá) de \nchocolate branco picado",
     item8: "Gota de corante comestível \n(anilina) variado a gosto",
@@ -174,7 +175,7 @@ export default function CoelhoDeChocolate() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

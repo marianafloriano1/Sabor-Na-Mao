@@ -41,27 +41,27 @@ export default function PamonhaSalgada() {
     step9: false,
   });
 
-  const itemsMap: { [key: string]: string } = {
-    item1: "200 ml de óleo",
-    item2: "1 pitada de açúcar",
-    item3: "1 colher de sopa de sal",
-    item4: "10 tiras de queijo coalho",
-    item5: "10 espigas de milho com as palhas",
-  };
+const itemsMap: { [key: string]: string } = {
+  item1: "10 espigas de milho com as palhas",
+  item2: "200 ml de óleo",
+  item3: "1 pitada de açúcar",
+  item4: "1 colher de sopa de sal",
+  item5: "10 tiras de queijo coalho",
+};
 
-  const stepsMap: { [key: string]: string } = {
-    step1: "Descasque o milho, separando as palhas boas, maiores e limpas.",
-    step2:
-      "Rale as espigas ou retire os grãos cortando com uma faca e bata no liquidificador para chegar ao mesmo efeito de milho ralado.",
-    step3: "Coe o milho ralado em uma peneira grossa.",
-    step4: "Acrescente o óleo bastante quente, o sal e o açúcar.",
-    step5: "Pegue a palha limpa e sem defeitos, dobre-a formando um copinho.",
-    step6: "Coloque a tira do queijo no meio da massa.",
-    step7: "Pegue outra palha para fechar o copinho, da mesma maneira.",
-    step8:
-      "Amarre com tiras da própria palha, com liga de borracha ou barbante.",
-    step9: "Deixe as pamonhas em água fervente por 30 minutos e pronto.",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1: "Descasque o milho com cuidado, separando as palhas mais bonitas e limpas para usar no preparo.",
+  step2: "Rale o milho ou corte os grãos com uma faca e bata no liquidificador até formar uma massa cremosa.",
+  step3: "Coe a massa em uma peneira grossa, apenas para retirar o excesso de bagaço.",
+  step4: "Aqueça bem o óleo e misture com o milho coado. Acrescente o sal e o açúcar, mexendo até ficar homogêneo.",
+  step5: "Pegue uma palha limpa e dobre formando um copinho para colocar a massa.",
+  step6: "Despeje um pouco da massa dentro do copinho e coloque uma tira de queijo coalho no centro.",
+  step7: "Cubra com mais massa até quase encher e feche com outra palha, formando um embrulho firme.",
+  step8: "Amarre as extremidades com tiras da própria palha, elástico ou barbante, para que não abra ao cozinhar.",
+  step9: "Coloque as pamonhas em uma panela grande com água fervente e cozinhe por cerca de 30 minutos.",
+  step10: "Retire da água, escorra e sirva morna ou fria — simples e deliciosa!",
+};
+
 
  const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
@@ -177,7 +177,7 @@ const [adShown, setAdShown] = useState(false);
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

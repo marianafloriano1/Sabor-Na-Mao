@@ -54,7 +54,6 @@ export default function Brigadeiro() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Sal a gosto",
     item2: "Azeite de oliva",
     item3: "2 batatas médias",
     item4: "1 cenoura média picada",
@@ -203,7 +202,7 @@ export default function Brigadeiro() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

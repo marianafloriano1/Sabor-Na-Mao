@@ -19,25 +19,23 @@ export default function RegisterScreen() {
 
   const handleRegister = async () => {
     if (!email || !senha) {
-      Alert.alert('Erro', 'Preencha todos os campos');
-      return;
-    } else {
-      Alert.alert('Erro', 'Email ou senha inválidos');
-    }
+  Alert.alert('Erro', 'Preencha todos os campos');
+  return;
+}
 
+try {
+  await saveUser(email, senha);
+  Alert.alert('Sucesso', 'Conta criada com sucesso!');
+  router.replace('/');
+} catch (error) {
+  console.error(error);
+  Alert.alert('Erro', 'Não foi possível criar a conta.');
+}
 
-    try {
-      await saveUser(email, senha);
-      Alert.alert('Sucesso', 'Conta criada com sucesso!');
-      router.replace('/');
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Erro', 'Não foi possível criar a conta.');
-    }
   };
 
   return (
-    <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+    <ScrollView style={{ flex: 1, paddingBottom: 45 }} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Text style={styles.textoTopo}>Sabor Na Mão</Text>
 

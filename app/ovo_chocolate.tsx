@@ -38,8 +38,10 @@ export default function OvoDePascoa() {
   });
 
   const itemsMap: { [key: string]: string } = {
+    item3: "1 rolo de papel-manteiga",
     item1: "240 gramas de \nchocolate ao leite ou \nmeio amargo",
     item2: "1 forma para ovo de \nPáscoa de 500 gramas",
+    
   };
 
   const stepsMap: { [key: string]: string } = {
@@ -173,7 +175,7 @@ export default function OvoDePascoa() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

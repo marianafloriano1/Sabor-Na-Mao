@@ -59,7 +59,9 @@ export default function App() {
 
   const stepsMap: { [key: string]: string } = {
     step1:
-      "Misture todos os ingredientes da carne e modele pequenas bolinhas, achatando-as para formar mini discos. Frite ou grelhe em frigideira antiaderente por 2–3 minutos de cada lado, até dourar bem. Coloque o queijo por cima nos últimos segundos para derreter.",
+      "Misture todos os ingredientes da carne e modele pequenas bolinhas, achatando-as para formar mini discos.",
+    step3: "Frite ou grelhe em frigideira antiaderente por 2–3 minutos de cada lado, até dourar bem",
+    step4: "Coloque o queijo por cima nos últimos segundos para derreter.",
     step2:
       "Corte os mini pães ao meio, passe o molho de sua preferência, adicione o hambúrguer com queijo, uma folha de alface e uma rodela de tomate. Feche o pão e espete com um palito para segurar tudo no lugar.",
   };
@@ -183,7 +185,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

@@ -207,7 +207,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         {/* Baixar lista com anúncio */}
@@ -298,7 +298,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-    fontWeight: "600",
   },
   ingredientesContainer: {
     flexDirection: "column",

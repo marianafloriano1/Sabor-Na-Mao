@@ -53,9 +53,7 @@ export default function Brigadeiro() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1:
-      "Separe os ingredientes desse delicioso sanduíche natural de atum! Simples de fazer, você vai adorar e querer fazer toda hora",
-    step2:
+      step2:
       "Lave e higienize todos os legumes e a salsinha. Descasque a cenoura e rale. Pique a salsinha em uma tábua e reserve.",
     step3:
       "Em um recipiente médio, junte o atum, a cenoura ralada, o tempero, a mostarda, a maionese e a salsinha. Misture tudo muito bem e, se quiser um recheio mais cremoso, adicione mais maionese.",
@@ -185,7 +183,7 @@ export default function Brigadeiro() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

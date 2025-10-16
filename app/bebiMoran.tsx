@@ -4,15 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 // Funções de anúncio e recompensa (substitua pelos seus arquivos reais)
@@ -43,7 +43,7 @@ export default function App() {
   const itemsMap: { [key: string]: string } = {
     item1: "Gelo a gosto (opcional)",
     item2: "500 ml de água gelada",
-    item3: "Suco de 1/2 limão (opcional, para realçar o sabor)",
+    item3: "Suco de 1/2 limão\n (opcional, para realçar o sabor)",
     item4: "250 g de morangos frescos (lavados e sem folhas)",
     item5: "2 a 4 colheres (sopa) de açúcar ou mel (a gosto)",
   };
@@ -186,7 +186,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

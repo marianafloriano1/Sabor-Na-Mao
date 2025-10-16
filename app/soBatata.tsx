@@ -41,29 +41,31 @@ export default function soArForno() {
     step6: false,
   });
 
-  const itemsMap: { [key: string]: string } = {
-    item1: "4 batatas médias",
-    item2: "2 colheres (sopa) de azeite",
-    item3: "1 colher (chá) de sal",
-    item4: "1 colher (chá) de páprica doce",
-    item5: "1/2 colher (chá) de pimenta-do-reino",
-    item6: "1 colher (chá) de alecrim fresco (opcional)",
-  };
+const itemsMap: { [key: string]: string } = {
+  item1: "4 batatas médias",
+  item2: "2 colheres (sopa) de azeite",
+  item3: "1 colher (chá) de sal",
+  item4: "1 colher (chá) de páprica doce",
+  item5: "1/2 colher (chá) de pimenta-do-reino",
+  item6: "1 colher (chá) de alecrim fresco (opcional)",
+};
 
-  const stepsMap: { [key: string]: string } = {
-    step1: "Preaqueça o forno a 220°C.",
-    step2: "Lave bem as batatas e corte em palitos ou gomos com casca.",
-    step3:
-      "Em uma tigela, misture o azeite, o sal, a páprica, a pimenta e o alecrim.",
-    step4:
-      "Adicione as batatas e misture bem para que fiquem completamente cobertas pelo tempero.",
-    step5:
-      "Distribua as batatas em uma assadeira forrada com papel manteiga, em uma única camada.",
-    step6:
-      "Asse por cerca de 35 a 40 minutos, mexendo na metade do tempo para dourar por igual.",
-    step7:
-      "Retire do forno quando estiverem douradas e crocantes. Sirva quente.",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1:
+    "Lave bem as batatas e corte em palitos ou gomos, mantendo a casca para mais sabor e fibras.",
+  step2:
+    "Em uma tigela, misture o azeite, o sal, a páprica, a pimenta e o alecrim. Mexa bem até formar um tempero uniforme.",
+  step3:
+    "Adicione as batatas na tigela e misture com as mãos ou uma colher até que todas fiquem bem cobertas pelo tempero.",
+  step4:
+    "Preaqueça a Air Fryer a 200°C por cerca de 5 minutos.",
+  step5:
+    "Coloque as batatas na cesta da Air Fryer em uma única camada (se necessário, faça em duas etapas para não amontoar).",
+  step6:
+    "Programe para 25 a 30 minutos a 200°C, mexendo ou sacudindo a cesta na metade do tempo para dourar por igual.",
+  step7:
+    "Retire quando estiverem douradas e crocantes por fora e macias por dentro. Sirva imediatamente!",
+};
 
   const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
@@ -182,7 +184,7 @@ export default function soArForno() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

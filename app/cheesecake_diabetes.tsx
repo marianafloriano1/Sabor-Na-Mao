@@ -67,8 +67,6 @@ export default function Brigadeiro() {
       "Prepare a base da torta no processador, batendo bem o biscoito até formar uma farofa. Adicione a pasta de amendoim e bata mais um pouco para misturar.",
     step2:
       "Transfira para uma forma de fundo removível de 20cm de diâmetro e forre apenas o fundo, pressionando bem.",
-    step3:
-      "Tempere os vegetais com o azeite, o sal e a pimenta-do-reino e espalhe por cima o queijo parmesão ralado, misturando bem os temperos.",
     step4:
       "Para o recheio, coloque em um liquidificador os ovos, o iogurte natural desnatado, a ricota esfarelada, o adoçante, a essência de baunilha e o suco de limão-taiti e bata até formar um creme.",
     step5:
@@ -198,7 +196,7 @@ export default function Brigadeiro() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

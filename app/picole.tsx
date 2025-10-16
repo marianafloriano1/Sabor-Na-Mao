@@ -114,7 +114,7 @@ export default function PicoleIogurteFrutas() {
               <Feather name="chevron-left" size={28} color="#000" />
 
               <Text style={styles.paragraph}>
-                PICOLÉ DE IOGURTE{"\n"}COM FRUTAS
+                PICOLÉ DE IOGURTE COM FRUTAS
               </Text>
             </TouchableOpacity>
           </View>
@@ -166,7 +166,7 @@ export default function PicoleIogurteFrutas() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <Modal transparent visible={modalVisible} animationType="slide">
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     color: "#242424",
     textTransform: "uppercase",
     marginLeft: 5,
-    width: 240,
+    width: 200,
     lineHeight: 26,
   },
   ingredientes: {

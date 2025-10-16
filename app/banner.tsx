@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
-const PRODUCTION_AD_UNIT_ID = 'ca-app-pub-3940256099942544/6300978111'; //mudar o id
+const PRODUCTION_AD_UNIT_ID = 'ca-app-pub-1704799142620945/5598769708'; //mudar o id
 const adUnitId = __DEV__ ? TestIds.BANNER : PRODUCTION_AD_UNIT_ID;
 
 export default function CustomBannerAd() {

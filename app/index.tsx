@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Image,
@@ -10,48 +12,42 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFonts } from 'expo-font';
 import { validateUser } from '../bancodedados';
-
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [showSplash, setShowSplash] = useState(true);
   const router = useRouter();
-  const video = useRef(null);
 
-   const [fontsLoaded] = useFonts({
-      Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
-      Julius: require("../assets/fonts/JuliusSansOne-Regular.ttf"),
-      Chewy: require("../assets/fonts/Chewy-Regular.ttf"),
-    });
+  const [fontsLoaded] = useFonts({
+    Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
+    Julius: require("../assets/fonts/JuliusSansOne-Regular.ttf"),
+    Chewy: require("../assets/fonts/Chewy-Regular.ttf"),
+  });
 
   useEffect(() => {
     const checkLoggedUser = async () => {
       const savedUser = await AsyncStorage.getItem('LOGGED_USER');
       if (savedUser) {
-        router.replace('/home'); // já logado, vai direto para Home
+        router.replace('/home'); 
       }
     };
     checkLoggedUser();
   }, []);
 
   const handleLogin = async () => {
-    const user = await validateUser(email, senha);
-    if (user) {
-      router.replace('/home');
-    } else {
-      Alert.alert('Erro', 'Email ou senha inválidos');
-    }
-  };
-
-
+  const user = await validateUser(email, senha);
+  if (user) {
+    await AsyncStorage.setItem('LOGGED_USER', JSON.stringify(user));
+    router.replace('/home');
+  } else {
+    Alert.alert('Erro', 'Email ou senha inválidos');
+  }
+};
+  
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 45 }} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Text style={styles.textoTopo}>Sabor Na Mão</Text>
         <Image source={require('../assets/images/login.png')} style={styles.imagem} />
@@ -93,7 +89,6 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
@@ -127,7 +122,6 @@ const styles = StyleSheet.create({
     color: '#565656',
     marginBottom: 10,
     fontFamily: "Imprima",
-    
   },
   subtitulo: {
     fontSize: 18,
@@ -139,7 +133,6 @@ const styles = StyleSheet.create({
   linkCadastro: {
     color: '#839deb',
     fontFamily: "Imprima",
-    
   },
   input: {
     height: 50,

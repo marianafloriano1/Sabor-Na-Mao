@@ -4,19 +4,22 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-  Alert,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 // Tipo para os itens marcados
 type CheckedItems = { [key: string]: boolean };
+
+import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
 
 export default function App() {
   const nav = useNavigation<NavigationProp<any>>();
@@ -67,41 +70,37 @@ export default function App() {
 
   // Função para alternar bolinha e mostrar anúncio se tudo marcado
   const toggleCheckWithAd = (key: string) => {
-    const updatedChecked = { ...checkedItems, [key]: !checkedItems[key] };
-    setCheckedItems(updatedChecked);
+    const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(updatedCheckedItems);
 
-    // Verificar se todos os itens estão marcados
     setTimeout(() => {
-      const allKeys = [...Object.keys(itemsMap), ...Object.keys(stepsMap)];
-      const allChecked = allKeys.every((k) => updatedChecked[k]);
+      const allKeys = [...Object.keys(itemsMap), "step1", "step2", "step3"];
+      const allChecked = allKeys.every((k) => updatedCheckedItems[k]);
+
       if (allChecked && !adShown) {
         setAdShown(true);
-        // Aqui você pode chamar seu anúncio, ex: anunciobola()
-        Alert.alert(
-          "Parabéns!",
-          "Você completou todos os passos! Anúncio exibido."
-        );
+        anunciobola(() => console.log("Anúncio intersticial fechado."));
       }
     }, 100);
   };
 
-  // Função para salvar lista de compras com itens não marcados
+
   const salvarListaDeCompras = async () => {
-    const naoMarcados = Object.keys(itemsMap)
+    const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
       .map((key) => `- ${itemsMap[key]}`)
       .join("\n");
 
-    if (!naoMarcados) {
+    if (!naoSelecionados) {
       Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
       return;
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_cookies.txt";
+      FileSystem.documentDirectory + "lista_de_compras_sucoMorango.txt";
 
     try {
-      await FileSystem.writeAsStringAsync(fileUri, naoMarcados, {
+      await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
         encoding: FileSystem.EncodingType.UTF8,
       });
 
@@ -116,6 +115,7 @@ export default function App() {
       console.error(err);
     }
   };
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -140,21 +140,23 @@ export default function App() {
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity
-                key={key}
-                onPress={() => toggleCheckWithAd(key)}
-              >
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>◯ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
@@ -185,12 +187,12 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
         >
           <Feather
             name="download"

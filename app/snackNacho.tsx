@@ -152,7 +152,7 @@ export default function App() {
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {[
-            "Derreta a manteiga em uma panela em fogo médio. Adicione a farinha e mexa por 1 minuto para cozinhar (roux).",
+            "Derreta a manteiga em uma panela em fogo médio. Adicione a farinha e mexa por 1 minuto para cozinhar.",
             "Aos poucos, adicione o leite, mexendo até virar creme. Acrescente o queijo e mexa até derreter. Ajuste sal, pimenta e temperos extras.",
             "Coloque os nachos em um prato. Sirva com o molho ao lado ou despeje por cima.",
             "Finalize com jalapeños, tomate, guacamole, sour cream ou carne moída refogada.",
@@ -185,7 +185,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         {/* anúncio recompensa antes de salvar lista */}

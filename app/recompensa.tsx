@@ -7,7 +7,7 @@ import {
 
 const adUnitId = __DEV__
   ? TestIds.REWARDED
-  : "ca-app-pub-3940256099942544/5224354917";
+  : "ca-app-pub-1704799142620945/3471283903";
 
 export function recompensa(onRewardEarned: () => void) {
   const rewarded = RewardedAd.createForAdRequest(adUnitId);

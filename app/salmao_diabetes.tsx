@@ -40,32 +40,31 @@ export default function Brigadeiro() {
     step5: false,
     step6: false,
   });
+const itemsMap: { [key: string]: string } = {
+  item1: "2 filés de salmão (aprox. 150 g cada)",
+  item2: "1 colher de sopa de azeite de oliva extra virgem",
+  item3: "Suco de 1/2 limão",
+  item4: "1 dente de alho picado",
+  item5: "1 pitada de sal marinho (ou a gosto)",
+  item6: "Pimenta-do-reino moída na hora a gosto",
+  item7: "Ervas frescas a gosto (como alecrim, tomilho ou salsinha)",
+  item8: "Legumes grelhados ou salada verde para acompanhar",
+};
 
-  const itemsMap: { [key: string]: string } = {
-    item2: "1 cenoura pequena ralada",
-    item5: "1 colher de sopa de mostarda",
-    item6: "4 colheres de sopa de maionese",
-    item8: "Folhas de alface a gosto",
-    item1: "1 lata de atum escorrida (atum em óleo)",
-    item3: "2 colheres de sopa de salsinha picada",
-    item7: "8 fatias de pão de forma integral",
-    item4: "1 colher de café de tempero completo (ou sal e pimenta)",
-  };
+const stepsMap: { [key: string]: string } = {
+ 
+  step2:
+    "Em uma tigela, misture o azeite, o suco de limão, o alho, o sal, a pimenta e as ervas frescas. Mexa bem até formar um molho aromático.",
+  step3:
+    "Coloque os filés de salmão em um prato e pincele o molho dos dois lados. Deixe marinar por cerca de 15 minutos para pegar o sabor.",
+  step4:
+    "Aqueça uma frigideira antiaderente em fogo médio e unte levemente com azeite. Grelhe o salmão por cerca de 3 a 4 minutos de cada lado, até dourar e ficar macio por dentro.",
+  step5:
+    "Sirva o salmão acompanhado de legumes grelhados ou uma salada verde, garantindo uma refeição equilibrada e nutritiva.",
+  step6:
+    "Pronto!",
+};
 
-  const stepsMap: { [key: string]: string } = {
-    step1:
-      "Separe os ingredientes desse delicioso sanduíche natural de atum! Simples de fazer, você vai adorar e querer fazer toda hora",
-    step2:
-      "Lave e higienize todos os legumes e a salsinha. Descasque a cenoura e rale. Pique a salsinha em uma tábua e reserve.",
-    step3:
-      "Em um recipiente médio, junte o atum, a cenoura ralada, o tempero, a mostarda, a maionese e a salsinha. Misture tudo muito bem e, se quiser um recheio mais cremoso, adicione mais maionese.",
-    step4:
-      "Em uma fatia do pão, espalhe uma camada de atum e posicione as folhas de alface por cima.",
-    step5:
-      "Passe outra camada de recheio na outra fatia e repita esse processo com a quantidade que desejar.",
-    step6:
-      "Feche e sirva um delicioso sanduíche de atum no seu lanchinho da tarde. Sirva e bom apetite!",
-  };
 
   const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
@@ -186,7 +185,7 @@ export default function Brigadeiro() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

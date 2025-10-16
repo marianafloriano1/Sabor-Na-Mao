@@ -36,7 +36,7 @@ export default function SaladaDeLentilha() {
     item10: "Sal a gosto",
     item11: "Pimenta-do-reino a gosto",
     item1: "1 xícara de lentilha crua",
-    item2: "1/2 pimentão vermelho picado",
+    item2: "1/2 pimentão vermelho\n picado",
     item3: "1/2 pepino em cubos pequenos",
     item5: "Salsinha ou coentro picado a gosto",
     item6: "10 tomates-cereja cortados ao meio",
@@ -48,7 +48,7 @@ export default function SaladaDeLentilha() {
   // modo de preparo
   const stepsMap: { [key: string]: string } = {
     step1:
-      "Lave bem e cozinhe em água com sal por cerca de 20 minutos, até que fique macia mas firme. Escorra e deixe esfriar.",
+      "Lave bem a lentilha e cozinhe em água com sal por cerca de 20 minutos, até que fique macia mas firme. Escorra e deixe esfriar.",
     step2: "Corte todos os ingredientes em cubinhos ou tiras pequenas.",
     step3:
       "Em uma tigela grande, junte a lentilha fria com os vegetais e ervas.",
@@ -192,7 +192,7 @@ export default function SaladaDeLentilha() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         {/* botão salvar lista com anúncio */}

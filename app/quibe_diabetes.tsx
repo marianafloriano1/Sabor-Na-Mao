@@ -166,7 +166,7 @@ export default function QuicheDeLegumes() {
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          {Object.entries(stepsMap).map(([key, step], index) => (
+          {Object.entries(stepsMap).map(([key, step]) => (
             <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
@@ -174,7 +174,7 @@ export default function QuicheDeLegumes() {
                 ) : (
                   <Text style={styles.bolinha}>◯ </Text>
                 )}
-                {index + 1}. {step}
+                {step}
               </Text>
             </TouchableOpacity>
           ))}
@@ -191,7 +191,7 @@ export default function QuicheDeLegumes() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

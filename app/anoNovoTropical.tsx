@@ -33,8 +33,8 @@ export default function App() {
   // Ingredientes
   const itemsMap: { [key: string]: string } = {
     item1: "Palitos de churrasco",
+    item4: "1/2 abacaxi cortado\n em cubos",
     item8: "4 colheres (sopa) de\n açúcar mascavo ou demerara",
-    item4: "1/2 abacaxi cortado em cubos",
     item2: "2 colheres (sopa) de manteiga",
     item7: "Morangos inteiros (sem folhas)",
     item3: "1 manga firme cortada em cubos",
@@ -49,7 +49,7 @@ export default function App() {
     step2:
       "Em uma frigideira grande, derreta a manteiga, acrescente o açúcar e a canela, mexa até formar um caramelo leve. Adicione os espetinhos e vá virando até dourar.",
     step3:
-      "Pincele os espetinhos com a calda de açúcar. Leve à churrasqueira por 2–3 minutos de cada lado ou ao forno a 200 °C por 10 minutos.",
+      "Pincele os espetinhos com a calda de açúcar.",
     step4: "Sirva com sorvete, iogurte gelado ou puro como sobremesa.",
   };
 
@@ -181,7 +181,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         {/* Baixar lista com anúncio */}

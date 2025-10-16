@@ -278,7 +278,7 @@ export default function App() {
                   fadeNavigate(() => nav.navigate("soboro"));
                 }}
               >
-                <Text style={styles.texto2}>Soboro</Text>
+                <Text style={styles.texto2}>Sobras</Text>
               </TouchableOpacity>
 
               <TouchableOpacity

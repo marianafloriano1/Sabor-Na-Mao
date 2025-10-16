@@ -1,14 +1,14 @@
 // InterstitialAdHandler.tsx
 import { Alert } from "react-native";
 import {
-    AdEventType,
-    InterstitialAd,
-    TestIds,
+  AdEventType,
+  InterstitialAd,
+  TestIds,
 } from "react-native-google-mobile-ads";
 
 const interstitialAdUnitId = __DEV__
   ? TestIds.INTERSTITIAL
-  : "ca-app-pub-3940256099942544/1033173712"; // ID teste oficial Google
+  : "ca-app-pub-1704799142620945/9845120562"; // ID teste oficial Google
 
 const interstitial = InterstitialAd.createForAdRequest(interstitialAdUnitId);
 

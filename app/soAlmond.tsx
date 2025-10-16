@@ -42,14 +42,13 @@ export default function soArForno() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "1 ovos",
+    item1: "1 ovo",
     item5: "1/2 cebola picada",
     item2: "1 pitada de sal",
     item8: "1/2 xícara de água",
     item7: "1 colher de sopa de azeite",
     item4: "1/2 cebola picada ou ralada",
     item3: "2 dentes de alho picados",
-    item6: "2 dentes de alho picados",
     item10: "2 colheres de sopa de farinha de rosca ou aveia",
     item11: "500 g de carne moída (boi, frango ou porco)",
     item9: "1 lata ou sachê de molho de tomate (ou 3 tomates batidos)",
@@ -182,7 +181,7 @@ export default function soArForno() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

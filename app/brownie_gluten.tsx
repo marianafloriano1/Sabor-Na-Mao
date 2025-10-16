@@ -133,23 +133,24 @@ export default function Brownie() {
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
           <View style={styles.ingredientesContainer}>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity
-                key={key}
-                onPress={() => toggleCheckWithAd(key)}
-              >
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>◯ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => toggleCheckWithAd(key)}
+                >
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>◯ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
           {Object.entries(stepsMap).map(([key, step]) => (
             <TouchableOpacity key={key} onPress={() => toggleCheckWithAd(key)}>
@@ -177,7 +178,7 @@ export default function Brownie() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

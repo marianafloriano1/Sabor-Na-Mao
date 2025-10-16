@@ -47,8 +47,9 @@ export default function SaladaLegumes() {
     item5: "1 cenoura média ralada ou em cubinhos",
     item6: "1 abobrinha pequena em cubinhos",
     item7: "Salsinha e cebolinha picadas a gosto",
-    item8:
-      "Suco de 1 limão, 2 colheres de sopa de azeite, sal e pimenta a gosto",
+    item8: "Suco de 1 limão ",
+    item9: "2 colheres de sopa de azeite",
+    item10: "Sal e pimenta a gosto",
   };
 
   const stepsMap: { [key: string]: string } = {
@@ -177,7 +178,7 @@ export default function SaladaLegumes() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

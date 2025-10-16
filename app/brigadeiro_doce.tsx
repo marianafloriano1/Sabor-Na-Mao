@@ -36,18 +36,24 @@ export default function Brigadeiro() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Granulado preto/colorido",
-    item2: "1/2 lata de leite condensado",
-    item3: "2 colheres cheias de chocolate em pó",
-  };
+  item1: "1/2 lata de leite condensado",
+  item2: "2 colheres (sopa) de chocolate em pó ou achocolatado",
+  item3: "1 colher (sopa) de margarina ou manteiga",
+  item4: "Granulado para enrolar (preto ou colorido)",
+};
 
-  const stepsMap: { [key: string]: string } = {
-    step1:
-      "Misture bem o leite condensado com o chocolate em pó e coloque no copo.",
-    step2: "Coloque na geladeira por 30 minutos.",
-    step3: "Retire do copo e enrole como uma bolinha.",
-    step4: "Coloque o granulado.",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1:
+    "Em uma panela pequena, coloque o leite condensado, o chocolate em pó e a margarina.",
+  step2:
+    "Leve ao fogo baixo, mexendo sempre com uma colher até começar a desgrudar do fundo da panela (cerca de 8 a 10 minutos).",
+  step3:
+    "Despeje o brigadeiro em um prato untado com margarina e deixe esfriar por alguns minutos.",
+  step4:
+    "Com as mãos levemente untadas, enrole pequenas bolinhas e passe no granulado.",
+  step5:
+    "Coloque em forminhas e sirva. Pronto! Um brigadeiro econômico, fácil e delicioso.",
+};
 
   const toggleCheckWithAd = (key: string) => {
     const updatedCheckedItems = { ...checkedItems, [key]: !checkedItems[key] };
@@ -167,7 +173,7 @@ export default function Brigadeiro() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>

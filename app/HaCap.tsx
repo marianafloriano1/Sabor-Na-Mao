@@ -45,30 +45,40 @@ export default function App() {
   const [adShown, setAdShown] = useState(false);
 
   // Ingredientes
-  const itemsMap: { [key: string]: string } = {
-    item1: "2 ovos",
-    item2: "1 pitada de sal",
-    item3: "1/2 xícara de óleo vegetal",
-    item4: "3/4 xícara de açúcar mascavo",
-    item5: "1/4 xícara de açúcar refinado",
-    item6: "1 e 1/2 xícara de farinha de trigo",
-    item7: "1 colher (chá) de fermento em pó",
-    item8: "1/2 colher (chá) de bicarbonato de sódio",
-    item9: "1 colher (chá) de canela em pó",
-    item10: "1/2 colher (chá) de noz-moscada",
-  };
+const itemsMap: { [key: string]: string } = {
+  item1: "2 ovos",
+  item2: "1 pitada de sal",
+  item3: "1/2 xícara de óleo vegetal",
+  item4: "3/4 xícara de açúcar mascavo",
+  item5: "1/4 xícara de açúcar refinado",
+  item6: "1 e 1/2 xícara de farinha de trigo",
+  item7: "1 colher (chá) de fermento em pó",
+  item8: "1/2 colher (chá) de bicarbonato de sódio",
+  item9: "1 colher (chá) de canela em pó",
+  item10: "1/2 colher (chá) de noz-moscada",
+  item11: "1 xícara de purê de abóbora cozida e amassada",
+};
 
-  // Passos
-  const stepsMap: { [key: string]: string } = {
-    step1:
-      "Mini abóboras de pasta americana ou fondant (ou use confeitos em formato de abóbora).",
-    step2:
-      "Preaqueça o forno a 180 °C. Misture purê de abóbora, ovos, óleo e açúcares. Em outra tigela, misture farinha, fermento, bicarbonato, canela, noz-moscada e sal. Una as misturas, asse por 20–25 min e deixe esfriar.",
-    step3:
-      "Bata a manteiga até ficar cremosa. Adicione o açúcar de confeiteiro, baunilha, leite e corante laranja (opcional). Bata até textura lisa. Decore com bico pitanga.",
-    step4:
-      "Finalize cada cupcake com mini abóbora de fondant ou modelada com bolinhas laranja e cabinho verde.",
-  };
+const stepsMap: { [key: string]: string } = {
+  step1:
+    "Preaqueça o forno a 180 °C e prepare forminhas de cupcake em uma assadeira.",
+  step2:
+    "Em uma tigela grande, misture os ovos, o óleo vegetal, o açúcar mascavo e o açúcar refinado até obter um creme homogêneo.",
+  step3:
+    "Adicione o purê de abóbora à mistura líquida e mexa bem até incorporar.",
+  step4:
+    "Em outra tigela, peneire a farinha de trigo, o fermento, o bicarbonato, a canela, a noz-moscada e o sal.",
+  step5:
+    "Junte os ingredientes secos aos molhados, misturando delicadamente até formar uma massa uniforme.",
+  step6:
+    "Distribua a massa nas forminhas, enchendo até 2/3 da altura, e leve ao forno por 20–25 minutos, ou até que um palito saia limpo.",
+  step7:
+    "Deixe os cupcakes esfriarem completamente antes de decorar.",
+  step8:
+    "Se desejar, prepare uma cobertura de manteiga com açúcar de confeiteiro e essência de baunilha na batedeira, tingindo de laranja para o tema de abóbora.",
+  step9:
+    "Finalize decorando com mini abóboras de fondant ou confeitos temáticos sobre a cobertura.",
+};
 
   // Toggle com anúncio
   const toggleCheckWithAd = (key: string) => {
@@ -189,7 +199,7 @@ export default function App() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <Modal transparent visible={modalVisible} animationType="slide">

@@ -53,8 +53,7 @@ export default function ArrozNatalino() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Sal",
-    item2: "Sal a gosto",
+    item1: "Sal a gosto",
     item3: "1/2 xícara de batata palha",
     item4: "2 tomates picados em cubos",
     item5: "1 copo de requeijão",
@@ -194,7 +193,7 @@ export default function ArrozNatalino() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

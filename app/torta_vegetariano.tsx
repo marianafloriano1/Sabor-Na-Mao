@@ -15,6 +15,8 @@ import {
   View,
 } from "react-native";
 import { anunciobola } from "./anunciobola";
+import { recompensa } from "./recompensa";
+
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -118,7 +120,7 @@ export default function TortaDeLegumesRicota() {
     }
 
     const fileUri =
-      FileSystem.documentDirectory + "lista_de_compras_queijo_quente.txt";
+      FileSystem.documentDirectory + "lista_de_compras_sucoMorango.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -136,6 +138,7 @@ export default function TortaDeLegumesRicota() {
       console.error(err);
     }
   };
+
   const [adShown, setAdShown] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -209,7 +212,7 @@ export default function TortaDeLegumesRicota() {
             color="#fff"
             style={styles.iconeBotao}
           />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.textoBotao}>Descarte correto</Text>
 
           <Modal transparent visible={modalVisible} animationType="slide">
             <View style={styles.modalContainer}>
@@ -266,7 +269,8 @@ export default function TortaDeLegumesRicota() {
 
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={salvarListaDeCompras}
+          onPress={() => recompensa(() => salvarListaDeCompras())}
+
         >
           <Feather
             name="download"
