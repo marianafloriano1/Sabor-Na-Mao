@@ -1,50 +1,93 @@
-# Welcome to your Expo app 👋
+# Sabor Na Mão
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> Aplicativo mobile em React Native que ajuda você a encontrar a receita perfeita para cada data comemorativa. Descubra pratos ideais para cada ocasião ou publique suas próprias receitas, salvas com privacidade só para você.
 
-## Get started
+![React Native](https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen?style=for-the-badge)
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## Sobre o projeto
 
-2. Start the app
+O Sabor na Mão nasceu para resolver um problema simples: encontrar a receita certa para a ocasião certa. Em vez de garimpar dezenas de sites e perfis de culinária, o app organiza sugestões de pratos a partir de **datas comemorativas** (Natal, Páscoa, festas juninas, e muito mais), tornando o planejamento das suas refeições especiais mais fácil e rápido.
 
-   ```bash
-   npx expo start
-   ```
+Além de buscar receitas prontas, cada usuário pode **criar e salvar suas próprias receitas**, mantidas privadas e acessíveis somente por quem as criou.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Funcionalidades
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Busca por data comemorativa** — encontre receitas alinhadas ao evento que você está celebrando
+- **Catálogo de receitas** — ingredientes e modo de preparo organizados de forma clara
+- **Receitas próprias** — publique e gerencie suas próprias criações culinárias
+- **Privacidade** — suas receitas pessoais ficam visíveis apenas para você
+- **Exportação de lista de compras** — exporte os ingredientes ainda não marcados como adquiridos para um arquivo .txt, funcionando como uma lista de compras prática
+- **Descarte correto dos alimentos** — na tela da receita, ao lado do botão de exportar a lista de compras, explica como descartar corretamente cada alimento, incentivando um consumo mais consciente
+- **Aproveitamento de sobras** — uma seção dedicada a receitas criadas a partir de sobras de outros pratos, ajudando a reduzir o desperdício na cozinha
+- **Receitas econômicas** — uma seção com pratos de baixo custo, ideais para quem busca economizar sem abrir mão de uma boa refeição
+- **Interface simples e intuitiva** — pensada para uma navegação rápida, direto ao que importa: cozinhar
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## Capturas de tela
+
+<p align="center">
+  <img src="./assets/images/home_readme.png" width="250" alt="Tela inicial" />
+  <img src="./assets/images/receita_readme.png" width="227" alt="Detalhes da receita" />
+  <img src="./assets/images/sobras_readme.png" width="250" alt="Tela sobras" />
+  <img src="./assets/images/economicas_readme.png" width="250" alt="Tela economica" />
+  <img src="./assets/images/perfil_readme.png" width="230" alt="Tela perfil" />
+  <img src="./assets/images/forma_descarte_readme.png" width="250" alt="Tela forma descarte" />
+</p>
+
+
+---
+
+## Tecnologias utilizadas
+
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+
+---
+
+## Como executar o projeto
+
+### Pré-requisitos
+
+- [Node.js](https://nodejs.org/) instalado
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- Emulador Android/iOS ou o app **Expo Go** no seu celular
+
+### Passo a passo
 
 ```bash
-npm run reset-project
+# Clone o repositório
+git clone https://github.com/marianafloriano1/Sabor-Na-Mao.git
+
+# Acesse a pasta do projeto
+cd sabornamao
+
+# Instale as dependências
+npm install
+
+# Inicie o projeto
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Em seguida, escaneie o QR Code com o app **Expo Go** ou execute em um emulador.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## Contato
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Desenvolvido por **Mariana Santanna** e **Rafaela Santos**
 
-## Join the community
+**Mariana Santanna**
+- GitHub: [@marianafloriano1](https://github.com/marianafloriano1)
+- E-mail: marianafloriano24@gmail.com
+- LinkedIn: [www.linkedin.com/in/marianafsantanna](https://www.linkedin.com/in/marianafsantanna)
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Rafaela Santos**
+- GitHub: [@RafaApS](https://github.com/RafaApS)
+- E-mail: rafaela132006@gmail.com
+- LinkedIn: [www.linkedin.com/in/rafaelaapsantos](https://www.linkedin.com/in/rafaelaapsantos)
